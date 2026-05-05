@@ -33,7 +33,8 @@ class Settings(BaseSettings):
         "finance": ["general", "finance"], 
         "engineering": ["general", "engineering"],
         "marketing": ["general", "marketing"],
-        "c_level": ["general", "finance", "engineering", "marketing"]
+        "hr": ["general", "hr"],
+        "c_level": ["general", "finance", "engineering", "marketing", "hr"]
     })
     
     # Collection to access roles mapping (inverse of role_access_matrix)
@@ -53,7 +54,8 @@ class Settings(BaseSettings):
         "general": [".pdf", ".md", ".txt"],
         "finance": [".pdf", ".docx", ".doc"],
         "engineering": [".md", ".txt", ".py", ".yaml", ".yml"],
-        "marketing": [".pdf", ".docx", ".doc"]
+        "marketing": [".pdf", ".docx", ".doc"],
+        "hr": [".csv", ".xlsx", ".pdf", ".md"]
     })
     
     # API settings

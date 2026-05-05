@@ -9,14 +9,14 @@ from pathlib import Path
 import uuid
 
 ChunkType = Literal["text", "table", "heading", "code", "list"]
-Collection = Literal["general", "finance", "engineering", "marketing"]
-Role = Literal["employee", "finance", "engineering", "marketing", "c_level"]
+Collection = Literal["general", "finance", "engineering", "marketing", "hr"]
+Role = Literal["employee", "finance", "engineering", "marketing", "hr", "c_level"]
 
 class DocumentMetadata(BaseModel):
     """Essential metadata for a document chunk stored in vector database"""
     
     # Essential fields only
-    collection: Collection = Field(..., description="Document collection (general, finance, engineering, marketing)")
+    collection: Collection = Field(..., description="Document collection (general, finance, engineering, marketing, hr)")
     access_roles: List[Role] = Field(..., description="List of roles that can access this document")
     source_document: str = Field(..., description="Filename of the source document")
     document_path: str = Field(..., description="Full path to the source document")

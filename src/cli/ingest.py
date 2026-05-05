@@ -37,7 +37,7 @@ def ingest_documents(
         "all", 
         "--collection", 
         "-c",
-        help="Collection to ingest: all, general, finance, engineering, marketing"
+        help="Collection to ingest: all, general, finance, engineering, marketing, hr"
     ),
     data_dir: Optional[str] = typer.Option(
         None,
@@ -84,7 +84,7 @@ def ingest_documents(
     """
     
     # Validate collection parameter
-    valid_collections = ["all", "general", "finance", "engineering", "marketing"]
+    valid_collections = ["all", "general", "finance", "engineering", "marketing", "hr"]
     if collection not in valid_collections:
         console.print(f"[red]Error:[/red] Invalid collection '{collection}'. Must be one of: {', '.join(valid_collections)}")
         raise typer.Exit(1)
@@ -310,7 +310,7 @@ def _discover_specific_files(
             collection_name = relative_to_data.parts[0]  # First directory is collection
             
             # Validate collection name
-            valid_collections = ["general", "finance", "engineering", "marketing"]
+            valid_collections = ["general", "finance", "engineering", "marketing", "hr"]
             if collection_name not in valid_collections:
                 console.print(f"[yellow]Warning:[/yellow] Unknown collection '{collection_name}' for file: {file_spec}")
                 console.print(f"[yellow]Valid collections:[/yellow] {', '.join(valid_collections)}")

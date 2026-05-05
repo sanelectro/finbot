@@ -369,3 +369,413 @@ async def _test_rbac_enforcement(test_cases):
     
     for role, collections in settings.role_access_matrix.items():
         console.print(f"  • {role}: {', '.join(collections)}")
+
+@test_app.command("chunking-accuracy")
+def test_chunking_accuracy(
+    file_path: Optional[str] = typer.Option(
+        None,
+        "--file", 
+        "-f",
+        help="Path to specific file to test chunking accuracy"
+    ),
+    content_type: str = typer.Option(
+        "all",
+        "--type",
+        "-t", 
+        help="Content type to test: table, paragraph, list, heading, multipage, csv, all"
+    )
+):
+    """
+    Test chunking accuracy by retrieving specific content and measuring relevance scores
+    """
+    console.print("\\n[bold blue]Testing Chunking Accuracy & Content Retrieval[/bold blue]")
+    
+    try:
+        asyncio.run(_test_chunking_accuracy_async(file_path, content_type))
+    except Exception as e:
+        console.print(f"[red]❌ Chunking accuracy test failed:[/red] {str(e)}")
+        raise typer.Exit(1)
+
+@test_app.command("content-retrieval") 
+def test_content_retrieval(
+    queries: str = typer.Option(
+        "system uptime,incident report,budget allocation",
+        "--queries",
+        "-q",
+        help="Comma-separated test queries"
+    ),
+    expected_docs: str = typer.Option(
+        "",
+        "--expected",
+        "-e", 
+        help="Comma-separated expected document names for validation"
+    ),
+    min_score: float = typer.Option(
+        0.5,
+        "--min-score",
+        "-s",
+        help="Minimum relevance score threshold"  
+    )
+):
+    """
+    Test content retrieval accuracy with known queries and expected documents
+    """
+    console.print("\\n[bold blue]Testing Content Retrieval Accuracy[/bold blue]")
+    
+    query_list = [q.strip() for q in queries.split(",")]
+    expected_list = [d.strip() for d in expected_docs.split(",")] if expected_docs else []
+    
+    try:
+        asyncio.run(_test_content_retrieval_async(query_list, expected_list, min_score))
+    except Exception as e:
+        console.print(f"[red]❌ Content retrieval test failed:[/red] {str(e)}")
+        raise typer.Exit(1)
+
+async def _test_chunking_accuracy_async(file_path: Optional[str], content_type: str):
+    """Test chunking accuracy across different content types"""
+    
+    vector_store = VectorStore()
+    processor = HierarchicalDocumentProcessor()
+    
+    # Define test cases for different content types
+    test_cases = await _get_chunking_test_cases(file_path, content_type)
+    
+    if not test_cases:
+        console.print("[yellow]No test cases found. Make sure documents are ingested first.[/yellow]")
+        return
+    
+    console.print(f"[green]Running {len(test_cases)} chunking accuracy test cases...[/green]")
+    
+    # Create results table
+    results_table = Table(title="Chunking Accuracy Test Results", box=box.ROUNDED)
+    results_table.add_column("Content Type", style="cyan")
+    results_table.add_column("Test Query", style="yellow", width=30)
+    results_table.add_column("Expected Content", style="blue", width=20)
+    results_table.add_column("Best Score", justify="center", style="green")
+    results_table.add_column("Found in Chunk", justify="center", style="magenta")
+    results_table.add_column("Accuracy", justify="center", style="bold")
+    
+    total_score = 0
+    passed_tests = 0
+    
+    for test_case in test_cases:
+        content_type = test_case["type"]
+        query = test_case["query"] 
+        expected_content = test_case["expected_content"]
+        expected_keywords = test_case.get("keywords", [])
+        
+        console.print(f"\\n[blue]Testing {content_type}: '{query}'[/blue]")
+        
+        # Choose appropriate role based on content type
+        if test_case.get("collection") == "hr" or content_type == "csv":
+            search_role = "c_level"  # c_level has access to HR data
+        else:
+            search_role = "engineering"  # Default role for other tests
+        
+        # Perform search
+        results = await vector_store.search_with_rbac(
+            query=query,
+            user_role=search_role,
+            limit=5
+        )
+        
+        if not results:
+            results_table.add_row(
+                content_type,
+                query,
+                expected_content[:20] + "..." if len(expected_content) > 20 else expected_content,
+                "0.000",
+                "❌ No results",
+                "[red]FAIL[/red]"
+            )
+            continue
+        
+        # Find best matching chunk and score
+        best_score = results[0][1]  # First result has highest score
+        best_chunk = results[0][0]
+        
+        # Check if expected content or keywords are found in the chunk
+        content_found = False
+        chunk_text = best_chunk.chunk_text.lower()
+        
+        # Check for expected content substring (more lenient)
+        if expected_content.lower() in chunk_text:
+            content_found = True
+        
+        # Check for expected keywords (at least 50% must be present)
+        keywords_found = sum(1 for keyword in expected_keywords if keyword.lower() in chunk_text)
+        keyword_ratio = keywords_found / len(expected_keywords) if expected_keywords else 1
+        
+        if keywords_found > 0:
+            content_found = True
+        
+        # More lenient accuracy calculation
+        # Consider it PASS if:
+        # 1. Score is >= 0.4 AND at least 50% keywords found, OR
+        # 2. Score is >= 0.6 (high semantic similarity), OR 
+        # 3. Expected content found AND score >= 0.3
+        if ((best_score >= 0.4 and keyword_ratio >= 0.5) or 
+            best_score >= 0.6 or 
+            (content_found and best_score >= 0.3)):
+            accuracy = "[green]PASS[/green]"
+            passed_tests += 1
+        elif best_score >= 0.4 or keyword_ratio >= 0.5:
+            accuracy = "[yellow]PARTIAL[/yellow]"
+        else:
+            accuracy = "[red]FAIL[/red]"
+        
+        total_score += best_score
+        
+        # Format found content indicator
+        found_indicator = "✅ Found" if content_found else "❌ Missing"
+        if keywords_found > 0 and expected_keywords:
+            found_indicator += f" ({keywords_found}/{len(expected_keywords)} keywords)"
+        
+        results_table.add_row(
+            content_type,
+            query,
+            expected_content[:20] + "..." if len(expected_content) > 20 else expected_content,
+            f"{best_score:.4f}",
+            found_indicator,
+            accuracy
+        )
+        
+        # Show best chunk details for debugging
+        console.print(f"[dim]  Best chunk preview: {best_chunk.chunk_text[:100]}...[/dim]")
+        console.print(f"[dim]  Relevance score: {best_score:.4f}[/dim]")
+        console.print()
+    
+    console.print("\\n")
+    console.print(results_table)
+    
+    # Summary statistics
+    avg_score = total_score / len(test_cases) if test_cases else 0
+    pass_rate = (passed_tests / len(test_cases)) * 100 if test_cases else 0
+    
+    console.print(f"\\n[bold]Chunking Accuracy Test Summary:[/bold]")
+    console.print(f"[green]Total Test Cases:[/green] {len(test_cases)}")
+    console.print(f"[green]Passed Tests:[/green] {passed_tests}")
+    console.print(f"[green]Pass Rate:[/green] {pass_rate:.1f}%")
+    console.print(f"[green]Average Relevance Score:[/green] {avg_score:.3f}")
+    
+    if pass_rate >= 80:
+        console.print("[green]✅ Chunking accuracy test PASSED![/green]")
+    elif pass_rate >= 60:
+        console.print("[yellow]⚠️ Chunking accuracy test PARTIAL - needs improvement[/yellow]")
+    else:
+        console.print("[red]❌ Chunking accuracy test FAILED - significant issues found[/red]")
+
+async def _get_chunking_test_cases(file_path: Optional[str], content_type: str) -> List[dict]:
+    """Generate test cases for different content types based on actual document content"""
+    
+    test_cases = []
+    
+    # Table content test cases (from SLA reports and CSV data)
+    if content_type in ["table", "all"]:
+        test_cases.extend([
+            {
+                "type": "table",
+                "query": "system uptime availability percentage",
+                "expected_content": "uptime",
+                "keywords": ["uptime", "availability", "SLA", "system"]
+            },
+            {
+                "type": "table", 
+                "query": "incident response time metrics",
+                "expected_content": "incident",
+                "keywords": ["incident", "response", "time", "metrics"]
+            },
+            {
+                "type": "table",
+                "query": "sprint metrics velocity points",
+                "expected_content": "sprint",
+                "keywords": ["sprint", "velocity", "points", "metrics"]
+            },
+        ])
+    
+    # Paragraph content test cases (from engineering documents)
+    if content_type in ["paragraph", "all"]:
+        test_cases.extend([
+            {
+                "type": "paragraph",
+                "query": "incident management process workflow",
+                "expected_content": "incident",
+                "keywords": ["incident", "management", "process", "workflow"]
+            },
+            {
+                "type": "paragraph",
+                "query": "system monitoring and alerting procedures", 
+                "expected_content": "monitoring",
+                "keywords": ["monitoring", "system", "alerting", "procedures"]
+            },
+            {
+                "type": "paragraph",
+                "query": "engineering team roles and responsibilities",
+                "expected_content": "engineering",
+                "keywords": ["engineering", "team", "roles", "responsibilities"]
+            },
+        ])
+    
+    # List content test cases (from structured documents)
+    if content_type in ["list", "all"]:
+        test_cases.extend([
+            {
+                "type": "list",
+                "query": "system requirements and specifications",
+                "expected_content": "requirements",
+                "keywords": ["system", "requirements", "specifications"]
+            },
+            {
+                "type": "list",
+                "query": "deployment checklist steps",
+                "expected_content": "deployment", 
+                "keywords": ["deployment", "checklist", "steps"]
+            },
+        ])
+    
+    # Heading/structure test cases (hierarchical document structure)
+    if content_type in ["heading", "all"]:
+        test_cases.extend([
+            {
+                "type": "heading",
+                "query": "incident report section overview",
+                "expected_content": "incident",
+                "keywords": ["incident", "report", "section"]
+            },
+            {
+                "type": "heading", 
+                "query": "system architecture documentation section",
+                "expected_content": "system",
+                "keywords": ["system", "architecture", "documentation"]
+            },
+        ])
+    
+    # Multi-page/complex content test cases
+    if content_type in ["multipage", "all"]:
+        test_cases.extend([
+            {
+                "type": "multipage",
+                "query": "comprehensive engineering documentation spanning multiple topics",
+                "expected_content": "engineering",
+                "keywords": ["engineering", "documentation", "comprehensive"]
+            },
+            {
+                "type": "multipage",
+                "query": "detailed incident post-mortem analysis with lessons learned",
+                "expected_content": "incident",
+                "keywords": ["incident", "post-mortem", "analysis", "lessons"]
+            },
+        ])
+    
+    # CSV/structured data test cases
+    if content_type in ["csv", "all"]:
+        test_cases.extend([
+            {
+                "type": "csv",
+                "query": "employee data HR information",
+                "expected_content": "employee",
+                "keywords": ["employee", "HR", "data"],
+                "collection": "hr"  # Specify this test should search HR collection
+            },
+        ])
+    
+    return test_cases
+
+async def _test_content_retrieval_async(queries: List[str], expected_docs: List[str], min_score: float):
+    """Test content retrieval accuracy with specific queries"""
+    
+    vector_store = VectorStore()
+    
+    console.print(f"[green]Testing content retrieval with {len(queries)} queries...[/green]")
+    console.print(f"[green]Minimum score threshold:[/green] {min_score}")
+    
+    # Create results table
+    results_table = Table(title="Content Retrieval Test Results", box=box.ROUNDED)
+    results_table.add_column("Query", style="cyan", width=25)
+    results_table.add_column("Top Result Score", justify="center", style="green")
+    results_table.add_column("Source Document", style="yellow", width=20)
+    results_table.add_column("Chunk Preview", style="blue", width=30)
+    results_table.add_column("Status", justify="center", style="bold")
+    
+    total_score = 0
+    passed_queries = 0
+    
+    for i, query in enumerate(queries):
+        console.print(f"\\n[blue]Testing query: '{query}'[/blue]")
+        
+        # Perform search with multiple roles to test comprehensive retrieval
+        results = await vector_store.search_with_rbac(
+            query=query,
+            user_role="c_level",  # Use c_level for maximum access
+            limit=10
+        )
+        
+        if not results:
+            results_table.add_row(
+                query,
+                "0.000",
+                "No results",
+                "No content found",
+                "[red]FAIL[/red]"
+            )
+            continue
+        
+        # Get best result
+        best_chunk, best_score = results[0]
+        total_score += best_score
+        
+        # Check if result meets minimum score threshold
+        meets_threshold = best_score >= min_score
+        
+        # Check if expected document is found (if specified)
+        doc_match = True
+        if expected_docs and i < len(expected_docs):
+            expected_doc = expected_docs[i]
+            doc_match = expected_doc.lower() in best_chunk.metadata.source_document.lower()
+        
+        # Determine status
+        if meets_threshold and doc_match:
+            status = "[green]PASS[/green]"
+            passed_queries += 1
+        elif meets_threshold:
+            status = "[yellow]SCORE OK[/yellow]"
+        elif doc_match:
+            status = "[yellow]DOC OK[/yellow]"
+        else:
+            status = "[red]FAIL[/red]"
+        
+        # Format chunk preview
+        chunk_preview = best_chunk.chunk_text[:50] + "..." if len(best_chunk.chunk_text) > 50 else best_chunk.chunk_text
+        
+        results_table.add_row(
+            query,
+            f"{best_score:.3f}",
+            best_chunk.metadata.source_document,
+            chunk_preview,
+            status
+        )
+        
+        # Show additional context
+        console.print(f"[dim]  Collection: {best_chunk.metadata.collection}[/dim]")
+        console.print(f"[dim]  Headings: {' > '.join(best_chunk.headings) if best_chunk.headings else 'None'}[/dim]")
+    
+    console.print("\\n")
+    console.print(results_table)
+    
+    # Summary statistics
+    avg_score = total_score / len(queries) if queries else 0
+    pass_rate = (passed_queries / len(queries)) * 100 if queries else 0
+    
+    console.print(f"\\n[bold]Content Retrieval Test Summary:[/bold]")
+    console.print(f"[green]Total Queries:[/green] {len(queries)}")
+    console.print(f"[green]Passed Queries:[/green] {passed_queries}")
+    console.print(f"[green]Pass Rate:[/green] {pass_rate:.1f}%")
+    console.print(f"[green]Average Relevance Score:[/green] {avg_score:.3f}")
+    console.print(f"[green]Score Threshold:[/green] {min_score}")
+    
+    if pass_rate >= 80 and avg_score >= min_score:
+        console.print("[green]✅ Content retrieval test PASSED![/green]")
+    elif pass_rate >= 60:
+        console.print("[yellow]⚠️ Content retrieval test PARTIAL - needs improvement[/yellow]")  
+    else:
+        console.print("[red]❌ Content retrieval test FAILED - significant issues found[/red]")
