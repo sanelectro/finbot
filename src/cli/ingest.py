@@ -45,6 +45,12 @@ def ingest_documents(
         "-d", 
         help="Path to data directory (defaults to ./data)"
     ),
+    files_str: Optional[str] = typer.Option(
+        None,
+        "--files",
+        "-f",
+        help="Specific files to ingest (comma-separated, relative to data directory)"
+    ),
     recreate_collection: bool = typer.Option(
         False,
         "--recreate",
@@ -62,6 +68,19 @@ def ingest_documents(
     
     This command processes documents from the data directory, creates hierarchical
     chunks using Docling, and stores them in Qdrant with proper RBAC metadata.
+    
+    Examples:
+        # Ingest all documents in engineering collection
+        python -m src.cli ingest documents --collection engineering
+        
+        # Ingest specific files only
+        python -m src.cli ingest documents --files engineering/system_sla_report_2024.md
+        
+        # Ingest multiple specific files (comma-separated)
+        python -m src.cli ingest documents --files "engineering/report1.md,finance/budget.pdf"
+        
+        # Re-ingest a single modified file (removes old chunks first)
+        python -m src.cli ingest documents --files engineering/updated_report.md
     """
     
     # Validate collection parameter
@@ -85,6 +104,7 @@ def ingest_documents(
         asyncio.run(_run_ingestion(
             collection=collection,
             data_path=data_path,
+            files_str=files_str,
             recreate_collection=recreate_collection,
             dry_run=dry_run
         ))
@@ -108,14 +128,20 @@ def show_status():
 async def _run_ingestion(
     collection: str,
     data_path: Path,
+    files_str: Optional[str],
     recreate_collection: bool,
     dry_run: bool
 ):
     """Main async ingestion process"""
-    
-    console.print(f"\\n[bold blue]FinBot Document Ingestion[/bold blue]")
+        # Parse files from string
+    files = []
+    if files_str:
+        files = [f.strip() for f in files_str.split(',') if f.strip()]
+        console.print(f"\\n[bold blue]FinBot Document Ingestion[/bold blue]")
     console.print(f"[green]Data Directory:[/green] {data_path}")
     console.print(f"[green]Collection:[/green] {collection}")
+    if files:
+        console.print(f"[green]Specific Files:[/green] {', '.join(files)}")
     console.print(f"[green]Recreate Collection:[/green] {recreate_collection}")
     console.print(f"[green]Dry Run:[/green] {dry_run}")
     
@@ -130,7 +156,15 @@ async def _run_ingestion(
         collections_to_process = [collection]
     
     # Discover documents
-    document_files = _discover_documents(data_path, collections_to_process)
+    if files:
+        # Process specific files
+        document_files = _discover_specific_files(data_path, files)
+        if not document_files:
+            console.print(f"[red]Error:[/red] No valid files found from the specified list")
+            return
+    else:
+        # Process by collection
+        document_files = _discover_documents(data_path, collections_to_process)
     
     if not document_files:
         console.print("[yellow]No documents found to process[/yellow]")
@@ -152,8 +186,14 @@ async def _run_ingestion(
     console.print("\\n[blue]Initializing vector store...[/blue]")
     if not await vector_store.initialize_collection(recreate=recreate_collection):
         console.print("[red]Failed to initialize vector store[/red]")
-        return
-    
+        return    
+    # If processing specific files, remove existing chunks first
+    if files and not recreate_collection:
+        console.print("\n[blue]Removing existing chunks for specified files...[/blue]")
+        for collection_name, file_path in document_files:
+            relative_path = str(file_path.relative_to(data_path))
+            await vector_store.remove_document_chunks(relative_path)
+            console.print(f"[yellow]Removed chunks for:[/yellow] {relative_path}")    
     # Track ingestion status
     status = IngestionStatus(total_documents=len(document_files))
     processed_documents = []
@@ -235,6 +275,62 @@ def _discover_documents(
             for file_path in files:
                 if file_path.is_file():
                     document_files.append((collection_name, file_path))
+    
+    # Sort by collection and filename for consistent processing order
+    document_files.sort(key=lambda x: (x[0], x[1].name))
+    
+    return document_files
+
+def _discover_specific_files(
+    data_path: Path,
+    files: List[str]
+) -> List[tuple]:
+    """Discover specific files and determine their collections"""
+    
+    document_files = []
+    
+    for file_spec in files:
+        # Handle both absolute paths and relative paths
+        if file_spec.startswith('/'):
+            file_path = Path(file_spec)
+        else:
+            file_path = data_path / file_spec
+        
+        if not file_path.exists():
+            console.print(f"[red]Warning:[/red] File not found: {file_spec}")
+            continue
+        
+        if not file_path.is_file():
+            console.print(f"[red]Warning:[/red] Not a file: {file_spec}")
+            continue
+        
+        # Determine collection from file path
+        try:
+            relative_to_data = file_path.relative_to(data_path)
+            collection_name = relative_to_data.parts[0]  # First directory is collection
+            
+            # Validate collection name
+            valid_collections = ["general", "finance", "engineering", "marketing"]
+            if collection_name not in valid_collections:
+                console.print(f"[yellow]Warning:[/yellow] Unknown collection '{collection_name}' for file: {file_spec}")
+                console.print(f"[yellow]Valid collections:[/yellow] {', '.join(valid_collections)}")
+                continue
+            
+            # Check if file extension is supported for this collection
+            file_extension = file_path.suffix.lower()
+            supported_extensions = settings.collection_file_types.get(collection_name, [])
+            
+            if file_extension not in supported_extensions:
+                console.print(f"[yellow]Warning:[/yellow] Unsupported file type '{file_extension}' for collection '{collection_name}': {file_spec}")
+                console.print(f"[yellow]Supported types:[/yellow] {', '.join(supported_extensions)}")
+                continue
+            
+            document_files.append((collection_name, file_path))
+            
+        except ValueError:
+            # File is not under data_path
+            console.print(f"[red]Error:[/red] File must be under data directory: {file_spec}")
+            continue
     
     # Sort by collection and filename for consistent processing order
     document_files.sort(key=lambda x: (x[0], x[1].name))

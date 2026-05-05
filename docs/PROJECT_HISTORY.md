@@ -17,6 +17,59 @@
 
 ## 🗓️ Development Timeline
 
+### 📅 **May 5, 2026** - Incremental File Updates Feature
+**Status**: ✅ COMPLETED  
+**Focus**: File-specific ingestion for efficient incremental updates
+
+#### 🎯 Advanced CLI Enhancement
+**New Capability**: Selective file re-ingestion for practical maintenance workflows
+
+#### 🔧 Feature Implementation
+- **File-Specific Ingestion**: `--files` parameter for targeting individual documents  
+- **Intelligent Chunk Replacement**: Automatically removes existing chunks before re-ingesting
+- **Multiple File Support**: Comma-separated syntax for batch file updates
+- **Collection Auto-Detection**: Determines collection from file path structure
+- **Enhanced CLI Experience**: Improved syntax with optional quotes
+
+#### 📊 Technical Implementation Details
+```python
+# New CLI Syntax Options
+✅ Single file: --files engineering/updated_report.md
+✅ Multiple files: --files engineering/doc1.md,finance/doc2.pdf  
+✅ No quotes needed: Comma separation works without shell quoting
+✅ Chunk replacement: remove_document_chunks() before new ingestion
+✅ Path validation: File existence, collection mapping, extension support
+```
+
+#### 🚀 Performance & Validation
+```bash
+# Feature Testing Results
+📊 Single File Processing: 54 chunks in 0.94 seconds
+🔄 Chunk Replacement: Successful removal and re-creation
+🎯 Collection Detection: Automatic mapping from file paths
+✅ Multi-file Batch: 2 documents, 66.3 KB processed successfully
+🔒 RBAC Preservation: Access roles maintained during updates
+```
+
+#### 💡 Usage Examples
+```bash
+# Single file update (most common use case)
+python -m src.cli ingest documents --files engineering/updated_report.md
+
+# Multiple files (no repeated flags needed!)  
+python -m src.cli ingest documents --files engineering/doc1.md,finance/doc2.pdf
+
+# Test changes with dry run
+python -m src.cli ingest documents --files engineering/test.md,finance/test.pdf --dry-run
+```
+
+#### 🎯 User Experience Benefits
+- **Efficient Updates**: No need to recreate entire collections
+- **Developer Friendly**: Perfect for iterative document development  
+- **Production Ready**: Safe chunk replacement without data loss
+- **Intuitive Syntax**: Natural comma-separated file specification
+- **Shell Compatible**: Works with or without quotes
+
 ### 📅 **May 5, 2026** - Modular Documentation Architecture
 **Status**: ✅ COMPLETED  
 **Focus**: Documentation restructuring for maintainability

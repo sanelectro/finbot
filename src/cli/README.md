@@ -10,9 +10,13 @@ The CLI provides a user-friendly interface for managing FinBot's document proces
 # Run CLI from project root
 python -m src.cli --help
 
-# Or run specific commands
+# Check available commands
 python -m src.cli ingest --help
 python -m src.cli test --help
+
+# Run specific subcommands
+python -m src.cli ingest documents --help
+python -m src.cli test search --help
 ```
 
 ## 📁 Components
@@ -24,6 +28,8 @@ python -m src.cli test --help
 #### Features
 - **Recursive directory scanning** for document discovery
 - **Collection-based organization** with automatic role assignment
+- **File-specific ingestion** for incremental updates
+- **Intelligent chunk replacement** - removes old chunks before adding new ones
 - **Parallel processing** for large document sets
 - **Progress tracking** with Rich console output
 - **Error handling** with detailed reporting
@@ -32,17 +38,32 @@ python -m src.cli test --help
 
 ##### Ingest Documents
 ```bash
-# Ingest all documents with collection auto-detection
-python -m src.cli ingest
+# Ingest all documents (all collections)
+python -m src.cli ingest documents
 
 # Ingest specific collection
-python -m src.cli ingest --collection engineering
+python -m src.cli ingest documents --collection engineering
+
+# Ingest specific files only (incremental updates)
+python -m src.cli ingest documents --files engineering/system_sla_report_2024.md
+
+# Ingest multiple specific files (comma-separated)
+python -m src.cli ingest documents --files "engineering/report1.md,finance/budget.pdf"
+
+# Re-ingest modified file (removes old chunks, adds new ones)
+python -m src.cli ingest documents --files marketing/campaign_update.md
 
 # Recreate vector database (clears existing data)
-python -m src.cli ingest --recreate
+python -m src.cli ingest documents --recreate
 
 # Specify custom data directory
-python -m src.cli ingest --data-dir /path/to/documents
+python -m src.cli ingest documents --data-dir /path/to/documents
+
+# Check ingestion status
+python -m src.cli ingest status
+
+# Dry run (preview what would be processed)
+python -m src.cli ingest documents --dry-run --collection engineering
 ```
 
 #### Implementation Details
@@ -93,31 +114,34 @@ data/
 
 #### Commands
 
-##### Run System Tests
+##### Available Test Commands
 ```bash
-# Run all tests
-python -m src.cli test
+# Test document chunking
+python -m src.cli test chunking
 
-# Test specific collection  
-python -m src.cli test --collection engineering
+# Test embedding generation  
+python -m src.cli test embeddings
 
-# Test with specific user role
-python -m src.cli test --role engineering
+# Test RBAC enforcement
+python -m src.cli test rbac
 
-# Verbose output with detailed results
-python -m src.cli test --verbose
+# Test search functionality
+python -m src.cli test search
 ```
 
-##### Search Testing
+##### Test Command Details
 ```bash
-# Interactive search testing
+# Test RBAC enforcement across different roles
+python -m src.cli test rbac
+
+# Test search functionality with RBAC filtering
 python -m src.cli test search
 
-# Batch query testing from file
-python -m src.cli test search --query-file test_queries.txt
+# Test document chunking process
+python -m src.cli test chunking
 
-# RBAC validation across all roles
-python -m src.cli test rbac
+# Test embedding generation
+python -m src.cli test embeddings
 ```
 
 #### Test Categories
@@ -245,40 +269,57 @@ panel = Panel(
 ### Complete Workflow
 ```bash
 # 1. Fresh setup - recreate database and ingest all documents
-python -m src.cli ingest --recreate
+python -m src.cli ingest documents --recreate
 
-# 2. Test system functionality
-python -m src.cli test
+# 2. Check ingestion status
+python -m src.cli ingest status
 
-# 3. Test search with specific role
-python -m src.cli test search --role engineering
+# 3. Test system functionality
+python -m src.cli test search
+python -m src.cli test rbac
 
-# 4. Add new documents to existing collection
-python -m src.cli ingest --collection finance --data-dir /new/finance/docs
+# 4. Update a single modified file (incremental)
+python -m src.cli ingest documents --files engineering/updated_report.md
+# Update multiple files (comma-separated)
+python -m src.cli ingest documents --files "engineering/doc1.md,finance/doc2.pdf"
+# 5. Add new documents to existing collection
+python -m src.cli ingest documents --collection finance --data-dir /new/finance/docs
 ```
 
 ### Development Workflow
 ```bash
-# Quick test after code changes
-python -m src.cli test --collection engineering --verbose
+# Test specific components after code changes
+python -m src.cli test chunking
+python -m src.cli test embeddings
 
-# Performance benchmarking
-python -m src.cli test --benchmark --iterations 10
+# Update a single file during development
+python -m src.cli ingest documents --files engineering/test_document.md
 
-# RBAC validation
-python -m src.cli test rbac --all-roles
+# Update multiple files during development
+python -m src.cli ingest documents --files "engineering/test1.md,finance/test2.pdf"
+
+# Validate search and RBAC functionality
+python -m src.cli test search
+python -m src.cli test rbac
+
+# Preview ingestion without processing
+python -m src.cli ingest documents --dry-run --collection engineering
+
+# Preview specific file ingestion
+python -m src.cli ingest documents --dry-run --files "finance/quarterly_report.pdf,engineering/system_report.md"
 ```
 
 ### Production Deployment
 ```bash
 # Initial data load
-python -m src.cli ingest --config-file production.env
+python -m src.cli ingest documents --recreate
 
-# Health check
-python -m src.cli test --health-check
+# Validate system components
+python -m src.cli test search
+python -m src.cli test rbac
 
-# Monitoring mode
-python -m src.cli test --monitor --interval 300  # Every 5 minutes
+# Check collection status
+python -m src.cli ingest status
 ```
 
 ## 📈 Performance Metrics

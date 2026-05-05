@@ -349,3 +349,42 @@ class VectorStore:
             chunk_text=payload["chunk_text"],
             metadata=metadata
         )
+
+    async def remove_document_chunks(self, document_path: str) -> bool:
+        """
+        Remove all chunks for a specific document by its path
+        
+        Args:
+            document_path: Relative path of the document to remove chunks for
+            
+        Returns:
+            True if chunks were removed successfully
+        """
+        try:
+            # Create filter to match chunks from the specific document
+            document_filter = Filter(
+                must=[
+                    FieldCondition(
+                        key="document_path",
+                        match=MatchValue(value=document_path)
+                    )
+                ]
+            )
+            
+            # Delete points matching the filter
+            delete_result = await asyncio.get_event_loop().run_in_executor(
+                None,
+                lambda: self.client.delete(
+                    collection_name=self.collection_name,
+                    points_selector=rest.FilterSelector(
+                        filter=document_filter
+                    )
+                )
+            )
+            
+            logger.info(f"Removed chunks for document: {document_path}")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Failed to remove chunks for {document_path}: {str(e)}")
+            return False
