@@ -21,7 +21,12 @@ class Settings(BaseSettings):
     
     # Embedding settings
     embedding_model: str = Field(default="all-MiniLM-L6-v2", description="Sentence transformer model")
+    semantic_router_model: str = Field(default="Qwen/Qwen3-Embedding-0.6B", description="Semantic router embedding model")
     embedding_dimension: int = Field(default=384, description="Embedding vector dimension")
+    
+    # LLM settings
+    groq_api_key: Optional[str] = Field(default=None, description="Groq API key", alias="GROQ_API_KEY")
+    groq_model: str = Field(default="llama-3.1-8b-instant", description="Groq model name")
     
     # Document processing settings
     chunk_size: int = Field(default=512, description="Base chunk size for document splitting")
@@ -49,14 +54,11 @@ class Settings(BaseSettings):
                 access_map[collection].append(role)
         return access_map
     
-    # Supported file extensions by collection
-    collection_file_types: Dict[str, List[str]] = Field(default={
-        "general": [".pdf", ".md", ".txt"],
-        "finance": [".pdf", ".docx", ".doc"],
-        "engineering": [".md", ".txt", ".py", ".yaml", ".yml"],
-        "marketing": [".pdf", ".docx", ".doc"],
-        "hr": [".csv", ".xlsx", ".pdf", ".md"]
-    })
+    # Supported file extensions (all types supported by Docling)
+    supported_file_types: List[str] = Field(default=[
+        ".pdf", ".docx", ".doc", ".md", ".txt", ".csv", ".xlsx", ".xls",
+        ".py", ".yaml", ".yml", ".json", ".html", ".htm"
+    ], description="File types supported by the document processor")
     
     # API settings
     api_host: str = Field(default="0.0.0.0", description="API server host")
@@ -64,7 +66,8 @@ class Settings(BaseSettings):
     
     class Config:
         env_prefix = "FINBOT_"
-        env_file = ".env"
+        env_file = [".env", "local.env"]  # Try both .env and local.env
+        env_file_encoding = 'utf-8'
 
 # Global settings instance
 settings = Settings()

@@ -28,6 +28,35 @@ app.add_typer(test_app, name="test")
 console = Console()
 
 @app.command()
+def serve(
+    host: str = typer.Option("0.0.0.0", "--host", "-h", help="Host to bind the server to"),
+    port: int = typer.Option(8000, "--port", "-p", help="Port to bind the server to"),
+    reload: bool = typer.Option(True, "--reload/--no-reload", help="Enable auto-reload on code changes"),
+):
+    """Start the FinBot API server"""
+    import uvicorn
+    from src.api.main import app as api_app
+    
+    console.print(f"[green]🚀 Starting FinBot API Server[/green]")
+    console.print(f"[blue]📍 Server will be available at: http://{host}:{port}[/blue]")
+    console.print(f"[blue]📖 API Documentation: http://{host}:{port}/docs[/blue]")
+    console.print(f"[blue]🔄 Auto-reload: {'enabled' if reload else 'disabled'}[/blue]")
+    
+    try:
+        uvicorn.run(
+            "src.api.main:app",
+            host=host,
+            port=port,
+            reload=reload,
+            log_level="info"
+        )
+    except KeyboardInterrupt:
+        console.print("\n[yellow]Server stopped by user[/yellow]")
+    except Exception as e:
+        console.print(f"[red]❌ Failed to start server: {str(e)}[/red]")
+        raise typer.Exit(1)
+
+@app.command()
 def info():
     """Show FinBot system information"""
     settings = Settings()

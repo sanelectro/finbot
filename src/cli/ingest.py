@@ -208,7 +208,11 @@ async def _run_ingestion(
         for collection_name, file_path in document_files:
             try:
                 # Get access roles for this collection
-                access_roles = settings.collection_access_roles.get(collection_name, [])
+                access_roles_strings = settings.collection_access_roles.get(collection_name, [])
+                # Cast strings to Role type for type safety
+                from typing import cast
+                from src.models.document import Role
+                access_roles = cast(List[Role], access_roles_strings)
                 
                 progress.update(
                     task, 
@@ -265,8 +269,8 @@ def _discover_documents(
             console.print(f"[yellow]Warning:[/yellow] Collection directory not found: {collection_dir}")
             continue
         
-        # Get supported file extensions for this collection
-        supported_extensions = settings.collection_file_types.get(collection_name, [])
+        # Get all supported file extensions
+        supported_extensions = settings.supported_file_types
         
         # Find all files with supported extensions
         for ext in supported_extensions:
@@ -316,12 +320,12 @@ def _discover_specific_files(
                 console.print(f"[yellow]Valid collections:[/yellow] {', '.join(valid_collections)}")
                 continue
             
-            # Check if file extension is supported for this collection
+            # Check if file extension is supported
             file_extension = file_path.suffix.lower()
-            supported_extensions = settings.collection_file_types.get(collection_name, [])
+            supported_extensions = settings.supported_file_types
             
             if file_extension not in supported_extensions:
-                console.print(f"[yellow]Warning:[/yellow] Unsupported file type '{file_extension}' for collection '{collection_name}': {file_spec}")
+                console.print(f"[yellow]Warning:[/yellow] Unsupported file type '{file_extension}': {file_spec}")
                 console.print(f"[yellow]Supported types:[/yellow] {', '.join(supported_extensions)}")
                 continue
             

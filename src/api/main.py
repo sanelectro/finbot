@@ -20,7 +20,13 @@ async def root():
     return {
         "message": "FinBot API - Advanced RAG with RBAC",
         "version": "0.1.0",
-        "status": "running"
+        "status": "running",
+        "features": [
+            "Semantic Query Routing",
+            "Role-Based Access Control (RBAC)",
+            "Hierarchical Document Processing",
+            "Vector Similarity Search"
+        ]
     }
 
 @app.get("/health")
@@ -28,8 +34,12 @@ async def health():
     """Health check endpoint"""
     return {"status": "healthy"}
 
-# Import and include routers when they're created
+# Include search router
+from src.api.search import router as search_router
+app.include_router(search_router, prefix="/api/v1", tags=["search"])
+
+# Import and include other routers when they're created
 # from src.api.chat import router as chat_router
 # from src.api.admin import router as admin_router
-# app.include_router(chat_router, prefix="/chat", tags=["chat"])
-# app.include_router(admin_router, prefix="/admin", tags=["admin"])
+# app.include_router(chat_router, prefix="/api/v1/chat", tags=["chat"])
+# app.include_router(admin_router, prefix="/api/v1/admin", tags=["admin"])

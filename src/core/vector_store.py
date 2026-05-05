@@ -187,7 +187,7 @@ class VectorStore:
         query: str, 
         user_role: Role,
         limit: int = 10,
-        collection_filter: Optional[Collection] = None,
+        collection_filter: Optional[List[Collection]] = None,
         score_threshold: float = 0.0
     ) -> List[Tuple[DocumentChunk, float]]:
         """
@@ -200,7 +200,7 @@ class VectorStore:
             query: Search query
             user_role: User's role for RBAC filtering
             limit: Maximum number of results
-            collection_filter: Optional filter by collection
+            collection_filter: Optional list of collections to filter by (from semantic routing)
             score_threshold: Minimum similarity score
             
         Returns:
@@ -215,23 +215,37 @@ class VectorStore:
             )
             
             # Build RBAC filter - this is the critical security enforcement
-            rbac_filter = Filter(
-                must=[
-                    FieldCondition(
-                        key="access_roles",
-                        match=MatchAny(any=[user_role])
-                    )
-                ]
-            )
-            
-            # Add collection filter if specified
-            if collection_filter:
-                rbac_filter.must.append(
-                    FieldCondition(
-                        key="collection", 
-                        match=MatchValue(value=collection_filter)
-                    )
+            filter_conditions = [
+                FieldCondition(
+                    key="access_roles",
+                    match=MatchAny(any=[user_role])
                 )
+            ]
+            
+            # Add collection filter if specified (supports multiple collections from semantic routing)
+            if collection_filter:
+                if len(collection_filter) == 1:
+                    # Single collection - use MatchValue for efficiency
+                    filter_conditions.append(
+                        FieldCondition(
+                            key="collection", 
+                            match=MatchValue(value=collection_filter[0])
+                        )
+                    )
+                else:
+                    # Multiple collections - use MatchAny for semantic routing results
+                    from typing import cast
+                    filter_conditions.append(
+                        FieldCondition(
+                            key="collection", 
+                            match=MatchAny(any=cast(List[str], collection_filter))
+                        )
+                    )
+            
+            # Create the final RBAC filter using cast to handle type checker
+            from typing import cast
+            from qdrant_client.http.models import Condition
+            rbac_filter = Filter(must=cast(List[Condition], filter_conditions))
             
             # Perform search with RBAC filter
             search_results = await asyncio.get_event_loop().run_in_executor(
@@ -249,16 +263,130 @@ class VectorStore:
             # Convert results to DocumentChunk objects
             results = []
             for result in search_results:
-                if result.score >= score_threshold:
+                if result.score >= score_threshold and result.payload is not None:
                     chunk = self._payload_to_chunk(result.payload)
                     results.append((chunk, result.score))
             
-            logger.info(f"RBAC search for role '{user_role}': {len(results)} results")
+            collections_searched = collection_filter if collection_filter else "all_accessible"
+            logger.info(f"RBAC search for role '{user_role}' in collections {collections_searched}: {len(results)} results")
             return results
             
         except Exception as e:
             logger.error(f"Search failed: {str(e)}")
             return []
+    
+    async def search_with_semantic_routing(
+        self, 
+        query: str, 
+        user_role: Role,
+        limit: int = 10,
+        score_threshold: float = 0.0,
+        enable_routing: bool = True
+    ) -> Dict[str, Any]:
+        """
+        Enhanced search with semantic routing and comprehensive RBAC enforcement.
+        
+        This method performs intelligent query routing to determine the most appropriate
+        collections to search, while enforcing role-based access control.
+        
+        Args:
+            query: User's natural language query
+            user_role: User's role for RBAC filtering
+            limit: Maximum number of results
+            score_threshold: Minimum similarity score
+            enable_routing: Whether to use semantic routing (can be disabled for testing)
+            
+        Returns:
+            Dict containing search results and routing information
+        """
+        try:
+            # Import here to avoid circular dependency
+            from src.core.query_router import get_semantic_router
+            
+            if enable_routing:
+                # Get semantic router and perform routing
+                router = get_semantic_router()
+                routing_result = await router.route_query(query, user_role)
+                
+                # Check if access is granted
+                if not routing_result.access_granted:
+                    return {
+                        "results": [],
+                        "total_results": 0,
+                        "routing_info": {
+                            "route": routing_result.route.value if routing_result.route else None,
+                            "user_role": user_role,
+                            "access_granted": False,
+                            "message": routing_result.message,
+                            "accessible_collections": routing_result.accessible_collections,
+                            "denied_collections": routing_result.access_denied_collections
+                        }
+                    }
+                
+                # Search only in accessible collections
+                target_collections = routing_result.accessible_collections
+                message = routing_result.message
+            else:
+                # Fallback to user's default accessible collections
+                target_collections = settings.role_access_matrix.get(user_role, [])
+                routing_result = None
+                message = None
+            
+            # Perform single optimized search across all target collections from semantic routing
+            # Convert string collections to Collection literals for type safety
+            collection_filter_typed = None
+            if target_collections:
+                from typing import cast
+                collection_filter_typed = cast(List[Collection], target_collections)
+            
+            search_results = await self.search_with_rbac(
+                query=query,
+                user_role=user_role,
+                limit=limit,
+                collection_filter=collection_filter_typed,
+                score_threshold=score_threshold
+            )
+            
+            # Results are already sorted by score from Qdrant
+            final_results = [(chunk, score, chunk.metadata.collection) for chunk, score in search_results]
+            
+            # Format response
+            response = {
+                "results": [(chunk, score) for chunk, score, _ in final_results],
+                "total_results": len(final_results),
+                "routing_info": {
+                    "route": routing_result.route.value if routing_result and routing_result.route else "direct_search",
+                    "user_role": user_role,
+                    "access_granted": True,
+                    "message": message,
+                    "searched_collections": target_collections,
+                    "accessible_collections": routing_result.accessible_collections if routing_result else target_collections,
+                    "denied_collections": routing_result.access_denied_collections if routing_result else []
+                }
+            }
+            
+            logger.info(
+                f"Semantic search completed - User: {user_role}, "
+                f"Route: {response['routing_info']['route']}, "
+                f"Collections: {target_collections}, "
+                f"Results: {len(final_results)}"
+            )
+            
+            return response
+            
+        except Exception as e:
+            logger.error(f"Semantic search failed: {str(e)}")
+            return {
+                "results": [],
+                "total_results": 0,
+                "routing_info": {
+                    "route": "error",
+                    "user_role": user_role,
+                    "access_granted": False,
+                    "message": "An error occurred during search. Please try again.",
+                    "error": str(e)
+                }
+            }
     
     async def get_collection_stats(self) -> Dict[str, Any]:
         """Get statistics about the vector collection"""
@@ -269,19 +397,55 @@ class VectorStore:
                 self.collection_name
             )
             
-            # Handle different versions of Qdrant API
+            # Handle different versions of Qdrant API with safe attribute access
             optimizer_status = "unknown"
-            if hasattr(info.optimizer_status, 'ok'):
-                optimizer_status = info.optimizer_status.ok
-            elif hasattr(info.optimizer_status, 'status'):
-                optimizer_status = str(info.optimizer_status.status)
-            else:
-                optimizer_status = str(info.optimizer_status)
+            try:
+                if hasattr(info.optimizer_status, 'ok'):
+                    optimizer_status = getattr(info.optimizer_status, 'ok', "unknown")
+                elif hasattr(info.optimizer_status, 'status'):
+                    optimizer_status = str(getattr(info.optimizer_status, 'status', "unknown"))
+                else:
+                    optimizer_status = str(info.optimizer_status)
+            except (AttributeError, TypeError):
+                optimizer_status = "unknown"
+            
+            # Safe access to vector configuration
+            vector_size = "unknown"
+            distance_metric = "unknown"
+            
+            try:
+                if hasattr(info.config, 'params') and hasattr(info.config.params, 'vectors'):
+                    vectors_config = info.config.params.vectors
+                    
+                    # Handle both dict and object formats for vectors config
+                    if isinstance(vectors_config, dict) and "" in vectors_config:
+                        # Default vector config in dict format
+                        default_vector = vectors_config[""]
+                        vector_size = getattr(default_vector, 'size', "unknown")
+                        if hasattr(default_vector, 'distance'):
+                            distance_attr = getattr(default_vector, 'distance', None)
+                            if distance_attr and hasattr(distance_attr, 'value'):
+                                distance_metric = getattr(distance_attr, 'value')
+                            else:
+                                distance_metric = str(distance_attr) if distance_attr else "unknown"
+                    elif hasattr(vectors_config, 'size'):
+                        # Direct vector params object
+                        vector_size = getattr(vectors_config, 'size', "unknown")
+                        if hasattr(vectors_config, 'distance'):
+                            distance_attr = getattr(vectors_config, 'distance', None)
+                            if distance_attr and hasattr(distance_attr, 'value'):
+                                distance_metric = getattr(distance_attr, 'value')
+                            else:
+                                distance_metric = str(distance_attr) if distance_attr else "unknown"
+            except (AttributeError, TypeError, KeyError):
+                # Fallback to safe defaults if vector config access fails
+                vector_size = "unknown"
+                distance_metric = "unknown"
             
             return {
                 "total_points": info.points_count,
-                "vector_size": info.config.params.vectors.size,
-                "distance_metric": info.config.params.vectors.distance.value,
+                "vector_size": vector_size,
+                "distance_metric": distance_metric,
                 "status": info.status.value,
                 "optimizer_status": optimizer_status
             }
@@ -347,7 +511,8 @@ class VectorStore:
             headings=payload["headings"],
             content=payload["content"],
             chunk_text=payload["chunk_text"],
-            metadata=metadata
+            metadata=metadata,
+            embedding=[]  # Empty embedding list for reconstructed chunks
         )
 
     async def remove_document_chunks(self, document_path: str) -> bool:
