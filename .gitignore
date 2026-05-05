@@ -216,3 +216,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# macOS system files
+.DS_Store
+
+# Qdrant storage (local Docker volumes)
+qdrant_storage/
+
+# Empty folders
+app/
