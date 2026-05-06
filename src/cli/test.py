@@ -13,8 +13,8 @@ from rich import box
 import time
 
 from src.core.config import settings
-from src.core.document_processor import HierarchicalDocumentProcessor
-from src.core.vector_store import VectorStore
+from src.core.processing.document_processor import HierarchicalDocumentProcessor
+from src.core.store.vector_store import VectorStore
 from src.models.document import Role
 import logging
 

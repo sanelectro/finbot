@@ -3,66 +3,26 @@ Configuration settings for FinBot
 """
 
 from pydantic_settings import BaseSettings
-from pydantic import Field
-from pathlib import Path
-from typing import Dict, List, Optional
-import os
 
-class Settings(BaseSettings):
+from src.core.settings.data import DataSettings
+from src.core.settings.vector_store import VectorStoreSettings
+from src.core.settings.embeddings import EmbeddingsSettings
+from src.core.settings.llm import LLMSettings
+from src.core.settings.processing import ProcessingSettings
+from src.core.settings.rbac import RBACSettings
+from src.core.settings.api import APISettings
+
+class Settings(
+    DataSettings,
+    VectorStoreSettings,
+    EmbeddingsSettings,
+    LLMSettings,
+    ProcessingSettings,
+    RBACSettings,
+    APISettings,
+    BaseSettings
+):
     """FinBot application settings"""
-    
-    # Data and storage settings
-    data_dir: Path = Field(default=Path("data"), description="Directory containing document collections")
-    
-    # Vector store settings
-    qdrant_url: str = Field(default="http://localhost:6333", description="Qdrant server URL")
-    qdrant_api_key: Optional[str] = Field(default=None, description="Qdrant API key")
-    collection_name: str = Field(default="finbot_documents", description="Qdrant collection name")
-    
-    # Embedding settings
-    embedding_model: str = Field(default="all-MiniLM-L6-v2", description="Sentence transformer model")
-    semantic_router_model: str = Field(default="Qwen/Qwen3-Embedding-0.6B", description="Semantic router embedding model")
-    embedding_dimension: int = Field(default=384, description="Embedding vector dimension")
-    
-    # LLM settings
-    groq_api_key: Optional[str] = Field(default=None, description="Groq API key", alias="GROQ_API_KEY")
-    groq_model: str = Field(default="llama-3.1-8b-instant", description="Groq model name")
-    
-    # Document processing settings
-    chunk_size: int = Field(default=512, description="Base chunk size for document splitting")
-    chunk_overlap: int = Field(default=50, description="Overlap between chunks")
-    
-    # RBAC settings - Role to document collection access mapping
-    role_access_matrix: Dict[str, List[str]] = Field(default={
-        "employee": ["general"],
-        "finance": ["general", "finance"], 
-        "engineering": ["general", "engineering"],
-        "marketing": ["general", "marketing"],
-        "hr": ["general", "hr"],
-        "c_level": ["general", "finance", "engineering", "marketing", "hr"]
-    })
-    
-    # Collection to access roles mapping (inverse of role_access_matrix)
-    @property
-    def collection_access_roles(self) -> Dict[str, List[str]]:
-        """Get which roles can access each collection"""
-        access_map = {}
-        for role, collections in self.role_access_matrix.items():
-            for collection in collections:
-                if collection not in access_map:
-                    access_map[collection] = []
-                access_map[collection].append(role)
-        return access_map
-    
-    # Supported file extensions (all types supported by Docling)
-    supported_file_types: List[str] = Field(default=[
-        ".pdf", ".docx", ".doc", ".md", ".txt", ".csv", ".xlsx", ".xls",
-        ".py", ".yaml", ".yml", ".json", ".html", ".htm"
-    ], description="File types supported by the document processor")
-    
-    # API settings
-    api_host: str = Field(default="0.0.0.0", description="API server host")
-    api_port: int = Field(default=8000, description="API server port")
     
     class Config:
         env_prefix = "FINBOT_"
