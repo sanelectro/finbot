@@ -101,6 +101,7 @@ python -m src.cli test --collection engineering
 - [Core Architecture](../src/core/docs/README.md) - Document processing & vector storage internals
 - [Data Models](../src/models/docs/README.md) - Schema definitions & RBAC structure
 - [Testing Guide](../src/tests/docs/README.md) - Integration testing & validation procedures
+- [Guardrails System](GUARDRAILS_DOCUMENTATION.md) - Input/output safety measures & validation
 
 ### 🚀 **For Users**  
 - [CLI Usage](../src/cli/docs/README.md) - Batch ingestion & system management
