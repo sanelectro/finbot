@@ -58,7 +58,7 @@ async def ensure_collections() -> bool:
 async def check_document_counts(vector_store) -> bool:
     """Check if collections have documents and provide statistics"""
     try:
-        from qdrant_client.http.models import Filter
+        from qdrant_client.http.models import Filter, FieldCondition, MatchValue
         
         print("📊 Checking document counts in collections...")
         
@@ -85,7 +85,10 @@ async def check_document_counts(vector_store) -> bool:
                 # Count documents for each collection type
                 filter_condition = Filter(
                     must=[
-                        {"key": "collection", "match": {"value": collection_type}}
+                        FieldCondition(
+                            key="collection", 
+                            match=MatchValue(value=collection_type)
+                        )
                     ]
                 )
                 
