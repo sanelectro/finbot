@@ -63,7 +63,27 @@ HR_GENERAL_UTTERANCES = [
     "What is the employee information based on id?",
     "Who takes the best salary in the company?",
     "What is the name of the employee with id?",
-    "How many active employees do we have?"
+    "How many active employees do we have?",
+    # Employee lookup patterns by name
+    "Give me information of John Smith",
+    "Tell me about Sarah Johnson",
+    "Show me details for Michael Brown",
+    "What information do you have on Lisa Davis",
+    "Can you find information about Robert Wilson",
+    "Look up employee information for Jennifer Garcia",
+    "Find details about David Martinez",
+    "Show employee data for Maria Rodriguez",
+    "Get information on James Taylor",
+    "Tell me about employee Amanda Clark",
+    # Employee lookup patterns - general
+    "Find employee information",
+    "Look up staff details", 
+    "Search for employee data",
+    "Get employee records",
+    "Show me employee information",
+    "Find staff member details",
+    "Employee directory lookup",
+    "Staff information search"
 ]
 
 CROSS_DEPARTMENT_UTTERANCES = [

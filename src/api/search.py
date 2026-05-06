@@ -17,15 +17,31 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 # Response models
+class SourceCitation(BaseModel):
+    """Source citation with document and page info"""
+    document_name: str
+    page_number: Optional[int] = None
+    section: Optional[str] = None
+    relevance_score: Optional[float] = None
+
 class RAGResponse(BaseModel):
-    """RAG response model with guardrails information"""
+    """Complete RAG response model with all assignment requirements"""
     query: str
     user_role: str
     answer: str
     score: float
     response_time_ms: float
-    warnings: Optional[List[str]] = Field(default_factory=list, description="Guardrail warnings")
-    guardrail_info: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Guardrail details")
+    
+    # Assignment-required fields
+    semantic_route: Optional[str] = Field(None, description="The semantic route selected for the query")
+    accessible_collections: List[str] = Field(default_factory=list, description="Collections user has access to")
+    source_citations: List[SourceCitation] = Field(default_factory=list, description="Sources with document and page numbers")
+    
+    # Guardrail and RBAC information
+    warnings: Optional[List[str]] = Field(default_factory=list, description="Guardrail warning banners")
+    rbac_message: Optional[str] = Field(None, description="RBAC denial or informative message")
+    guardrail_triggered: bool = Field(False, description="Whether any guardrail was triggered")
+    guardrail_info: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Detailed guardrail info")
     
 class SessionInfo(BaseModel):
     """Session information for rate limiting"""
@@ -77,14 +93,30 @@ async def search_documents(
         
         response_time = (time.time() - start_time) * 1000  # Convert to milliseconds
         
-        # Create enhanced API response with guardrail information
+        # Create enhanced API response with all assignment requirements
         response = RAGResponse(
             query=rag_result["query"],
             user_role=rag_result["user_role"],
             answer=rag_result["answer"],
             score=rag_result["confidence"],
             response_time_ms=response_time,
+            
+            # Assignment-required fields
+            semantic_route=rag_result.get("semantic_route"),
+            accessible_collections=rag_result.get("accessible_collections", []),
+            source_citations=[
+                SourceCitation(
+                    document_name=citation["document_name"],
+                    page_number=citation.get("page_number"),
+                    section=citation.get("section"),
+                    relevance_score=citation.get("relevance_score")
+                ) for citation in rag_result.get("source_citations", [])
+            ],
+            
+            # Guardrail and RBAC information
             warnings=rag_result.get("warnings", []),
+            rbac_message=rag_result.get("rbac_message"),
+            guardrail_triggered=bool(rag_result.get("warnings", []) or rag_result.get("guardrail_info", {}).get("input_blocked", False)),
             guardrail_info=rag_result.get("guardrail_info", {})
         )
         

@@ -11,6 +11,7 @@ from typing import List, Dict, Any, Optional, Tuple
 from src.core.store.vector_store import VectorStore
 from src.core.config import settings
 from src.core.guardrails import GuardrailsOrchestrator
+from src.core.routing.query_router import SemanticQueryRouter, RouteType
 from src.models.document import Role
 
 try:
@@ -29,6 +30,7 @@ class FinBotRAGSystem:
     def __init__(self):
         self.vector_store = VectorStore()
         self.guardrails = GuardrailsOrchestrator()
+        self.query_router = SemanticQueryRouter()
         self.system_prompt = self._create_system_prompt()
         
         # Initialize Groq client with proper error handling
@@ -118,6 +120,10 @@ When you receive context documents and a question, provide a clear, accurate ans
                 "user_role": user_role,
                 "answer": input_warning,
                 "confidence": 0.0,
+                "semantic_route": None,
+                "accessible_collections": self._get_accessible_collections(user_role),
+                "rbac_message": None,
+                "source_citations": [],
                 "warnings": [input_warning] if input_warning else [],
                 "guardrail_info": {
                     "input_blocked": True,
@@ -128,8 +134,39 @@ When you receive context documents and a question, provide a clear, accurate ans
         # Prepare warnings list
         warnings = [input_warning] if input_warning else []
         
+        # Get accessible collections for this user role
+        accessible_collections = self._get_accessible_collections(user_role)
+        
         try:
-            # Step 2: Enhanced query processing for employee IDs
+            # Step 2: Semantic Query Routing
+            routing_result = await self.query_router.route_query(processed_query, user_role)
+            semantic_route = routing_result.route.value if routing_result.route else None
+            
+            # Check RBAC permissions for the routed query
+            rbac_message = None
+            if not routing_result.access_granted:
+                rbac_message = f"Access denied to {', '.join(routing_result.access_denied_collections)} collections. You have access to: {', '.join(routing_result.accessible_collections)}"
+                
+                # For completely blocked queries, return RBAC message
+                if not routing_result.target_collections:
+                    return {
+                        "query": query,
+                        "user_role": user_role,
+                        "answer": f"I don't have access to information that would help answer your question. {rbac_message}",
+                        "confidence": 0.0,
+                        "semantic_route": semantic_route,
+                        "accessible_collections": accessible_collections,
+                        "rbac_message": rbac_message,
+                        "source_citations": [],
+                        "warnings": warnings,
+                        "guardrail_info": {
+                            "input_blocked": False,
+                            "output_warnings": [],
+                            "session_info": self.guardrails.get_session_info(session_id)
+                        }
+                    }
+            
+            # Step 3: Enhanced query processing for employee IDs
             enhanced_query = self._enhance_query_for_exact_matches(processed_query)
             
             # Step 3: Retrieve relevant documents with RBAC
@@ -145,6 +182,10 @@ When you receive context documents and a question, provide a clear, accurate ans
                     "user_role": user_role,
                     "answer": f"I couldn't find any relevant information for your query in the documents you have access to as a {user_role} user.",
                     "confidence": 0.0,
+                    "semantic_route": semantic_route,
+                    "accessible_collections": accessible_collections,
+                    "rbac_message": rbac_message,
+                    "source_citations": [],
                     "warnings": warnings,
                     "guardrail_info": {
                         "input_blocked": False,
@@ -153,7 +194,10 @@ When you receive context documents and a question, provide a clear, accurate ans
                     }
                 }
             
-            # Step 4: Build context from retrieved chunks
+            # Step 5: Extract source citations from results
+            source_citations = self._extract_source_citations(results)
+            
+            # Step 6: Build context from retrieved chunks
             context = self._build_context(results)
             
             # Step 5: Generate response using Groq (if available)
@@ -201,6 +245,10 @@ When you receive context documents and a question, provide a clear, accurate ans
                 "user_role": user_role,
                 "answer": final_answer,
                 "confidence": confidence,
+                "semantic_route": semantic_route,
+                "accessible_collections": accessible_collections,
+                "rbac_message": rbac_message,
+                "source_citations": source_citations,
                 "warnings": warnings,
                 "guardrail_info": {
                     "input_blocked": False,
@@ -216,6 +264,10 @@ When you receive context documents and a question, provide a clear, accurate ans
                 "user_role": user_role,
                 "answer": "I encountered an error while processing your request. Please try again or contact support.",
                 "confidence": 0.0,
+                "semantic_route": None,
+                "accessible_collections": self._get_accessible_collections(user_role),
+                "rbac_message": None,
+                "source_citations": [],
                 "warnings": warnings,
                 "guardrail_info": {
                     "input_blocked": False,
@@ -267,6 +319,43 @@ When you receive context documents and a question, provide a clear, accurate ans
             "c_level": ["general", "finance", "engineering", "marketing", "hr"]
         }
         return role_access_matrix.get(user_role, ["general"])
+    
+    def _extract_source_citations(self, results: List[Tuple]) -> List[Dict[str, Any]]:
+        """Extract source citations with document names and page numbers from search results"""
+        citations = []
+        seen_sources = set()  # Avoid duplicate sources
+        
+        for chunk, score in results:
+            # Extract metadata
+            metadata = chunk.metadata
+            if hasattr(metadata, 'model_dump'):
+                meta_dict = metadata.model_dump()
+            elif hasattr(metadata, '__dict__'):
+                meta_dict = metadata.__dict__
+            else:
+                meta_dict = metadata if isinstance(metadata, dict) else {}
+            
+            # Create unique identifier for this source
+            source_key = (
+                meta_dict.get('source_document', 'Unknown Document'),
+                meta_dict.get('page_number')
+            )
+            
+            if source_key not in seen_sources:
+                citation = {
+                    "document_name": meta_dict.get('source_document', 'Unknown Document'),
+                    "page_number": meta_dict.get('page_number'),
+                    "section": meta_dict.get('section_title'),
+                    "relevance_score": float(score)
+                }
+                citations.append(citation)
+                seen_sources.add(source_key)
+                
+                # Limit to top 5 sources to keep response manageable
+                if len(citations) >= 5:
+                    break
+        
+        return citations
     
     def reset_session(self, session_id: str):
         """Reset guardrail session tracking"""
