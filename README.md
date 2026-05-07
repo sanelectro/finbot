@@ -238,10 +238,130 @@ finbot/
 ### System Flow
 
 **Query Processing Pipeline**
-> 🖼️ [Insert diagram: Input → Guardrails → Router → Search → Output → Response]
+>
+
+```mermaid
+flowchart LR
+
+    U[User Query] --> A[Frontend UI<br/>Next.js]
+
+    A --> B[FastAPI Backend]
+
+    B --> C[Input Guardrails]
+
+    C -->|Off-topic / Injection / PII| X[Blocked Response]
+
+    C -->|Valid Query| D[RBAC Validation]
+
+    D --> E[Semantic Router]
+
+    E --> F1[Finance Route]
+    E --> F2[Engineering Route]
+    E --> F3[Marketing Route]
+    E --> F4[HR / General Route]
+    E --> F5[Cross Department Route]
+
+    F1 --> G[Allowed Collections]
+    F2 --> G
+    F3 --> G
+    F4 --> G
+    F5 --> G
+
+    G --> H[Qdrant Vector Search<br/>Metadata Filter Applied]
+
+    H --> I[Retrieve Relevant Chunks]
+
+    I --> J[Context Assembly]
+
+    J --> K[LLM Response Generation<br/>Groq / Llama]
+
+    K --> L[Output Guardrails]
+
+    L -->|Grounded + Safe| M[Final Response]
+
+    L -->|Potential Hallucination| N[Warning + Disclaimer]
+
+    M --> O[Frontend Chat UI]
+    N --> O
+
+    X --> O
+```
+
 
 **RBAC Access Control**
-> 🖼️ [Insert diagram: Role hierarchy and collection access mapping]
+> 
+```mermaid
+flowchart TD
+
+    User[👤 User Login Request] --> Auth[🔑 Authentication Layer]
+
+    Auth --> RoleCheck{Determine User Role}
+
+    RoleCheck -->|employee| EmployeeRole[Employee Access]
+    RoleCheck -->|finance| FinanceRole[Finance Access]
+    RoleCheck -->|engineering| EngineeringRole[Engineering Access]
+    RoleCheck -->|marketing| MarketingRole[Marketing Access]
+    RoleCheck -->|c_level| CLevelRole[C-Level Access]
+
+    EmployeeRole --> EmployeeCollections[
+    Allowed Collections:
+    • company_policies
+    • general_faqs
+    ]
+
+    FinanceRole --> FinanceCollections[
+    Allowed Collections:
+    • financial_reports
+    • budgets
+    • investor_docs
+    • general_docs
+    ]
+
+    EngineeringRole --> EngineeringCollections[
+    Allowed Collections:
+    • technical_specs
+    • architecture_docs
+    • runbooks
+    • general_docs
+    ]
+
+    MarketingRole --> MarketingCollections[
+    Allowed Collections:
+    • campaign_reports
+    • brand_guidelines
+    • market_research
+    • general_docs
+    ]
+
+    CLevelRole --> AllCollections[
+    Allowed Collections:
+    • ALL collections
+    ]
+
+    EmployeeCollections --> QueryRequest[🔍 User Query]
+    FinanceCollections --> QueryRequest
+    EngineeringCollections --> QueryRequest
+    MarketingCollections --> QueryRequest
+    AllCollections --> QueryRequest
+
+    QueryRequest --> MetadataFilter[
+    Apply Metadata Filters:
+    role_access IN allowed_roles
+    ]
+
+    MetadataFilter --> Qdrant[🧠 Qdrant Vector Search]
+
+    Qdrant --> RetrievedDocs[📄 Retrieved Chunks]
+
+    RetrievedDocs --> LLM[🤖 LLM Response Generation]
+
+    LLM --> FinalResponse[✅ Secure Response Returned]
+
+    style Qdrant fill:#E8F5E9
+    style MetadataFilter fill:#FFF3E0
+    style LLM fill:#E3F2FD
+    style FinalResponse fill:#E8F5E9
+```
 
 ---
 
