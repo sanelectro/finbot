@@ -16,17 +16,7 @@ FinBot is a **production-ready document processing pipeline** that chunks hierar
 
 ## 🏗️ System Architecture
 
-```mermaid
-graph TB
-    CLI[CLI Interface<br/>src/cli/] --> Core[Core Processing<br/>src/core/]
-    API[REST API<br/>src/api/] --> Core
-    Core --> Models[Data Models<br/>src/models/]
-    Core --> VectorDB[(Qdrant Vector DB)]
-    Core --> Embedding[SentenceTransformers<br/>all-MiniLM-L6-v2]
-    Tests[Test Suite<br/>src/tests/] --> Core
-    Tests --> API
-    Tests --> CLI
-```
+**👉 [See ARCHITECTURE.md](ARCHITECTURE.md) for all diagrams (component graph, data flow, RAG pipeline, RBAC matrix)**
 
 ## 📚 Component Documentation
 
@@ -40,48 +30,40 @@ graph TB
 
 ## 🔄 Data Flow
 
-```mermaid
-sequenceDiagram
-    participant CLI as CLI Interface
-    participant Core as Core Processing
-    participant DB as Qdrant Vector DB
-    participant API as REST API
-    participant User as End User
-
-    CLI->>Core: Process documents
-    Core->>Core: Docling chunking + breadcrumbs
-    Core->>DB: Store 384D embeddings + RBAC metadata
-    User->>API: Search query with role
-    API->>DB: RBAC-filtered vector search
-    DB-->>API: Relevant chunks
-    API-->>User: JSON response
-```
+See [ARCHITECTURE.md → Request Data Flow](ARCHITECTURE.md#-request-data-flow) for the sequence diagram.
 
 ## 🚀 Quick Start
 
 ```bash
-# 1. Setup
-pip install -r requirements.txt
-docker run -p 6333:6333 qdrant/qdrant:latest
+# 1. Start PostgreSQL + Qdrant (Docker)
+docker compose up -d
 
-# 2. Ingest documents
-python -m src.cli ingest --collection engineering --recreate
+# 2. Install Python dependencies
+pip install -e .
 
-# 3. Start API
-python main.py  # Available at http://localhost:8000/docs
+# 3. Load documents into vector database
+python -m src.cli ingest documents
 
-# 4. Test system
-python -m src.cli test --collection engineering
+# 4. Start API server
+PYTHONPATH=. python main.py
+
+# 5. (Optional) Start frontend
+cd frontend && npm run dev
+
+# System endpoints:
+# 📊 API Docs: http://localhost:8000/docs
+# 🏥 Health Check: http://localhost:8000/health
+# 💬 Chat Interface: http://localhost:3001
 ```
 
 ## 📊 System Metrics
 
 ```
-🎯 Performance:        📏 Scale:               🔒 Security:
-• 54 chunks/second     • 1,247 total chunks    • 100% RBAC enforcement
-• <200ms search        • 4 collections         • Zero data leakage
-• 0.730+ accuracy      • 384D embeddings       • Vector-level access control
-• <500MB memory        • 100+ requests/sec     • Complete audit trail
+🎯 Performance:           📏 Services:              🔒 Security:
+• <200ms search response  • PostgreSQL 16 Alpine    • Role-based access control
+• 54 chunks/second        • Qdrant vector DB        • 100% RBAC enforcement
+• 0.655+ accuracy (CSV)   • SentenceTransformers    • Zero data leakage
+• 100+ concurrent users   • FastAPI + Next.js 14    • Vector-level filtering
 ```
 
 ## 🎯 Architecture Benefits
@@ -116,3 +98,27 @@ python -m src.cli test --collection engineering
 ---
 
 **📚 This document provides the high-level architecture overview. For detailed implementation, configuration, and usage instructions, refer to the component-specific documentation linked above.**
+
+---
+
+## 🔧 Environment Setup
+
+### Services (Docker)
+- **PostgreSQL 16 Alpine**: Runs on localhost:5435
+  - User: `finbot`
+  - Password: `finbot123`
+  - Database: `finbot_db`
+  - Schema: Auto-created by SQLAlchemy on startup
+
+- **Qdrant Vector Database**: Runs on localhost:6333 (REST) + 6334 (gRPC)
+  - Collections: `general`, `finance`, `engineering`, `marketing`, `hr`
+  - Auto-initialized on backend startup
+
+### Python Requirements
+- See `pyproject.toml` for dependencies
+- Install: `pip install -e .`
+
+### Frontend
+- Next.js 14 on localhost:3001
+- Install: `cd frontend && npm install`
+- Run: `npm run dev`

@@ -11,6 +11,7 @@ from src.core.settings.llm import LLMSettings
 from src.core.settings.processing import ProcessingSettings
 from src.core.settings.rbac import RBACSettings
 from src.core.settings.api import APISettings
+from src.core.settings.database import DatabaseSettings
 
 class Settings(
     DataSettings,
@@ -20,6 +21,7 @@ class Settings(
     ProcessingSettings,
     RBACSettings,
     APISettings,
+    DatabaseSettings,
     BaseSettings
 ):
     """FinBot application settings"""

@@ -138,7 +138,7 @@ You cannot improve what you do not measure. You must construct a structured test
 **Requirements:**
 
 **Test Dataset Construction:**
-Create a ground-truth evaluation dataset with a minimum of **40 question-answer pairs** covering all 4 document collections.
+Create a ground-truth evaluatiosetup_postgres.shn dataset with a minimum of **40 question-answer pairs** covering all 4 document collections.
 
 **RAGAs Metrics : report all of the following:**
 

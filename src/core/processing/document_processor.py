@@ -7,12 +7,14 @@ from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
 import logging
 import csv
+import json
 from docling.document_converter import DocumentConverter, ConversionResult
 from docling.datamodel.base_models import InputFormat
 from docling.datamodel.document import DoclingDocument
 from docling.chunking import HierarchicalChunker
 import hashlib
 import time
+import pandas as pd
 
 from src.models.document import (
     DocumentChunk, 
@@ -72,8 +74,13 @@ class HierarchicalDocumentProcessor:
         
         try:
             # Check if this is a CSV file and use specialized processing
-            if file_path.suffix.lower() == '.csv':
+            file_suffix = file_path.suffix.lower()
+            if file_suffix == '.csv':
                 chunks = await self.process_csv_document(file_path, collection, access_roles)
+            elif file_suffix in {'.xlsx', '.xls'}:
+                chunks = await self.process_excel_document(file_path, collection, access_roles)
+            elif file_suffix == '.json':
+                chunks = await self.process_json_document(file_path, collection, access_roles)
             else:
                 # Load document using Docling
                 doc = await asyncio.get_event_loop().run_in_executor(
@@ -237,6 +244,142 @@ class HierarchicalDocumentProcessor:
         
         logger.info(f"Created {len(chunks)} semantic chunks from CSV: {file_path}")
         return chunks
+
+    async def process_excel_document(
+        self,
+        file_path: Path,
+        collection: Collection,
+        access_roles: List[Role]
+    ) -> List[DocumentChunk]:
+        """Process Excel files with row-based chunking similar to CSV handling."""
+        logger.info(f"Processing Excel document with specialized chunking: {file_path}")
+
+        df = pd.read_excel(file_path)
+        if df.empty:
+            logger.warning(f"Excel file has no rows: {file_path}")
+            return []
+
+        df = df.fillna("")
+        headers = [str(col) for col in df.columns]
+        chunks: List[DocumentChunk] = []
+
+        for row_num, (_, row_series) in enumerate(df.iterrows(), 1):
+            row = {str(col): str(row_series[col]) for col in df.columns}
+            content = self.create_generic_table_chunk(row, headers, file_path.name, row_num, "Excel")
+            headings = [
+                f"Source: {file_path.name}",
+                f"Excel Row: {row_num}",
+            ]
+
+            chunk = DocumentChunk(
+                headings=headings,
+                content=content,
+                chunk_text=content,
+                embedding=None,
+                metadata=DocumentMetadata(
+                    collection=collection,
+                    access_roles=access_roles,
+                    source_document=file_path.name,
+                    document_path=str(file_path)
+                )
+            )
+            chunks.append(chunk)
+
+        logger.info(f"Created {len(chunks)} semantic chunks from Excel: {file_path}")
+        return chunks
+
+    async def process_json_document(
+        self,
+        file_path: Path,
+        collection: Collection,
+        access_roles: List[Role]
+    ) -> List[DocumentChunk]:
+        """Process JSON files into record-based chunks for search and retrieval."""
+        logger.info(f"Processing JSON document with specialized chunking: {file_path}")
+
+        with open(file_path, 'r', encoding='utf-8') as json_file:
+            data = json.load(json_file)
+
+        records: List[Dict[str, Any]] = []
+
+        if isinstance(data, list):
+            for item in data:
+                if isinstance(item, dict):
+                    records.append(item)
+                else:
+                    records.append({"value": item})
+        elif isinstance(data, dict):
+            for key, value in data.items():
+                if isinstance(value, list):
+                    for item in value:
+                        if isinstance(item, dict):
+                            records.append({"section": key, **item})
+                        else:
+                            records.append({"section": key, "value": item})
+                elif isinstance(value, dict):
+                    flattened = {
+                        inner_key: inner_value
+                        for inner_key, inner_value in value.items()
+                        if not isinstance(inner_value, (dict, list))
+                    }
+                    if flattened:
+                        records.append({"section": key, **flattened})
+                    else:
+                        records.append({"section": key, "value": json.dumps(value)})
+                else:
+                    records.append({"section": "root", "key": key, "value": value})
+        else:
+            records.append({"value": data})
+
+        chunks: List[DocumentChunk] = []
+        for index, record in enumerate(records, 1):
+            keys = list(record.keys())
+            content = self.create_generic_table_chunk(record, keys, file_path.name, index, "JSON")
+            headings = [
+                f"Source: {file_path.name}",
+                f"JSON Record: {index}",
+            ]
+
+            chunk = DocumentChunk(
+                headings=headings,
+                content=content,
+                chunk_text=content,
+                embedding=None,
+                metadata=DocumentMetadata(
+                    collection=collection,
+                    access_roles=access_roles,
+                    source_document=file_path.name,
+                    document_path=str(file_path)
+                )
+            )
+            chunks.append(chunk)
+
+        logger.info(f"Created {len(chunks)} semantic chunks from JSON: {file_path}")
+        return chunks
+
+    def create_generic_table_chunk(
+        self,
+        row: Dict[str, Any],
+        headers: List[str],
+        filename: str,
+        row_num: int,
+        source_type: str,
+    ) -> str:
+        """Create readable semantic text for table-like records."""
+        ordered_fields = []
+        for header in headers:
+            value = row.get(header, "")
+            value_text = "" if value is None else str(value).strip()
+            if value_text:
+                ordered_fields.append(f"{header}: {value_text}")
+
+        if not ordered_fields:
+            return f"{source_type} record {row_num} from {filename} has no populated fields."
+
+        return (
+            f"{source_type} record {row_num} from {filename}. "
+            f"This row contains: {'; '.join(ordered_fields)}."
+        )
     
     def create_semantic_csv_chunk(self, row: Dict[str, str], headers: List[str], filename: str, row_num: int) -> str:
         """

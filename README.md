@@ -4,99 +4,18 @@
 
 [![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com)
-[![Qdrant](https://img.shields.io/badge/Qdrant-1.7+-purple.svg)](https://qdrant.tech)
-[![RAGAs](https://img.shields.io/badge/RAGAs-0.1+-orange.svg)](https://github.com/explodinggradients/ragas)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16+-blue.svg)](https://postgresql.org)
+[![Qdrant](https://img.shields.io/badge/Qdrant-latest-purple.svg)](https://qdrant.tech)
 
-## 📋 **Quick Start for New Developers**
+## ⚡ **Quick Start**
 
-### **🔧 Prerequisites**
-```bash
-# 1. Python 3.9 or higher
-python --version
-
-# 2. Qdrant Vector Database running
-# Using Docker:
-docker run -p 6333:6333 qdrant/qdrant:latest
-# Or visit: http://localhost:6333/dashboard
-
-# 3. Environment Variables
-cp .env.example .env
-# Add your GROQ_API_KEY to .env file
-```
-
-### **⚡ Quick Setup**
-```bash
-# Clone and setup
-git clone <repository-url>
-cd finbot
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Ingest sample documents
-python -m src.cli ingest documents --collection hr --recreate
-
-# Start the server
-PYTHONPATH=. python main.py
-```
-
-### **📊 Run Evaluation (Component 4)**
-```bash
-# Option 1: Quick verification
-python src/evaluation/ragas_health_monitor.py
-
-# Option 2: Full RAGAs evaluation
-python src/evaluation/ragas_orchestrator.py
-
-# Option 3: Check latest results
-python src/evaluation/check_metrics.py
-```
-
-### **🎯 Test the System**
-```bash
-# Test API endpoint
-curl -X POST "http://localhost:8000/api/v1/search" \
-  -H "Content-Type: application/json" \
-  -d '{"query": "What is employee FINEMP1000 name?", "user_role": "hr"}'
-```
-
----
+**👉 [See QUICKSTART.md](QUICKSTART.md) for 5-minute setup guide**
 
 ## 🏗️ **System Architecture**
 
-FinBot implements a complete enterprise RAG pipeline:
+**👉 [See docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for all architecture diagrams**
 
-```
-📝 Query Input
-     ↓
-🛡️  Input Guardrails (Component 3)
-     ├── Off-topic Detection
-     ├── Prompt Injection Prevention  
-     ├── PII Detection & Scrubbing
-     └── Rate Limiting
-     ↓
-🧠 Semantic Router (Component 2)
-     ├── Intent Classification (5 routes)
-     ├── RBAC-Enforced Routing
-     └── Auto-Sync Index Building
-     ↓
-🔍 Vector Search & RAG Processing
-     ├── Role-Based Document Filtering
-     ├── Advanced CSV Chunking
-     └── Groq LLM Integration
-     ↓
-🛡️  Output Guardrails (Component 3)
-     ├── Citation Enforcement
-     ├── Cross-Role Leakage Prevention
-     └── Response Grounding
-     ↓
-📤 Final Response + Metadata
-
-📊 RAGAs Evaluation (Component 4)
-     ├── 45 Test Cases
-     ├── 5 RAGAs Metrics
-     └── Ablation Study
-```
+FinBot implements: Input Guardrails → Semantic Router → Vector Search → Output Guardrails → Response
 
 ## 🎯 **Assignment Components Status**
 
@@ -159,6 +78,19 @@ RAGAs provides 5 key metrics:
 ## 🔧 **Development Commands**
 
 ### **Database Management**
+
+#### **PostgreSQL & Qdrant (Docker)**
+```bash
+docker compose up -d          # Start PostgreSQL + Qdrant
+docker compose down           # Stop all services
+
+# Database connection details:
+# Host: localhost:5435
+# Database: finbot_db
+# User: finbot / Password: finbot123
+```
+
+#### **Qdrant Vector Database (Document Storage)**
 ```bash
 # Check database status
 curl http://localhost:6333/collections
