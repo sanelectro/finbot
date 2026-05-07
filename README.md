@@ -19,11 +19,51 @@ FinBot implements: Input Guardrails → Semantic Router → Vector Search → Ou
 
 ## 🎯 **Assignment Components Status**
 
-✅ **Component 1: Document Ingestion with Hierarchical Chunking (Docling)**
-✅ **Component 2: Semantic Query Router** - COMPLETED  
-✅ **Component 3: Guardrails System** - COMPLETED  
-✅ **Component 4: RAGAs Evaluation** - COMPLETED 
-✅ **Component 5: Application Interface** - COMPLETED 
+### ✅ **Component 1: Document Ingestion with Hierarchical Chunking (Docling)**
+
+Enterprise-grade document processing system using Docling's advanced hierarchical chunking algorithm.
+
+**Key Features:**
+- 🔄 **Hierarchical Chunking**: Multi-level document decomposition for semantic coherence
+- 📊 **Metadata Enrichment**: Automatic extraction of title, source, collection, and role-based tags
+- 🎯 **Context Preservation**: Breadcrumb trails linking parent-child document relationships
+- ⚡ **Performance Optimized**: +109% improvement over traditional CSV chunking
+- 🔒 **RBAC Integration**: Role-based access control tags at ingestion time
+
+**Supported Formats:**
+- PDF documents with complex layouts
+- Word documents (DOCX)
+- Text and markdown files
+- Structured data sources (CSV, JSON)
+
+**Quick Start:**
+```bash
+# Ingest documents into specific collections
+python -m src.cli ingest documents --collection finance --source data/finance/
+python -m src.cli ingest documents --collection engineering --source data/engineering/
+
+# Recreate collections with fresh data
+python -m src.cli ingest documents --collection hr --recreate
+
+# View ingestion statistics
+python src/core/document_processor.py --stats
+```
+
+**Architecture:**
+- Uses Docling's native `HierarchicalChunker` for intelligent text segmentation
+- Generates 384-dimensional vector embeddings via Groq's embedding API
+- Stores vectors in Qdrant with collection-based organization
+- Enforces RBAC at the vector storage level
+
+---
+
+### ✅ **Component 2: Semantic Query Router** - COMPLETED  
+
+### ✅ **Component 3: Guardrails System** - COMPLETED  
+
+### ✅ **Component 4: RAGAs Evaluation** - COMPLETED 
+
+### ✅ **Component 5: Application Interface** - COMPLETED 
 
 **🏆 All Assignment Requirements: FULLY SATISFIED**
 
@@ -104,6 +144,9 @@ python -m src.cli ingest documents --collection engineering --recreate
 
 ### **Testing**
 ```bash
+# Test document ingestion
+PYTHONPATH=. python -c "from src.core.document_processor import DocumentProcessor; print('✅ Document Processor ready')"
+
 # Test semantic router
 PYTHONPATH=. python -c "from src.core.query_router import SemanticQueryRouter; print('✅ Router ready')"
 
@@ -145,6 +188,7 @@ finbot/
 │   └── marketing/                   # Campaign docs
 ├── 🔧 src/
 │   ├── core/
+│   │   ├── document_processor.py     # Component 1: Document Ingestion & Chunking
 │   │   ├── query_router.py          # Component 2: Semantic Router
 │   │   ├── guardrails.py            # Component 3: Safety System
 │   │   ├── rag_system.py            # Main RAG pipeline
@@ -209,7 +253,7 @@ finbot/
 ## 🏆 **Achievement Summary**
 
 - ✅ **Production-Ready RAG System** with enterprise features
-- ✅ **Complete Assignment Implementation** (Components 2, 3, 4)
+- ✅ **Complete Assignment Implementation** (Components 1-5)
 - ✅ **97.8% Guardrails Success Rate** across 45 test scenarios
 - ✅ **+109% CSV Performance Improvement** with advanced chunking
 - ✅ **Comprehensive Evaluation Framework** with RAGAs metrics
