@@ -1,8 +1,12 @@
 # FinBot Source Code Documentation
 
-**Modular Documentation Structure**
+**Deep Component Documentation Structure**
 
-This directory contains the complete FinBot source code organized into logical components. Each component has its own documentation for maintainability and clarity.
+This directory contains detailed technical documentation for FinBot's source code components. Each component has comprehensive documentation covering implementation details, architecture patterns, and development guidelines.
+
+> **📖 For general project overview and getting started, see [../README.md](../README.md)**
+
+---
 
 ## 📁 Component Overview
 
@@ -44,6 +48,8 @@ This directory contains the complete FinBot source code organized into logical c
 
 **Coverage:** Complete system functionality
 
+---
+
 ## 🚀 Quick Start
 
 ### 1. Environment Setup
@@ -71,6 +77,8 @@ python src/tests/test_ingestion_and_search.py
 python main.py
 ```
 
+---
+
 ## 📈 Architecture Achievements
 
 ✅ **Eliminated over-engineering**: 15+ metadata fields → 6 essential fields  
@@ -79,12 +87,16 @@ python main.py
 ✅ **RBAC security**: Vector-level access control with zero data leakage  
 ✅ **Production ready**: Async processing, batch operations, comprehensive testing  
 
+---
+
 ## 🔧 Development Workflow
 
 1. **Code changes** → Update component-specific documentation
 2. **New features** → Add tests in `tests/` directory  
 3. **API changes** → Update `api/docs/` documentation
 4. **Model changes** → Update `models/docs/` schemas
+
+---
 
 ## 📚 Detailed Documentation
 
@@ -96,4 +108,15 @@ python main.py
 
 ---
 
-*For complete architectural overview, see [Technical Documentation](../docs/TECHNICAL_DOCUMENTATION.md)*
+## 📖 Related Documentation
+
+- **[../README.md](../README.md)** - Main project documentation and overview
+- **[../QUICKSTART.md](../QUICKSTART.md)** - 5-minute setup guide
+- **[../ASSIGNMENT_COMPLETION_SUMMARY.md](../ASSIGNMENT_COMPLETION_SUMMARY.md)** - Component requirements verification
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - System architecture diagrams
+- **[TECHNICAL_DOCUMENTATION.md](TECHNICAL_DOCUMENTATION.md)** - Complete technical reference
+- **[PROJECT_HISTORY.md](PROJECT_HISTORY.md)** - Development journey and decisions
+
+---
+
+*For high-level project information and features, start with [../README.md](../README.md)*
