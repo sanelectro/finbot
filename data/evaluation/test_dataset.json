@@ -1,0 +1,409 @@
+{
+  "test_cases": [
+    {
+      "id": 1,
+      "question": "What is the name of employee with ID FINEMP1000?",
+      "ground_truth": "The employee with ID FINEMP1000 is Mahesh Desai.",
+      "collection": "hr",
+      "user_role": "hr",
+      "category": "employee_lookup",
+      "expected_context": "Employee data with ID FINEMP1000"
+    },
+    {
+      "id": 2,
+      "question": "Who has the highest salary in the company?",
+      "ground_truth": "Based on the HR data, the employee with the highest salary would need to be identified from the salary column in the employee data.",
+      "collection": "hr",
+      "user_role": "hr",
+      "category": "salary_analysis",
+      "expected_context": "Employee salary information"
+    },
+    {
+      "id": 3,
+      "question": "What are the company's leave policies?",
+      "ground_truth": "Company leave policies include annual leave, sick leave, maternity/paternity leave, and other company-specific policies as outlined in the HR handbook.",
+      "collection": "general",
+      "user_role": "employee",
+      "category": "policy_inquiry",
+      "expected_context": "HR handbook and policy documents"
+    },
+    {
+      "id": 4,
+      "question": "How many employees work in the Compliance department?",
+      "ground_truth": "The number of employees in the Compliance department can be determined by counting employees with 'Compliance' as their department.",
+      "collection": "hr",
+      "user_role": "hr",
+      "category": "department_analysis",
+      "expected_context": "Employee department information"
+    },
+    {
+      "id": 5,
+      "question": "What is the average salary for employees in the Finance department?",
+      "ground_truth": "The average salary for Finance department employees would be calculated from the salary data of all employees in the Finance department.",
+      "collection": "hr",
+      "user_role": "hr",
+      "category": "salary_analysis",
+      "expected_context": "Employee salary and department data"
+    },
+    {
+      "id": 6,
+      "question": "What are the system architecture best practices?",
+      "ground_truth": "System architecture best practices include scalable design patterns, microservices architecture, proper separation of concerns, and documented APIs.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "architecture",
+      "expected_context": "Engineering documentation and architecture guides"
+    },
+    {
+      "id": 7,
+      "question": "How do we handle incident management?",
+      "ground_truth": "Incident management follows a structured process including detection, response, resolution, and post-incident review as documented in the incident runbooks.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "process",
+      "expected_context": "Incident management documentation"
+    },
+    {
+      "id": 8,
+      "question": "What are our API authentication methods?",
+      "ground_truth": "API authentication methods include token-based authentication, OAuth 2.0, and other security protocols as specified in the API documentation.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "api_docs",
+      "expected_context": "API reference documentation"
+    },
+    {
+      "id": 9,
+      "question": "What are the company's financial performance metrics for Q3?",
+      "ground_truth": "Q3 financial performance metrics include revenue, profit margins, expense ratios, and other key financial indicators as reported in the quarterly earnings summary.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "financial_performance",
+      "expected_context": "Q3 earnings and financial reports"
+    },
+    {
+      "id": 10,
+      "question": "What is the budget allocation for different departments?",
+      "ground_truth": "Budget allocation varies by department based on strategic priorities and operational needs as outlined in the annual budget plan.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "budget_analysis",
+      "expected_context": "Budget allocation documents"
+    },
+    {
+      "id": 11,
+      "question": "What are our investment priorities for FY2024?",
+      "ground_truth": "FY2024 investment priorities focus on technology infrastructure, talent acquisition, and market expansion as detailed in the annual investment plan.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "investment_strategy",
+      "expected_context": "Annual report and investment documents"
+    },
+    {
+      "id": 12,
+      "question": "What are our key marketing campaigns for this quarter?",
+      "ground_truth": "Key marketing campaigns include digital marketing initiatives, brand awareness programs, and customer acquisition campaigns as outlined in the campaign reports.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "campaign_strategy",
+      "expected_context": "Campaign performance reports"
+    },
+    {
+      "id": 13,
+      "question": "How do we measure customer acquisition cost?",
+      "ground_truth": "Customer acquisition cost is measured by dividing total marketing spend by the number of new customers acquired, as detailed in our marketing analytics.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "metrics",
+      "expected_context": "Marketing analytics and performance data"
+    },
+    {
+      "id": 14,
+      "question": "What is our brand positioning strategy?",
+      "ground_truth": "Brand positioning strategy focuses on establishing FinSolve as a trusted financial technology partner, emphasizing innovation and reliability.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "brand_strategy",
+      "expected_context": "Brand guidelines and strategy documents"
+    },
+    {
+      "id": 15,
+      "question": "Who are our main competitors in the fintech space?",
+      "ground_truth": "Main competitors include other B2B fintech companies offering similar financial services and technology solutions as identified in competitive analysis reports.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "competitive_analysis",
+      "expected_context": "Competitor analysis documentation"
+    },
+    {
+      "id": 16,
+      "question": "What is the onboarding process for new employees?",
+      "ground_truth": "New employee onboarding includes orientation, documentation setup, system access provisioning, and department-specific training as outlined in the onboarding guide.",
+      "collection": "general",
+      "user_role": "employee",
+      "category": "process",
+      "expected_context": "HR handbook and onboarding documentation"
+    },
+    {
+      "id": 17,
+      "question": "What are the company's core values?",
+      "ground_truth": "Company core values include integrity, innovation, customer focus, and team collaboration as stated in the company handbook.",
+      "collection": "general",
+      "user_role": "employee",
+      "category": "company_culture",
+      "expected_context": "Company handbook and culture documentation"
+    },
+    {
+      "id": 18,
+      "question": "How do I report a workplace concern?",
+      "ground_truth": "Workplace concerns can be reported through HR, anonymous hotlines, or direct management channels as outlined in the employee handbook.",
+      "collection": "general",
+      "user_role": "employee",
+      "category": "hr_process",
+      "expected_context": "HR policies and procedures"
+    },
+    {
+      "id": 19,
+      "question": "What employee benefits does the company offer?",
+      "ground_truth": "Employee benefits include health insurance, retirement plans, paid time off, professional development opportunities, and other benefits detailed in the benefits package.",
+      "collection": "general",
+      "user_role": "employee",
+      "category": "benefits",
+      "expected_context": "Employee benefits documentation"
+    },
+    {
+      "id": 20,
+      "question": "What is the company's remote work policy?",
+      "ground_truth": "Remote work policy outlines guidelines for working from home, hybrid arrangements, and equipment requirements as specified in the employee handbook.",
+      "collection": "general",
+      "user_role": "employee",
+      "category": "policy",
+      "expected_context": "Remote work policy documentation"
+    },
+    {
+      "id": 21,
+      "question": "How many female employees work in the Engineering department?",
+      "ground_truth": "The number of female employees in Engineering can be determined by filtering employee data by gender and department.",
+      "collection": "hr",
+      "user_role": "hr",
+      "category": "diversity_analysis",
+      "expected_context": "Employee gender and department data"
+    },
+    {
+      "id": 22,
+      "question": "What is the employee turnover rate?",
+      "ground_truth": "Employee turnover rate is calculated based on departures over a specific period and total employee count as tracked in HR metrics.",
+      "collection": "hr",
+      "user_role": "hr",
+      "category": "hr_metrics",
+      "expected_context": "HR analytics and turnover data"
+    },
+    {
+      "id": 23,
+      "question": "What are the system performance requirements?",
+      "ground_truth": "System performance requirements include response time, throughput, availability, and scalability metrics as defined in technical specifications.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "requirements",
+      "expected_context": "Technical specifications and SLA documents"
+    },
+    {
+      "id": 24,
+      "question": "How do we implement CI/CD pipelines?",
+      "ground_truth": "CI/CD pipeline implementation follows automated testing, code review, and deployment processes as documented in the development guidelines.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "devops",
+      "expected_context": "Development and deployment documentation"
+    },
+    {
+      "id": 25,
+      "question": "What are our quarterly revenue targets?",
+      "ground_truth": "Quarterly revenue targets are set based on market analysis and growth projections as detailed in financial planning documents.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "revenue_planning",
+      "expected_context": "Financial planning and target documents"
+    },
+    {
+      "id": 26,
+      "question": "How do we calculate return on investment for projects?",
+      "ground_truth": "ROI calculation involves comparing project costs to generated benefits over time using established financial metrics and analysis frameworks.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "financial_analysis",
+      "expected_context": "Financial analysis methodologies"
+    },
+    {
+      "id": 27,
+      "question": "What is our customer retention strategy?",
+      "ground_truth": "Customer retention strategy includes loyalty programs, customer success initiatives, and ongoing engagement tactics as outlined in retention plans.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "retention_strategy",
+      "expected_context": "Customer retention and success documentation"
+    },
+    {
+      "id": 28,
+      "question": "How do we track marketing campaign ROI?",
+      "ground_truth": "Marketing ROI is tracked by measuring campaign costs against generated revenue and customer acquisitions using analytics tools and attribution models.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "marketing_analytics",
+      "expected_context": "Marketing analytics and ROI measurement documentation"
+    },
+    {
+      "id": 29,
+      "question": "What is the process for requesting time off?",
+      "ground_truth": "Time off requests follow a structured approval process through HR systems or management channels as outlined in the leave policy.",
+      "collection": "general",
+      "user_role": "employee",
+      "category": "hr_process",
+      "expected_context": "Leave policy and HR procedures"
+    },
+    {
+      "id": 30,
+      "question": "How do I access company training resources?",
+      "ground_truth": "Company training resources are accessible through learning management systems and internal portals as detailed in employee development programs.",
+      "collection": "general",
+      "user_role": "employee",
+      "category": "training",
+      "expected_context": "Training and development documentation"
+    },
+    {
+      "id": 31,
+      "question": "What security protocols must engineers follow?",
+      "ground_truth": "Engineers must follow security protocols including secure coding practices, access controls, and data protection measures as specified in security guidelines.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "security",
+      "expected_context": "Security guidelines and engineering standards"
+    },
+    {
+      "id": 32,
+      "question": "How do we handle database backup and recovery?",
+      "ground_truth": "Database backup and recovery procedures include automated backups, disaster recovery plans, and data restoration processes as documented in operational runbooks.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "database_operations",
+      "expected_context": "Database administration and backup procedures"
+    },
+    {
+      "id": 33,
+      "question": "What are the key financial risks facing the company?",
+      "ground_truth": "Key financial risks include market volatility, credit risk, operational costs, and regulatory compliance as identified in risk assessment reports.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "risk_management",
+      "expected_context": "Risk assessment and financial analysis documents"
+    },
+    {
+      "id": 34,
+      "question": "How do we evaluate vendor contracts and costs?",
+      "ground_truth": "Vendor evaluation includes cost analysis, service quality assessment, and contract terms review using established procurement processes.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "vendor_management",
+      "expected_context": "Procurement and vendor management documentation"
+    },
+    {
+      "id": 35,
+      "question": "What are our target customer segments?",
+      "ground_truth": "Target customer segments include specific industry verticals and business sizes as defined in market segmentation and customer persona documents.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "market_segmentation",
+      "expected_context": "Market research and customer segmentation analysis"
+    },
+    {
+      "id": 36,
+      "question": "How do we measure brand awareness and sentiment?",
+      "ground_truth": "Brand awareness and sentiment are measured through surveys, social media monitoring, and market research as detailed in brand tracking methodologies.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "brand_measurement",
+      "expected_context": "Brand measurement and market research documentation"
+    },
+    {
+      "id": 37,
+      "question": "What is the company's diversity and inclusion policy?",
+      "ground_truth": "Diversity and inclusion policy promotes equal opportunity, inclusive workplace culture, and diversity initiatives as outlined in company policies.",
+      "collection": "general",
+      "user_role": "employee",
+      "category": "diversity_policy",
+      "expected_context": "Diversity and inclusion policy documentation"
+    },
+    {
+      "id": 38,
+      "question": "How do I escalate technical issues or concerns?",
+      "ground_truth": "Technical issues can be escalated through IT helpdesk, management hierarchy, or incident management systems as detailed in escalation procedures.",
+      "collection": "general",
+      "user_role": "employee",
+      "category": "escalation_process",
+      "expected_context": "IT support and escalation procedures"
+    },
+    {
+      "id": 39,
+      "question": "What performance metrics do we track for engineering systems?",
+      "ground_truth": "Engineering performance metrics include system uptime, response time, error rates, and throughput as defined in monitoring and SLA documentation.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "performance_monitoring",
+      "expected_context": "System monitoring and performance documentation"
+    },
+    {
+      "id": 40,
+      "question": "How do we ensure compliance with financial regulations?",
+      "ground_truth": "Financial compliance involves following regulatory requirements, audit processes, and compliance frameworks as detailed in regulatory compliance documentation.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "regulatory_compliance",
+      "expected_context": "Regulatory compliance and audit documentation"
+    },
+    {
+      "id": 41,
+      "question": "What are our content marketing strategies?",
+      "ground_truth": "Content marketing strategies include thought leadership, educational content, and customer-focused materials as outlined in content strategy documents.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "content_strategy",
+      "expected_context": "Content marketing and strategy documentation"
+    },
+    {
+      "id": 42,
+      "question": "How do employees access mental health support?",
+      "ground_truth": "Mental health support is available through employee assistance programs, health benefits, and wellness resources as detailed in employee support services.",
+      "collection": "general",
+      "user_role": "employee",
+      "category": "employee_wellness",
+      "expected_context": "Employee wellness and support program documentation"
+    },
+    {
+      "id": 43,
+      "question": "What are the requirements for code reviews?",
+      "ground_truth": "Code review requirements include peer review processes, quality standards, and approval workflows as specified in development guidelines.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "code_quality",
+      "expected_context": "Development process and code review guidelines"
+    },
+    {
+      "id": 44,
+      "question": "How do we track and manage operational expenses?",
+      "ground_truth": "Operational expenses are tracked through financial systems, budgeting processes, and regular review cycles as documented in expense management procedures.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "expense_management",
+      "expected_context": "Financial management and budgeting documentation"
+    },
+    {
+      "id": 45,
+      "question": "What social media guidelines should employees follow?",
+      "ground_truth": "Social media guidelines include professional conduct standards, brand representation rules, and privacy considerations as outlined in social media policy.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "social_media_policy",
+      "expected_context": "Social media policy and brand guidelines"
+    }
+  ]
+}
