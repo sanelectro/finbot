@@ -8,21 +8,54 @@
 
 ```mermaid
 graph TB
-    subgraph Docker["🐳 Docker Services"]
-        PG[(PostgreSQL<br/>Port 5435)]
-        QD[(Qdrant Vector DB<br/>Port 6333)]
+
+    subgraph Client["🖥️ Client Layer"]
+        Frontend[Frontend<br/>Next.js 14<br/>Port 3001]
+        CLI[CLI Interface<br/>src/cli/]
+        Tests[Test Suite<br/>src/tests/]
     end
-    
-    CLI[CLI Interface<br/>src/cli/] --> Core[Core Processing<br/>src/core/]
-    API[REST API<br/>src/api/] --> Core
-    Core --> Models[Data Models<br/>src/models/]
-    Core --> QD
-    Core --> Embedding[SentenceTransformers<br/>all-MiniLM-L6-v2]
-    Core --> PG
-    Tests[Test Suite<br/>src/tests/] --> Core
+
+    subgraph Backend["⚡ Backend Services"]
+        API[REST API<br/>src/api/]
+        Core[Core Processing<br/>src/core/]
+        Models[Data Models<br/>src/models/]
+    end
+
+    subgraph AI["🧠 AI / RAG Pipeline"]
+        Docling[Docling Parser<br/>Hierarchical Parsing]
+        Chunking[Hierarchical Chunking]
+        Embedding[SentenceTransformers<br/>all-MiniLM-L6-v2]
+        Router[Semantic Router]
+        Guardrails[Guardrails]
+        LLM[LLM Response Generation]
+    end
+
+    subgraph Docker["🐳 Docker Services"]
+        PG[(PostgreSQL<br/>Users / Roles / Audit Logs<br/>Port 5435)]
+
+        QD[(Qdrant Vector DB<br/>Embeddings + Metadata<br/>Port 6333)]
+    end
+
+    Frontend --> API
+    CLI --> Core
     Tests --> API
     Tests --> CLI
-    Frontend[Frontend<br/>Next.js 14<br/>Port 3001] --> API
+
+    API --> Core
+    Core --> Models
+
+    Core --> Guardrails
+    Guardrails --> Router
+
+    Core --> Docling
+    Docling --> Chunking
+    Chunking --> Embedding
+
+    Embedding --> QD
+
+    Core --> QD
+    Core --> LLM
+    Core --> PG
 ```
 
 ---
