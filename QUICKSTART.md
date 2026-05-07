@@ -29,6 +29,7 @@ cp .env.example .env
 
 Before starting, clean any previously running FinBot containers:
 ```bash
+docker rm -f finbot-qdrant finbot-postgres
 docker compose down -v --remove-orphans
 ```
 
