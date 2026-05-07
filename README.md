@@ -24,7 +24,7 @@ FinBot implements: Input Guardrails → Semantic Router → Vector Search → Ou
 
 ### ✅ **Component 1: Document Ingestion with Hierarchical Chunking**
 
-**📖 [Read Component 1 Documentation](src/core/docs/COMPONENT_1.md)**
+**📖 [Read Component 1 Documentation](docs/COMPONENT_1.md)**
 
 Enterprise-grade document processing system using Docling's advanced hierarchical chunking algorithm.
 
@@ -53,7 +53,7 @@ Enterprise-grade document processing system using Docling's advanced hierarchica
 
 ### ✅ **Component 2: Semantic Query Router**
 
-**📖 [Read Component 2 Documentation](src/core/docs/COMPONENT_2.md)**
+**📖 [Read Component 2 Documentation](docs/COMPONENT_2.md)**
 
 Intelligent query classification and routing system that directs queries to optimal retrieval strategies.
 
@@ -76,7 +76,7 @@ Intelligent query classification and routing system that directs queries to opti
 
 ### ✅ **Component 3: Guardrails System**
 
-**📖 [Read Component 3 Documentation](src/core/docs/COMPONENT_3.md)**
+**📖 [Read Component 3 Documentation](src/core/docs/GUARDRAILS_DOCUMENTATION.md)**
 
 Safety and compliance framework protecting against harmful queries and data leakage.
 
