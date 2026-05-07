@@ -8,21 +8,54 @@
 
 ```mermaid
 graph TB
-    subgraph Docker["🐳 Docker Services"]
-        PG[(PostgreSQL<br/>Port 5435)]
-        QD[(Qdrant Vector DB<br/>Port 6333)]
+
+    subgraph Client["🖥️ Client Layer"]
+        Frontend[Frontend<br/>Next.js 14<br/>Port 3001]
+        CLI[CLI Interface<br/>src/cli/]
+        Tests[Test Suite<br/>src/tests/]
     end
-    
-    CLI[CLI Interface<br/>src/cli/] --> Core[Core Processing<br/>src/core/]
-    API[REST API<br/>src/api/] --> Core
-    Core --> Models[Data Models<br/>src/models/]
-    Core --> QD
-    Core --> Embedding[SentenceTransformers<br/>all-MiniLM-L6-v2]
-    Core --> PG
-    Tests[Test Suite<br/>src/tests/] --> Core
+
+    subgraph Backend["⚡ Backend Services"]
+        API[REST API<br/>src/api/]
+        Core[Core Processing<br/>src/core/]
+        Models[Data Models<br/>src/models/]
+    end
+
+    subgraph AI["🧠 AI / RAG Pipeline"]
+        Docling[Docling Parser<br/>Hierarchical Parsing]
+        Chunking[Hierarchical Chunking]
+        Embedding[SentenceTransformers<br/>all-MiniLM-L6-v2]
+        Router[Semantic Router]
+        Guardrails[Guardrails]
+        LLM[LLM Response Generation]
+    end
+
+    subgraph Docker["🐳 Docker Services"]
+        PG[(PostgreSQL<br/>Users / Roles / Audit Logs<br/>Port 5435)]
+
+        QD[(Qdrant Vector DB<br/>Embeddings + Metadata<br/>Port 6333)]
+    end
+
+    Frontend --> API
+    CLI --> Core
     Tests --> API
     Tests --> CLI
-    Frontend[Frontend<br/>Next.js 14<br/>Port 3001] --> API
+
+    API --> Core
+    Core --> Models
+
+    Core --> Guardrails
+    Guardrails --> Router
+
+    Core --> Docling
+    Docling --> Chunking
+    Chunking --> Embedding
+
+    Embedding --> QD
+
+    Core --> QD
+    Core --> LLM
+    Core --> PG
 ```
 
 ---
@@ -31,22 +64,50 @@ graph TB
 
 ```mermaid
 sequenceDiagram
-    participant User as User / Admin
-    participant Frontend as Frontend<br/>Next.js 14
-    participant API as REST API
-    participant Core as Core Processing
-    participant PG[(PostgreSQL)]
-    participant QD[(Qdrant)]
 
-    User->>Frontend: Upload document / Chat query
-    Frontend->>API: HTTP request
-    API->>PG: RBAC lookup, user validation
-    API->>Core: Process request
-    Core->>QD: Vector search (role-filtered)
-    QD-->>Core: Relevant chunks
-    Core->>API: Generate response
-    API-->>Frontend: JSON response
-    Frontend-->>User: Display results
+    participant User as User / Admin
+    participant FE as Frontend<br/>Next.js 14
+    participant API as FastAPI Backend
+    participant Auth as Auth + RBAC
+    participant Guard as Guardrails
+    participant Router as Semantic Router
+    participant Embed as Embedding Model
+    participant QD as Qdrant Vector DB
+    participant LLM as LLM Provider
+    participant PG as PostgreSQL
+
+    User->>FE: Ask question / Upload document
+
+    FE->>API: HTTP Request
+
+    API->>Auth: Validate JWT + User Role
+    Auth->>PG: Fetch user + permissions
+    PG-->>Auth: Role + access collections
+
+    API->>Guard: Input guardrails
+    Guard-->>API: Query approved
+
+    API->>Router: Detect query intent
+    Router-->>API: Route selection
+
+    API->>Embed: Generate query embedding
+    Embed-->>API: Vector embedding
+
+    API->>QD: Role-filtered vector search
+    Note over API,QD: RBAC metadata filter applied BEFORE retrieval
+
+    QD-->>API: Relevant chunks + metadata
+
+    API->>LLM: Prompt + retrieved context
+    LLM-->>API: Generated grounded answer
+
+    API->>Guard: Output guardrails
+    Guard-->>API: Citation + leakage validation
+
+    API->>PG: Store audit logs / chat history
+
+    API-->>FE: Final response + citations
+    FE-->>User: Display answer
 ```
 
 ---
