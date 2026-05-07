@@ -1,8 +1,14 @@
-# FinBot Guardrails System - Component 3 Documentation
+# 🛡️ FinBot Guardrails System - Component 3 Documentation
 
-## 🛡️ Overview
+**Complete guide for the Safety and Compliance Framework**
+
+---
+
+## Overview
 
 The FinBot Guardrails System provides comprehensive safety measures for enterprise RAG applications, implementing both input and output validation to ensure secure, appropriate, and reliable responses.
+
+---
 
 ## 🎯 Key Features
 
@@ -18,24 +24,28 @@ The FinBot Guardrails System provides comprehensive safety measures for enterpri
 - **Grounding Verification**: Checks if responses align with retrieved context
 - **Professional Response Formatting**: Maintains consistent, business-appropriate tone
 
+---
+
 ## 🏗️ Architecture
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
 │   User Query    │ -> │ Input Guardrails │ -> │  RAG Processing │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
-                                                         │
+                                                        │
 ┌─────────────────┐    ┌──────────────────┐             │
 │ Final Response  │ <- │Output Guardrails │ <-----------┘
 └─────────────────┘    └──────────────────┘
 ```
+
+---
 
 ## 📊 Test Results
 
 **Overall Success Rate: 97.8% (45/46 tests passed)**
 
 | Guardrail Type | Tests | Passed | Success Rate |
-|----------------|--------|---------|--------------|
+|----------------|-------|--------|--------------|
 | Off-topic Detection | 7 | 7 | 100.0% |
 | Prompt Injection | 9 | 9 | 100.0% |
 | PII Detection | 6 | 6 | 100.0% |
@@ -43,12 +53,14 @@ The FinBot Guardrails System provides comprehensive safety measures for enterpri
 | Citation Enforcement | 1 | 1 | 100.0% ✅ |
 | Cross-role Leakage | 1 | 1 | 100.0% |
 
+---
+
 ## 🚀 Usage Examples
 
 ### Basic Usage with RAG System
 
 ```python
-from src.core.rag.rag_system import FinBotRAGSystem
+from src.core.rag_system import FinBotRAGSystem
 
 rag = FinBotRAGSystem()
 
@@ -110,6 +122,8 @@ curl -X GET "http://localhost:8000/api/v1/session/test/info"
 curl -X POST "http://localhost:8000/api/v1/session/test/reset"
 ```
 
+---
+
 ## 🔧 Configuration
 
 ### Business Domains (Off-topic Detection)
@@ -142,6 +156,8 @@ injection_patterns = [
     r'bypass\s+(?:security|rbac|access|restrictions|controls)'
 ]
 ```
+
+---
 
 ## 📝 Response Format
 
@@ -189,6 +205,8 @@ injection_patterns = [
 }
 ```
 
+---
+
 ## 🧪 Testing
 
 Run the comprehensive test suite:
@@ -223,6 +241,8 @@ python test_guardrails.py
    - Cross-role information leakage
    - Response grounding validation
 
+---
+
 ## 🔒 Security Features
 
 ### Multi-layered Protection
@@ -237,6 +257,8 @@ python test_guardrails.py
 - **Access Control**: Prevents unauthorized information disclosure
 - **Audit Trail**: Complete logging for compliance monitoring
 
+---
+
 ## 📚 Dependencies
 
 - `langchain_community`: For potential ML model integration
@@ -246,6 +268,8 @@ python test_guardrails.py
 - `collections.deque`: Efficient session tracking
 - `dataclasses`: Structured result objects
 
+---
+
 ## 🎯 Performance
 
 - **Input Validation**: < 2ms average processing time
@@ -253,6 +277,8 @@ python test_guardrails.py
 - **Memory Usage**: < 10MB for session tracking
 - **Throughput**: Supports 100+ concurrent sessions
 - **Accuracy**: 97.8% overall test success rate
+
+---
 
 ## 🚀 Future Enhancements
 
@@ -263,9 +289,13 @@ python test_guardrails.py
 - [ ] **Multi-language Support**: International PII pattern recognition
 - [ ] **Real-time Monitoring**: Dashboard for guardrail violations
 
+---
+
 ## 📞 Support
 
 For questions or issues with the guardrails system:
 - Check the test suite output for validation examples
 - Review the PROJECT_HISTORY.md for implementation details
 - Examine the API responses for debugging information
+
+**Implementation File**: `src/core/guardrails.py`
