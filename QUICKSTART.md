@@ -26,9 +26,25 @@ cp .env.example .env
 ```
 
 ### Step 4: Start Services (PostgreSQL + Qdrant)
+
+Before starting, clean any previously running FinBot containers:
+```bash
+docker compose down -v --remove-orphans
+```
+
+Now start PostgreSQL and Qdrant:
 ```bash
 docker compose up -d
 ```
+
+Wait around 10–15 seconds for services to become healthy.
+
+Verify containers:
+```bash
+docker ps
+```
+
+You should see PostgreSQL and Qdrant containers running.
 
 Wait ~10 seconds for services to be healthy.
 
