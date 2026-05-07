@@ -223,19 +223,17 @@ finbot/
 ### Frontend Interface
 
 **Login Screen**
-> 🖼️ [Insert screenshot: 5 demo user accounts with role badges]
+> <img width="3448" height="2024" alt="image" src="https://github.com/user-attachments/assets/809f2d08-da94-4016-aedd-738e699cb45d" />
 
 **Chat Interface - Finance Role**
-> 🖼️ [Insert screenshot: Chat with cited sources and role indicators]
-
-**Chat Interface - Guardrail Trigger**
-> 🖼️ [Insert screenshot: Warning banner for policy violation]
+> <img width="3456" height="2234" alt="image" src="https://github.com/user-attachments/assets/b291dc41-682a-4042-9cbd-f00a06bc0e61" />
 
 **Admin Panel - User Management**
-> 🖼️ [Insert screenshot: C-Level admin dashboard with user metrics]
+> <img width="1726" height="828" alt="image" src="https://github.com/user-attachments/assets/8edbb204-eb59-4d1e-b057-ff24e39a1b0e" />
 
 **Admin Panel - Document Management**
-> 🖼️ [Insert screenshot: Document upload and collection management]
+> <img width="3456" height="2234" alt="image" src="https://github.com/user-attachments/assets/741dc497-9784-4146-b527-89d201c25c78" />
+
 
 ### System Flow
 
