@@ -368,51 +368,37 @@ flowchart TD
 ## 🎥 **Video Demonstrations**
 
 ### System Overview
-> 📹 [Insert video link: Complete system walkthrough (5 minutes)]
+> 📹 https://www.youtube.com/watch?v=l8tnCbqVzJc
 > - System architecture overview
 > - Component interactions
 > - Key features demonstration
 
-### Document Ingestion
+### Document Ingestion (Coming soon)
 > 📹 [Insert video link: Document processing pipeline (3 minutes)]
 > - Hierarchical chunking in action
 > - Vector embedding generation
 > - RBAC tagging
 
-### Query Processing
+### Query Processing (Coming soon)
 > 📹 [Insert video link: Query to response flow (4 minutes)]
 > - Query input and preprocessing
 > - Semantic routing decision
 > - Vector search and retrieval
 > - Response generation with citations
 
-### Role-Based Access Control
+### Role-Based Access Control (Coming soon)
 > 📹 [Insert video link: RBAC demonstration (3 minutes)]
 > - Login with different roles
 > - Collection-specific access
 > - Guardrail enforcement
 > - Admin panel capabilities
 
-### Admin Operations
+### Admin Operations (Coming soon)
 > 📹 [Insert video link: Admin panel tutorial (4 minutes)]
 > - User management operations
 > - Document upload and reindexing
 > - Collection configuration
 > - System monitoring
-
----
-
-## 🏆 **Achievement Summary**
-
-| Metric | Status | Details |
-|--------|--------|---------|
-| **All 5 Components** | ✅ COMPLETE | Document Ingestion, Router, Guardrails, Evaluation, Frontend |
-| **Production Ready** | ✅ YES | Enterprise-grade code quality and documentation |
-| **Guardrails Success** | ✅ 97.8% | 45 test scenarios, comprehensive protection |
-| **Performance** | ✅ +109% | Improvement over baseline chunking methods |
-| **RBAC Security** | ✅ ROBUST | Zero data leakage, vector-level enforcement |
-| **Documentation** | ✅ EXTENSIVE | 200+ pages across all components |
-| **Test Coverage** | ✅ COMPREHENSIVE | 45+ test scenarios with metrics tracking |
 
 ---
 
