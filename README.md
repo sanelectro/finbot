@@ -368,7 +368,7 @@ flowchart TD
 ## 🎥 **Video Demonstrations (coming soon)**
 
 ### System Overview
-> 📹 https://www.youtube.com/watch?v=l8tnCbqVzJc
+> 📹 [https://www.youtube.com/watch?v=l8tnCbqVzJc]
 > - System architecture overview
 > - Component interactions
 > - Key features demonstration
