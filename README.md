@@ -368,32 +368,32 @@ flowchart TD
 ## 🎥 **Video Demonstrations (coming soon)**
 
 ### System Overview
-> 📹 [Insert video link: Complete system walkthrough (5 minutes)]
+> 📹 https://www.youtube.com/watch?v=l8tnCbqVzJc
 > - System architecture overview
 > - Component interactions
 > - Key features demonstration
 
-### Document Ingestion
+### Document Ingestion (Coming soon)
 > 📹 [Insert video link: Document processing pipeline (3 minutes)]
 > - Hierarchical chunking in action
 > - Vector embedding generation
 > - RBAC tagging
 
-### Query Processing
+### Query Processing (Coming soon)
 > 📹 [Insert video link: Query to response flow (4 minutes)]
 > - Query input and preprocessing
 > - Semantic routing decision
 > - Vector search and retrieval
 > - Response generation with citations
 
-### Role-Based Access Control
+### Role-Based Access Control (Coming soon)
 > 📹 [Insert video link: RBAC demonstration (3 minutes)]
 > - Login with different roles
 > - Collection-specific access
 > - Guardrail enforcement
 > - Admin panel capabilities
 
-### Admin Operations
+### Admin Operations (Coming soon)
 > 📹 [Insert video link: Admin panel tutorial (4 minutes)]
 > - User management operations
 > - Document upload and reindexing
@@ -402,17 +402,15 @@ flowchart TD
 
 ---
 
-## 🏆 **Achievement Summary**
+## 📖 **Detailed Component Documentation**
 
-| Metric | Status | Details |
-|--------|--------|---------|
-| **All 5 Components** | ✅ COMPLETE | Document Ingestion, Router, Guardrails, Evaluation, Frontend |
-| **Guardrails Success** | ✅ 97.8% | 45 test scenarios, comprehensive protection |
-| **Performance** | ✅ +109% | Improvement over baseline chunking methods |
-| **RBAC Security** | ✅ ROBUST | Zero data leakage, vector-level enforcement |
-| **Documentation** | ✅ EXTENSIVE | 10+ pages across all components |
-| **Test Coverage** | ✅ COMPREHENSIVE | 45+ test scenarios with metrics tracking |
+Each component has comprehensive documentation:
 
+- **[Component 1: Document Ingestion](src/core/docs/COMPONENT_1.md)** - Advanced chunking, metadata extraction, RBAC tagging
+- **[Component 2: Query Router](src/core/docs/COMPONENT_2.md)** - Intent recognition, semantic routing, collection mapping
+- **[Component 3: Guardrails](src/core/docs/COMPONENT_3.md)** - Safety systems, compliance validation, threat detection
+- **[Component 4: RAGAs Evaluation](src/evaluation/docs/COMPONENT_4.md)** - Metrics, testing framework, performance analysis
+- **[Component 5: Frontend](frontend/README.md)** - UI components, RBAC display, admin capabilities
 
 ---
 
