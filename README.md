@@ -368,7 +368,7 @@ flowchart TD
 ## 🎥 **Video Demonstrations (coming soon)**
 
 ### System Overview
-> 📹 [https://www.youtube.com/watch?v=l8tnCbqVzJc]
+> 📹 [![FinBot overview](https://img.youtube.com/vi/l8tnCbqVzJc/maxresdefault.jpg)](https://www.youtube.com/watch?v=l8tnCbqVzJc)
 > - System architecture overview
 > - Component interactions
 > - Key features demonstration
