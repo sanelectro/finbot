@@ -365,7 +365,7 @@ flowchart TD
 
 ---
 
-## 🎥 **Video Demonstrations**
+## 🎥 **Video Demonstrations (coming soon)**
 
 ### System Overview
 > 📹 https://www.youtube.com/watch?v=l8tnCbqVzJc
