@@ -1,0 +1,400 @@
+{
+  "Full System": {
+    "config_name": "Full System",
+    "configuration": {
+      "enable_full_system": true
+    },
+    "evaluation_time_seconds": 40.16561675071716,
+    "total_cases": 6,
+    "valid_results": 6,
+    "failed_results": 0,
+    "overall_score": 0.7028335368335368,
+    "metrics_summary": {
+      "faithfulness": {
+        "mean": 0.49523809523809526,
+        "median": 0.5,
+        "std": 0.29439202887759486,
+        "min": 0.0,
+        "max": 0.8571428571428571
+      },
+      "answer_relevancy": {
+        "mean": 0.8371428571428572,
+        "median": 0.79,
+        "std": 0.10162455914004331,
+        "min": 0.7428571428571429,
+        "max": 1.0
+      },
+      "context_precision": {
+        "mean": 0.9666666666666667,
+        "median": 1.0,
+        "std": 0.08164965809277258,
+        "min": 0.8,
+        "max": 1.0
+      },
+      "context_recall": {
+        "mean": 0.5553724053724054,
+        "median": 0.4916666666666667,
+        "std": 0.27503320146302,
+        "min": 0.21428571428571427,
+        "max": 0.9166666666666666
+      },
+      "answer_correctness": {
+        "mean": 0.6597476597476597,
+        "median": 0.5722222222222222,
+        "std": 0.22843489481484688,
+        "min": 0.4076923076923077,
+        "max": 1.0
+      }
+    },
+    "collection_analysis": {
+      "hr": {
+        "count": 6,
+        "mean_score": 0.7028335368335368,
+        "median_score": 0.7001678876678876
+      }
+    },
+    "detailed_results": [
+      {
+        "test_id": 1,
+        "question": "What is the name of employee with ID FINEMP1000?",
+        "answer": "Based on the provided context, the employee with ID FINEMP1000 is Mahesh Desai.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.",
+        "ground_truth": "The employee with ID FINEMP1000 is Mahesh Desai.",
+        "collection": "hr",
+        "user_role": "hr",
+        "category": "employee_lookup",
+        "confidence": 0.65347075,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.8,
+          "context_precision": 1.0,
+          "context_recall": 0.8333333333333334,
+          "answer_correctness": 1.0
+        },
+        "overall_score": 0.8266666666666665
+      },
+      {
+        "test_id": 2,
+        "question": "Who has the highest salary in the company?",
+        "answer": "Based on the provided context, I can see that there are multiple employee records with their annual compensation figures. To determine who has the highest salary in the company, I will compare the annual compensation figures of all employees mentioned in the context.\n\nHere are the annual compensation figures:\n\n- Subramanian Banerjee (FINEMP1065): 4751293\n- Naveen Ghosh (FINEMP1358): 2687132\n- Shruti Dey (FINEMP1415): 680234\n- Rohan Pandey (FINEMP1009): 1602853\n\nComparing these figures, I can see that Subramanian Banerjee (FINEMP1065) has the highest salary in the company with an annual compensation of 4751293.\n\nTherefore, the answer to the question is: Subramanian Banerjee (FINEMP1065) has the highest salary in the company.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.",
+        "ground_truth": "Based on the HR data, the employee with the highest salary would need to be identified from the salary column in the employee data.",
+        "collection": "hr",
+        "user_role": "hr",
+        "category": "salary_analysis",
+        "confidence": 0.35365877,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.4,
+          "answer_relevancy": 1.0,
+          "context_precision": 1.0,
+          "context_recall": 0.5833333333333334,
+          "answer_correctness": 0.5444444444444444
+        },
+        "overall_score": 0.7055555555555555
+      },
+      {
+        "test_id": 4,
+        "question": "How many employees work in the Compliance department?",
+        "answer": "Based on the provided context, I can see that there are multiple employee records related to the Compliance department. Let me count them for you:\n\n1. Ishita Dutta (FINEMP1106)\n2. Raghu Udayakumar (FINEMP1385)\n3. Raghu Sharma (FINEMP1141)\n4. Prakash Udayakumar (FINEMP1389)\n\nThere are 4 employees working in the Compliance department.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.",
+        "ground_truth": "The number of employees in the Compliance department can be determined by counting employees with 'Compliance' as their department.",
+        "collection": "hr",
+        "user_role": "hr",
+        "category": "department_analysis",
+        "confidence": 0.5177004,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.7428571428571429,
+          "context_precision": 1.0,
+          "context_recall": 0.4,
+          "answer_correctness": 0.5285714285714286
+        },
+        "overall_score": 0.6342857142857142
+      },
+      {
+        "test_id": 5,
+        "question": "What is the average salary for employees in the Finance department?",
+        "answer": "Based on the provided context, I found a relevant record in the hr_data.csv file that contains information about the average annual compensation for employees in the Finance department.\n\nAccording to the hr_data.csv file, the employee Aman Bhat (ID: FINEMP1133) works as a Treasury Analyst in the Finance department and has an annual compensation of \u20b91,195,332.\n\nHowever, I couldn't find any information about the average salary for all employees in the Finance department. The provided context only contains a single employee record, and there is no aggregate data available for the Finance department.\n\nTherefore, I can provide the annual compensation for Aman Bhat, but I cannot determine the average salary for all employees in the Finance department based on the provided context.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.",
+        "ground_truth": "The average salary for Finance department employees would be calculated from the salary data of all employees in the Finance department.",
+        "collection": "hr",
+        "user_role": "hr",
+        "category": "salary_analysis",
+        "confidence": 0.40471575,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.8571428571428571,
+          "answer_relevancy": 0.925,
+          "context_precision": 1.0,
+          "context_recall": 0.9166666666666666,
+          "answer_correctness": 0.8777777777777778
+        },
+        "overall_score": 0.9153174603174602
+      },
+      {
+        "test_id": 21,
+        "question": "How many female employees work in the Engineering department?",
+        "answer": "Based on the provided context, I can see that there are employee records for Divya Nath, Varun Dwivedi, Megha Banerjee, and Priya Shetty. However, the Engineering department is mentioned in the context of the Technology department, which includes Software Engineers and DevOps Engineers.\n\nTo answer your question, I can see that there are two female employees working in the Technology department:\n\n1. Divya Nath (ID: FINEMP1027) - Software Engineer\n2. Megha Banerjee (ID: FINEMP1322) - DevOps Engineer\n3. Priya Shetty (ID: FINEMP1338) - Software Engineer\n\nTherefore, there are three female employees working in the Technology department, which is a subset of the Engineering department.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.",
+        "ground_truth": "The number of female employees in Engineering can be determined by filtering employee data by gender and department.",
+        "collection": "hr",
+        "user_role": "hr",
+        "category": "diversity_analysis",
+        "confidence": 0.38225198,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.7142857142857143,
+          "answer_relevancy": 0.775,
+          "context_precision": 1.0,
+          "context_recall": 0.38461538461538464,
+          "answer_correctness": 0.6
+        },
+        "overall_score": 0.6947802197802198
+      },
+      {
+        "test_id": 22,
+        "question": "What is the employee turnover rate?",
+        "answer": "I'm unable to provide the employee turnover rate as it is not mentioned in the provided context documents. The context only includes information about employee policies, procedures, and benefits, but does not contain any data or metrics related to employee turnover.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.",
+        "ground_truth": "Employee turnover rate is calculated based on departures over a specific period and total employee count as tracked in HR metrics.",
+        "collection": "hr",
+        "user_role": "hr",
+        "category": "hr_metrics",
+        "confidence": 0.41051978,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.78,
+          "context_precision": 0.8,
+          "context_recall": 0.21428571428571427,
+          "answer_correctness": 0.4076923076923077
+        },
+        "overall_score": 0.44039560439560443
+      }
+    ],
+    "timestamp": "2026-05-10T09:41:35.476660",
+    "description": "Complete FinBot with all components"
+  },
+  "Direct Vector Search": {
+    "config_name": "Direct Vector Search",
+    "configuration": {
+      "enable_full_system": false
+    },
+    "evaluation_time_seconds": 0.6423869132995605,
+    "total_cases": 6,
+    "valid_results": 6,
+    "failed_results": 0,
+    "overall_score": 0.6411782661782661,
+    "metrics_summary": {
+      "faithfulness": {
+        "mean": 0.8333333333333334,
+        "median": 1.0,
+        "std": 0.25819888974716115,
+        "min": 0.5,
+        "max": 1.0
+      },
+      "answer_relevancy": {
+        "mean": 0.5428571428571429,
+        "median": 0.55,
+        "std": 0.08794710840926505,
+        "min": 0.4,
+        "max": 0.6571428571428571
+      },
+      "context_precision": {
+        "mean": 0.9666666666666667,
+        "median": 1.0,
+        "std": 0.08164965809277258,
+        "min": 0.8,
+        "max": 1.0
+      },
+      "context_recall": {
+        "mean": 0.5553724053724054,
+        "median": 0.4916666666666667,
+        "std": 0.27503320146302,
+        "min": 0.21428571428571427,
+        "max": 0.9166666666666666
+      },
+      "answer_correctness": {
+        "mean": 0.3076617826617827,
+        "median": 0.3111111111111111,
+        "std": 0.10299292404495537,
+        "min": 0.17692307692307693,
+        "max": 0.45
+      }
+    },
+    "collection_analysis": {
+      "hr": {
+        "count": 6,
+        "mean_score": 0.6411782661782661,
+        "median_score": 0.6677472527472528
+      }
+    },
+    "detailed_results": [
+      {
+        "test_id": 1,
+        "question": "What is the name of employee with ID FINEMP1000?",
+        "answer": "Based on available information: Employee Karan Dutta (ID: FINEMP1184) works as a Operations Manager in the Operations department. They have good attendance of 86.0 percent. They are a VP-level employee based in Lucknow. This is an a...",
+        "ground_truth": "The employee with ID FINEMP1000 is Mahesh Desai.",
+        "collection": "hr",
+        "user_role": "hr",
+        "category": "employee_lookup",
+        "confidence": 0.693342,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.6,
+          "context_precision": 1.0,
+          "context_recall": 0.8333333333333334,
+          "answer_correctness": 0.45
+        },
+        "overall_score": 0.7766666666666667
+      },
+      {
+        "test_id": 2,
+        "question": "Who has the highest salary in the company?",
+        "answer": "Based on available information: - Annual Performance Increment : Reviewed annually (April) based on performance rating, market data, and company performance.\n- Increment Range : Typically 8-15% based on performance rating (Needs Imp...",
+        "ground_truth": "Based on the HR data, the employee with the highest salary would need to be identified from the salary column in the employee data.",
+        "collection": "hr",
+        "user_role": "hr",
+        "category": "salary_analysis",
+        "confidence": 0.35365877,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.5,
+          "context_precision": 1.0,
+          "context_recall": 0.5833333333333334,
+          "answer_correctness": 0.3222222222222222
+        },
+        "overall_score": 0.5811111111111111
+      },
+      {
+        "test_id": 4,
+        "question": "How many employees work in the Compliance department?",
+        "answer": "Based on available information: Employee Ishita Dutta (ID: FINEMP1106) works as a Compliance Officer in the Compliance department. They have high attendance of 93.5 percent and a satisfactory performance rating of 2. They are a Juni...",
+        "ground_truth": "The number of employees in the Compliance department can be determined by counting employees with 'Compliance' as their department.",
+        "collection": "hr",
+        "user_role": "hr",
+        "category": "department_analysis",
+        "confidence": 0.5177004,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.6571428571428571,
+          "context_precision": 1.0,
+          "context_recall": 0.4,
+          "answer_correctness": 0.3857142857142857
+        },
+        "overall_score": 0.6885714285714285
+      },
+      {
+        "test_id": 5,
+        "question": "What is the average salary for employees in the Finance department?",
+        "answer": "Based on available information: Conveyance Allowance, Details = As per company policy; \u20b91,200/month standard; cab facility for senior roles (see FAQs). Performance Bonus, Details = Up to 20%of basic salary, based on individual and c...",
+        "ground_truth": "The average salary for Finance department employees would be calculated from the salary data of all employees in the Finance department.",
+        "collection": "hr",
+        "user_role": "hr",
+        "category": "salary_analysis",
+        "confidence": 0.40471575,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.55,
+          "context_precision": 1.0,
+          "context_recall": 0.9166666666666666,
+          "answer_correctness": 0.2111111111111111
+        },
+        "overall_score": 0.7355555555555555
+      },
+      {
+        "test_id": 21,
+        "question": "How many female employees work in the Engineering department?",
+        "answer": "Based on available information: Employee Divya Nath (ID: FINEMP1027) works as a Software Engineer in the Technology department. They have good attendance of 81.5 percent and a satisfactory performance rating of 2. They are a Mid-lev...",
+        "ground_truth": "The number of female employees in Engineering can be determined by filtering employee data by gender and department.",
+        "collection": "hr",
+        "user_role": "hr",
+        "category": "diversity_analysis",
+        "confidence": 0.38225198,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.55,
+          "context_precision": 1.0,
+          "context_recall": 0.38461538461538464,
+          "answer_correctness": 0.30000000000000004
+        },
+        "overall_score": 0.6469230769230769
+      },
+      {
+        "test_id": 22,
+        "question": "What is the employee turnover rate?",
+        "answer": "Based on available information: - Annual Performance Increment : Reviewed annually (April) based on performance rating, market data, and company performance.\n- Increment Range : Typically 8-15% based on performance rating (Needs Imp...",
+        "ground_truth": "Employee turnover rate is calculated based on departures over a specific period and total employee count as tracked in HR metrics.",
+        "collection": "hr",
+        "user_role": "hr",
+        "category": "hr_metrics",
+        "confidence": 0.41051978,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.4,
+          "context_precision": 0.8,
+          "context_recall": 0.21428571428571427,
+          "answer_correctness": 0.17692307692307693
+        },
+        "overall_score": 0.41824175824175824
+      }
+    ],
+    "timestamp": "2026-05-10T09:41:36.123570",
+    "description": "Direct vector search without RAG processing"
+  },
+  "comparison": {
+    "metric_comparison": {},
+    "best_configuration": {
+      "faithfulness": {
+        "config": "Direct Vector Search",
+        "score": 0.8333333333333334
+      },
+      "answer_relevancy": {
+        "config": "Full System",
+        "score": 0.8371428571428572
+      },
+      "context_precision": {
+        "config": "Full System",
+        "score": 0.9666666666666667
+      },
+      "context_recall": {
+        "config": "Full System",
+        "score": 0.5553724053724054
+      },
+      "answer_correctness": {
+        "config": "Full System",
+        "score": 0.6597476597476597
+      }
+    },
+    "performance_improvement": {
+      "faithfulness": {
+        "absolute_improvement": -0.3380952380952381,
+        "percentage_improvement": -40.57142857142857
+      },
+      "answer_relevancy": {
+        "absolute_improvement": 0.29428571428571426,
+        "percentage_improvement": 54.210526315789465
+      },
+      "context_precision": {
+        "absolute_improvement": 0.0,
+        "percentage_improvement": 0.0
+      },
+      "context_recall": {
+        "absolute_improvement": 0.0,
+        "percentage_improvement": 0.0
+      },
+      "answer_correctness": {
+        "absolute_improvement": 0.352085877085877,
+        "percentage_improvement": 114.43926315441344
+      }
+    }
+  },
+  "metadata": {
+    "total_test_cases": 6,
+    "completion_time": "2026-05-10T09:41:36.123640",
+    "evaluation_framework": "Internal RAGAs-style metrics"
+  }
+}

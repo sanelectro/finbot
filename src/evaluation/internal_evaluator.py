@@ -8,7 +8,7 @@ import json
 import logging
 import time
 from datetime import datetime
-from typing import Dict, List, Any, Tuple
+from typing import Dict, List, Any, Tuple, Optional
 import re
 from collections import Counter
 import statistics
@@ -29,15 +29,24 @@ logger = logging.getLogger(__name__)
 
 class InternalEvaluator:
     """Internal evaluation system for FinBot with RAGAs-style metrics"""
-    
-    def __init__(self, test_dataset_path: str = "data/evaluation/test_dataset.json"):
+
+    def __init__(
+        self,
+        test_dataset_path: str = "data/evaluation/test_dataset.json",
+        role: Optional[str] = None,
+    ):
         self.test_dataset_path = test_dataset_path
+        # Label used in output filenames: specific role name or 'all'
+        self.role_label = role if role else "all"
         self.rag_system = FinBotRAGSystem()
         self.vector_store = VectorStore()
-        
+
         # Load test dataset
         self.test_cases = self._load_test_dataset()
-        logger.info(f"Loaded {len(self.test_cases)} test cases")
+        logger.info(
+            f"Loaded {len(self.test_cases)} test cases "
+            f"(role={self.role_label}, path={self.test_dataset_path})"
+        )
     
     def _load_test_dataset(self) -> List[Dict[str, Any]]:
         """Load test dataset from JSON file"""
@@ -56,11 +65,11 @@ class InternalEvaluator:
             return 0.0
         
         # Extract keywords from question
-        question_keywords = set(re.findall(r'\\b\\w+\\b', question.lower()))
+        question_keywords = set(re.findall(r'\b\w+\b', question.lower()))
         question_keywords = {word for word in question_keywords if len(word) > 2}
         
         # Extract keywords from answer
-        answer_keywords = set(re.findall(r'\\b\\w+\\b', answer.lower()))
+        answer_keywords = set(re.findall(r'\b\w+\b', answer.lower()))
         answer_keywords = {word for word in answer_keywords if len(word) > 2}
         
         # Calculate keyword overlap
@@ -113,28 +122,30 @@ class InternalEvaluator:
         """Calculate context precision - how useful were the retrieved contexts"""
         
         if not contexts:
+            logger.warning("context_precision: NO CONTEXTS PROVIDED - returning 0.0")
             return 0.0
         
-        question_keywords = set(re.findall(r'\\b\\w+\\b', question.lower()))
-        answer_keywords = set(re.findall(r'\\b\\w+\\b', answer.lower()))
+        question_keywords = set(re.findall(r'\b\w+\b', question.lower()))
+        question_keywords = {w for w in question_keywords if len(w) > 2}
+        answer_keywords = set(re.findall(r'\b\w+\b', answer.lower()))
+        
+        logger.debug(f"context_precision: Q_keywords={question_keywords} ({len(question_keywords)}), A_keywords count={len(answer_keywords)}")
         
         relevant_contexts = 0
-        
-        for context in contexts:
-            context_keywords = set(re.findall(r'\\b\\w+\\b', context.lower()))
+        for i, context in enumerate(contexts, 1):
+            context_keywords = set(re.findall(r'\b\w+\b', context.lower()))
+            context_keywords = {w for w in context_keywords if len(w) > 2}
             
-            # Check if context is relevant to question
             question_overlap = len(question_keywords.intersection(context_keywords))
-            
-            # Check if context contributed to answer
             answer_overlap = len(answer_keywords.intersection(context_keywords))
-            
             relevance_score = (question_overlap + answer_overlap) / max(len(question_keywords), 1)
             
-            if relevance_score > 0.3:  # Threshold for relevance
+            logger.debug(f"  Context {i}: Q_overlap={question_overlap}, A_overlap={answer_overlap}, score={relevance_score:.3f}")
+            if relevance_score > 0.3:
                 relevant_contexts += 1
         
         precision = relevant_contexts / len(contexts)
+        logger.debug(f"context_precision: {relevant_contexts}/{len(contexts)} = {precision:.3f}")
         return precision
     
     def calculate_context_recall(self, question: str, contexts: List[str], ground_truth: str) -> float:
@@ -144,13 +155,13 @@ class InternalEvaluator:
             return 0.0
         
         # Extract key concepts from ground truth
-        gt_keywords = set(re.findall(r'\\b\\w+\\b', ground_truth.lower()))
+        gt_keywords = set(re.findall(r'\b\w+\b', ground_truth.lower()))
         gt_keywords = {word for word in gt_keywords if len(word) > 2}
         
         # Extract keywords from all contexts
         context_keywords = set()
         for context in contexts:
-            context_words = set(re.findall(r'\\b\\w+\\b', context.lower()))
+            context_words = set(re.findall(r'\b\w+\b', context.lower()))
             context_keywords.update(context_words)
         
         # Calculate recall
@@ -173,8 +184,8 @@ class InternalEvaluator:
         gt_norm = re.sub(r'\\s+', ' ', ground_truth.lower().strip())
         
         # Extract key information
-        answer_keywords = set(re.findall(r'\\b\\w+\\b', answer_norm))
-        gt_keywords = set(re.findall(r'\\b\\w+\\b', gt_norm))
+        answer_keywords = set(re.findall(r'\b\w+\b', answer_norm))
+        gt_keywords = set(re.findall(r'\b\w+\b', gt_norm))
         
         # Filter out common words
         common_words = {'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'as', 'is', 'are', 'was', 'were', 'be', 'been', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 'can', 'shall'}
@@ -224,8 +235,8 @@ class InternalEvaluator:
     def _is_claim_supported(self, claim: str, context: str) -> bool:
         """Check if a claim is supported by the context"""
         
-        claim_words = set(re.findall(r'\\b\\w+\\b', claim.lower()))
-        context_words = set(re.findall(r'\\b\\w+\\b', context.lower()))
+        claim_words = set(re.findall(r'\b\w+\b', claim.lower()))
+        context_words = set(re.findall(r'\b\w+\b', context.lower()))
         
         # High overlap suggests support
         overlap = len(claim_words.intersection(context_words))
@@ -241,24 +252,29 @@ class InternalEvaluator:
         gt_lower = ground_truth.lower()
         
         # Look for specific entity matches
-        employee_ids_answer = re.findall(r'finemp\\d+', answer_lower)
-        employee_ids_gt = re.findall(r'finemp\\d+', gt_lower)
+        employee_ids_answer = re.findall(r'finemp\d+', answer_lower)
+        employee_ids_gt = re.findall(r'finemp\d+', gt_lower)
         
         if employee_ids_answer and employee_ids_gt:
             return any(emp_id in employee_ids_gt for emp_id in employee_ids_answer)
         
         # Look for numerical consistency
-        numbers_answer = re.findall(r'\\b\\d+\\b', answer)
-        numbers_gt = re.findall(r'\\b\\d+\\b', ground_truth)
+        numbers_answer = re.findall(r'\b\d+\b', answer)
+        numbers_gt = re.findall(r'\b\d+\b', ground_truth)
         
         if numbers_answer and numbers_gt:
             return any(num in numbers_gt for num in numbers_answer)
         
         return True  # No contradiction found
     
-    async def evaluate_single_case(self, test_case: Dict[str, Any], config: Dict[str, bool]) -> Dict[str, Any]:
+    async def evaluate_single_case(
+        self,
+        test_case: Dict[str, Any],
+        config: Dict[str, bool],
+        config_name: str = "Unknown",
+    ) -> Dict[str, Any]:
         """Evaluate a single test case"""
-        
+
         try:
             # Get system response
             if config.get('enable_full_system', True):
@@ -276,21 +292,51 @@ class InternalEvaluator:
                     user_role=test_case['user_role'],
                     limit=5
                 )
-                
+
                 if search_results:
                     answer = f"Based on available information: {search_results[0][0].content[:200]}..."
                     confidence = search_results[0][1]
                 else:
                     answer = "No relevant information found."
                     confidence = 0.0
-            
-            # Get contexts
+
+            # Get contexts (second search — for metric calculation)
             search_results = await self.vector_store.search_with_rbac(
                 query=test_case['question'],
                 user_role=test_case['user_role'],
                 limit=5
             )
             contexts = [chunk.content for chunk, _ in search_results] if search_results else []
+
+            # ── Detailed retrieval log ──────────────────────────────────────
+            sep = "─" * 72
+            logger.info(sep)
+            logger.info(
+                f"[Q{test_case['id']}] [{config_name}] "
+                f"Role={test_case['user_role']} | Category={test_case.get('category', 'N/A')}"
+            )
+            logger.info(f"  QUESTION   : {test_case['question']}")
+            logger.info(f"  GROUND TRUTH: {test_case['ground_truth']}")
+            logger.info(f"  RETRIEVED CHUNKS ({len(search_results)} total):")
+            if search_results:
+                for rank, (chunk, score) in enumerate(search_results, 1):
+                    src = getattr(chunk.metadata, 'source_document', 'unknown')
+                    col = getattr(chunk.metadata, 'collection', 'unknown')
+                    preview = chunk.content[:300].replace('\n', ' ')
+                    logger.info(
+                        f"    [{rank}] score={score:.4f} | src={src} | col={col}\n"
+                        f"         content: {preview}{'...' if len(chunk.content) > 300 else ''}"
+                    )
+            else:
+                logger.warning(f"    ⚠️  NO CHUNKS RETRIEVED — check Qdrant collection & RBAC filter")
+            logger.info(f"  ANSWER     : {answer[:500].replace(chr(10), ' ')}{'...' if len(answer) > 500 else ''}")
+            logger.info(sep)
+            # ───────────────────────────────────────────────────────────────
+
+            if not contexts:
+                logger.warning(
+                    f"[Q{test_case['id']}] NO CONTEXTS → faithfulness & context_precision will be 0"
+                )
             
             # Calculate metrics
             metrics = {
@@ -342,7 +388,10 @@ class InternalEvaluator:
             batch = self.test_cases[i:i+batch_size]
             logger.info(f"Processing batch {i//batch_size + 1}/{(len(self.test_cases) + batch_size - 1)//batch_size}")
             
-            batch_tasks = [self.evaluate_single_case(test_case, config) for test_case in batch]
+            batch_tasks = [
+                self.evaluate_single_case(test_case, config, config_name=config_name)
+                for test_case in batch
+            ]
             batch_results = await asyncio.gather(*batch_tasks, return_exceptions=True)
             
             for result in batch_results:
@@ -497,16 +546,17 @@ class InternalEvaluator:
     
     def save_results(self, results: Dict[str, Any]) -> str:
         """Save results to file"""
-        
+
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filepath = f"data/evaluation/internal_evaluation_{timestamp}.json"
-        
+        # Stamp filename with role label so per-role runs don't overwrite each other
+        filepath = f"data/evaluation/internal_evaluation_{self.role_label}_{timestamp}.json"
+
         import os
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
-        
-        with open(filepath, 'w') as f:
+
+        with open(filepath, "w") as f:
             json.dump(results, f, indent=2, default=str)
-        
+
         logger.info(f"Results saved to {filepath}")
         return filepath
     
@@ -588,25 +638,37 @@ class InternalEvaluator:
 
 
 # Test runner function
-async def run_internal_evaluation():
-    """Run the internal evaluation"""
-    
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    
-    evaluator = InternalEvaluator()
-    
+async def run_internal_evaluation(
+    dataset_path: str = "data/evaluation/test_dataset.json",
+    role: Optional[str] = None,
+):
+    """
+    Run the internal evaluation.
+
+    Args:
+        dataset_path: Path to the JSON test dataset to load.
+        role: Human-readable role label (e.g. 'hr', 'finance').  Used to stamp
+              the output filename.  Pass None when evaluating all roles.
+    """
+
+    # Only configure logging when run directly (no handlers set up by orchestrator yet)
+    if not logging.getLogger().handlers:
+        logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
+    evaluator = InternalEvaluator(test_dataset_path=dataset_path, role=role)
+
     # Run ablation study
     results = await evaluator.run_ablation_study()
-    
+
     # Save results
     results_file = evaluator.save_results(results)
-    
+
     # Generate and display report
     report = evaluator.generate_report(results)
-    print("\\n" + "="*80)
+    print("\n" + "=" * 80)
     print(report)
-    print("="*80)
-    
+    print("=" * 80)
+
     logger.info(f"✅ Evaluation completed! Results saved to: {results_file}")
 
 

@@ -1,0 +1,95 @@
+{
+  "role": "marketing",
+  "test_cases": [
+    {
+      "id": 12,
+      "question": "What are our key marketing campaigns for this quarter?",
+      "ground_truth": "Key marketing campaigns include digital marketing initiatives, brand awareness programs, and customer acquisition campaigns as outlined in the campaign reports.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "campaign_strategy",
+      "expected_context": "Campaign performance reports"
+    },
+    {
+      "id": 13,
+      "question": "How do we measure customer acquisition cost?",
+      "ground_truth": "Customer acquisition cost is measured by dividing total marketing spend by the number of new customers acquired, as detailed in our marketing analytics.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "metrics",
+      "expected_context": "Marketing analytics and performance data"
+    },
+    {
+      "id": 14,
+      "question": "What is our brand positioning strategy?",
+      "ground_truth": "Brand positioning strategy focuses on establishing FinSolve as a trusted financial technology partner, emphasizing innovation and reliability.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "brand_strategy",
+      "expected_context": "Brand guidelines and strategy documents"
+    },
+    {
+      "id": 15,
+      "question": "Who are our main competitors in the fintech space?",
+      "ground_truth": "Main competitors include other B2B fintech companies offering similar financial services and technology solutions as identified in competitive analysis reports.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "competitive_analysis",
+      "expected_context": "Competitor analysis documentation"
+    },
+    {
+      "id": 27,
+      "question": "What is our customer retention strategy?",
+      "ground_truth": "Customer retention strategy includes loyalty programs, customer success initiatives, and ongoing engagement tactics as outlined in retention plans.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "retention_strategy",
+      "expected_context": "Customer retention and success documentation"
+    },
+    {
+      "id": 28,
+      "question": "How do we track marketing campaign ROI?",
+      "ground_truth": "Marketing ROI is tracked by measuring campaign costs against generated revenue and customer acquisitions using analytics tools and attribution models.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "marketing_analytics",
+      "expected_context": "Marketing analytics and ROI measurement documentation"
+    },
+    {
+      "id": 35,
+      "question": "What are our target customer segments?",
+      "ground_truth": "Target customer segments include specific industry verticals and business sizes as defined in market segmentation and customer persona documents.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "market_segmentation",
+      "expected_context": "Market research and customer segmentation analysis"
+    },
+    {
+      "id": 36,
+      "question": "How do we measure brand awareness and sentiment?",
+      "ground_truth": "Brand awareness and sentiment are measured through surveys, social media monitoring, and market research as detailed in brand tracking methodologies.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "brand_measurement",
+      "expected_context": "Brand measurement and market research documentation"
+    },
+    {
+      "id": 41,
+      "question": "What are our content marketing strategies?",
+      "ground_truth": "Content marketing strategies include thought leadership, educational content, and customer-focused materials as outlined in content strategy documents.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "content_strategy",
+      "expected_context": "Content marketing and strategy documentation"
+    },
+    {
+      "id": 45,
+      "question": "What social media guidelines should employees follow?",
+      "ground_truth": "Social media guidelines include professional conduct standards, brand representation rules, and privacy considerations as outlined in social media policy.",
+      "collection": "marketing",
+      "user_role": "marketing",
+      "category": "social_media_policy",
+      "expected_context": "Social media policy and brand guidelines"
+    }
+  ]
+}

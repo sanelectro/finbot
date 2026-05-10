@@ -1,0 +1,590 @@
+{
+  "Full System": {
+    "config_name": "Full System",
+    "configuration": {
+      "enable_full_system": true
+    },
+    "evaluation_time_seconds": 87.52332329750061,
+    "total_cases": 11,
+    "valid_results": 11,
+    "failed_results": 0,
+    "overall_score": 0.6944271138843331,
+    "metrics_summary": {
+      "faithfulness": {
+        "mean": 0.5517840745113473,
+        "median": 0.5555555555555556,
+        "std": 0.2201639894112947,
+        "min": 0.0,
+        "max": 0.8181818181818182
+      },
+      "answer_relevancy": {
+        "mean": 0.795064935064935,
+        "median": 0.8142857142857143,
+        "std": 0.212349695834406,
+        "min": 0.2,
+        "max": 1.0
+      },
+      "context_precision": {
+        "mean": 0.9272727272727272,
+        "median": 1.0,
+        "std": 0.10090499582190258,
+        "min": 0.8,
+        "max": 1.0
+      },
+      "context_recall": {
+        "mean": 0.6124743720331955,
+        "median": 0.5625,
+        "std": 0.13615706074756517,
+        "min": 0.38461538461538464,
+        "max": 0.7857142857142857
+      },
+      "answer_correctness": {
+        "mean": 0.5855394605394605,
+        "median": 0.6333333333333333,
+        "std": 0.2231651893203889,
+        "min": 0.1,
+        "max": 0.9333333333333333
+      }
+    },
+    "collection_analysis": {
+      "general": {
+        "count": 11,
+        "mean_score": 0.6944271138843331,
+        "median_score": 0.733015873015873
+      }
+    },
+    "detailed_results": [
+      {
+        "test_id": 3,
+        "question": "What are the company's leave policies?",
+        "answer": "Based on the provided context from the employee handbook, the company's leave policies are outlined in sections 3, 4, and 5 of the handbook. Here's a summary of the leave policies:\n\n1. **Privilege/Annual Leave**: 15-21 days/year (accrued monthly), as per state Shops& Establishments Acts, with the option to carry forward up to 10 days to the next year.\n2. **Sick Leave**: 12 days/year (non-cumulative), with a medical certificate required for absence exceeding 2 consecutive days.\n3. **Casual Leave**: 7 days/year (state-specific), which must be taken within the calendar year and cannot be carried forward.\n4. **Maternity Leave**: 26 weeks paid for the first two children and 12 weeks for subsequent children, which can start 6 weeks before the expected due date.\n5. **Paternity Leave**: 15 days paid, which must be taken within 6 months of the child's birth.\n6. **Bereavement Leave**: 3-7 days for immediate family (spouse, parents, children, siblings) and up to 2 days for extended family, with HR approval required.\n7. **Compensatory Off (CTO)**: Awarded for work on public holidays or weekends, which must be taken within 30 days of accrual.\n8. **Public Holidays**: 10-14 days/year (national, state, and festival holidays), as per the company calendar and state notifications.\n9. **Leave Without Pay (LWP)**: Approved after exhausting all paid leave, with a maximum of 30 days/year, and note that no benefits accrue during LWP.\n\nThese leave policies are outlined in the employee handbook, and employees are expected to follow these guidelines when taking leave.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: hr content: 'employee', hr content: 'benefits'. Please verify your access permissions.",
+        "ground_truth": "Company leave policies include annual leave, sick leave, maternity/paternity leave, and other company-specific policies as outlined in the HR handbook.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "policy_inquiry",
+        "confidence": 0.52749527,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.6666666666666666,
+          "answer_relevancy": 0.9,
+          "context_precision": 1.0,
+          "context_recall": 0.7857142857142857,
+          "answer_correctness": 0.9333333333333333
+        },
+        "overall_score": 0.8571428571428571
+      },
+      {
+        "test_id": 16,
+        "question": "What is the onboarding process for new employees?",
+        "answer": "Based on the provided context, the onboarding process for new employees at FinSolve is as follows:\n\nDay 1: Welcome orientation, HR induction covering policies and procedures, IT setup and security briefing, introduction to your team, assignment of mentor/buddy, and office tour.\n\nFirst Week: Detailed policy orientation, compliance and data security training, rolespecific technical training, internal platform and tools onboarding, and kickoff meeting with your direct manager.\n\nAdditionally, new hires are required to complete a mandatory 3-day onboarding program, which covers company policies, compliance, and role-specific skills. This program is led by HR, IT, and departmental trainers, and completion is required before the employee is deemed 'onboarded.'\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: engineering content: 'technical', hr content: 'employee', hr content: 'policy'. Please verify your access permissions.",
+        "ground_truth": "New employee onboarding includes orientation, documentation setup, system access provisioning, and department-specific training as outlined in the onboarding guide.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "process",
+        "confidence": 0.655248,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.9142857142857143,
+          "context_precision": 1.0,
+          "context_recall": 0.7647058823529411,
+          "answer_correctness": 0.6333333333333333
+        },
+        "overall_score": 0.7624649859943977
+      },
+      {
+        "test_id": 17,
+        "question": "What are the company's core values?",
+        "answer": "Based on the provided context from the employee handbook, the company's core values are:\n\n1. **Integrity**: Acting with honesty, transparency, and accountability in all business dealings.\n2. **Respect**: Valuing diversity and treating every individual with dignity, regardless of background or role.\n3. **Innovation**: Encouraging creativity, experimentation, and continuous improvement across all functions.\n4. **Customer Focus**: Putting customers at the heart of everything we do, with their success being our success.\n5. **Accountability**: Taking responsibility for our actions, decisions, and results.\n6. **Excellence**: Maintaining high standards of quality and professionalism in every deliverable.\n\nThese core values are outlined in the employee handbook as the foundation of FinSolve Technologies' culture and operations.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: marketing content: 'customer', hr content: 'employee'. Please verify your access permissions.",
+        "ground_truth": "Company core values include integrity, innovation, customer focus, and team collaboration as stated in the company handbook.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "company_culture",
+        "confidence": 0.67959934,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5555555555555556,
+          "answer_relevancy": 0.9,
+          "context_precision": 0.8,
+          "context_recall": 0.6428571428571429,
+          "answer_correctness": 0.7666666666666666
+        },
+        "overall_score": 0.733015873015873
+      },
+      {
+        "test_id": 18,
+        "question": "How do I report a workplace concern?",
+        "answer": "I can only assist with FinSolve business-related questions. Please ask about our financial reports, HR policies, engineering documentation, or marketing materials.",
+        "ground_truth": "Workplace concerns can be reported through HR, anonymous hotlines, or direct management channels as outlined in the employee handbook.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "hr_process",
+        "confidence": 0.0,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.2,
+          "context_precision": 0.8,
+          "context_recall": 0.5,
+          "answer_correctness": 0.1
+        },
+        "overall_score": 0.32
+      },
+      {
+        "test_id": 19,
+        "question": "What employee benefits does the company offer?",
+        "answer": "Based on the provided context from the employee handbook, the company offers the following benefits:\n\n1. **Group Health Insurance**: A comprehensive family floater policy covering employee, spouse, and up to 2 children, including OPD, hospitalization, critical illness, and maternity coverage.\n2. **Accident & Life Insurance**: Additional coverage for accidental death (\u20b925 lakhs) or permanent disability, extending to spouse and dependent children.\n3. **Wellness Programs**: Annual comprehensive health check-ups, yoga and meditation sessions (2 hours/week), mental health counseling, and fitness subsidies (\u20b92,000/month gym allowance).\n4. **Employee Assistance Program (EAP)**: 24/7 access to confidential counseling for personal, family, or professional issues, covering up to 8 free sessions/year with licensed counselors.\n5. **Flexible Work Arrangements**: Hybrid work options, flexible hours for eligible roles, parental support programs, and sabbatical provisions after 5 years of service.\n6. **Employee Referral Program**: \u20b910,000-\u20b950,000 bonus for successful referrals (paid after new hire completes 6 months; higher amounts for senior/specialized roles).\n\nThese benefits are designed to support employees' physical and mental well-being, work-life balance, and career growth.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: hr content: 'employee', hr content: 'benefits', hr content: 'policy'. Please verify your access permissions.",
+        "ground_truth": "Employee benefits include health insurance, retirement plans, paid time off, professional development opportunities, and other benefits detailed in the benefits package.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "benefits",
+        "confidence": 0.59948057,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.6363636363636364,
+          "answer_relevancy": 0.7428571428571429,
+          "context_precision": 0.8,
+          "context_recall": 0.5555555555555556,
+          "answer_correctness": 0.475
+        },
+        "overall_score": 0.641955266955267
+      },
+      {
+        "test_id": 20,
+        "question": "What is the company's remote work policy?",
+        "answer": "Based on the provided context from the employee handbook, FinSolve operates a hybrid work model. The standard arrangement is 3 days in the office and 2 days remote per week, typically on Thursday and Friday. However, this can be adjusted with manager approval.\n\nCore hours, which are from 10 AM to 4 PM IST, must be maintained regardless of the employee's location. During core hours, employees must be available via Slack or email with a response time of less than 30 minutes.\n\nFull-remote arrangements are available for eligible roles, but not all roles are eligible for full-remote work. The specific criteria for full-remote approval can be found in the Remote & Hybrid Work Policy.\n\nIt's worth noting that remote employees must have a reliable internet connection and be available via Slack, email, and video conferencing during core hours. Repeated non-availability during core hours may result in a written warning or escalation to HR.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: hr content: 'employee', hr content: 'policy'. Please verify your access permissions.",
+        "ground_truth": "Remote work policy outlines guidelines for working from home, hybrid arrangements, and equipment requirements as specified in the employee handbook.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "policy",
+        "confidence": 0.52469856,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.8181818181818182,
+          "answer_relevancy": 0.8,
+          "context_precision": 1.0,
+          "context_recall": 0.7222222222222222,
+          "answer_correctness": 0.6333333333333333
+        },
+        "overall_score": 0.7947474747474748
+      },
+      {
+        "test_id": 29,
+        "question": "What is the process for requesting time off?",
+        "answer": "According to the employee handbook, the process for requesting time off is as follows:\n\n1. Apply via the HRMS/leave portal at least 3 working days in advance (except for genuine emergencies).\n2. For sick leave exceeding 2 consecutive days, submit an original medical certificate within 24 hours of return.\n3. For emergency leave, communicate with your manager and HR as soon as possible, with documentation to follow.\n4. Approval is required from your reporting manager and HR; if your manager is unavailable, the request will be escalated to the department head.\n\nAdditionally, you can view your leave balance, history, and approvals in real-time on the HRMS portal. If your leave request is rejected, you will receive a written reason, and you can appeal to HR if you disagree.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: hr content: 'employee'. Please verify your access permissions.",
+        "ground_truth": "Time off requests follow a structured approval process through HR systems or management channels as outlined in the leave policy.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "hr_process",
+        "confidence": 0.5219361,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.7142857142857143,
+          "answer_relevancy": 0.9142857142857143,
+          "context_precision": 1.0,
+          "context_recall": 0.5333333333333333,
+          "answer_correctness": 0.5285714285714286
+        },
+        "overall_score": 0.738095238095238
+      },
+      {
+        "test_id": 30,
+        "question": "How do I access company training resources?",
+        "answer": "Based on the provided context, you can access company training resources through the following channels:\n\n1. **Internal Training Library**: You can access recorded training sessions, technical documentation, and best practices wiki via the company intranet.\n2. **Online Learning Platforms**: You can enroll in job-relevant courses on Coursera, Udemy, and LinkedIn Learning, with up to 4 courses per year recommended.\n3. **Peer Learning**: You can participate in brown-bag sessions and knowledge-sharing workshops, where employees present their learnings from external courses or certifications.\n4. **Mentorship Program**: You can be matched with a senior mentor for career guidance and skill development through the formal mentorship program.\n\nAdditionally, you can also access training resources through the following programs:\n\n1. **Induction Training**: Mandatory 3-day onboarding for all new hires covering company policies, compliance, and role-specific skills.\n2. **Technical Training**: Regular upskilling in core technologies, tools, and domain knowledge relevant to your role, conducted in-house by subject matter experts or external partners.\n3. **Soft Skills Workshops**: Quarterly workshops on communication, leadership, emotional intelligence, time management, conflict resolution, and more.\n4. **Compliance Training**: Annual mandatory training on data privacy, anticorruption, workplace harassment prevention, and information security.\n\nPlease note that some of these resources may require access to the company intranet or specific training platforms, so you may need to check with your HR or IT department for more information on how to access them.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: finance content: 'earnings', engineering content: 'technical', hr content: 'employee'. Please verify your access permissions.",
+        "ground_truth": "Company training resources are accessible through learning management systems and internal portals as detailed in employee development programs.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "training",
+        "confidence": 0.55558765,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.42857142857142855,
+          "answer_relevancy": 1.0,
+          "context_precision": 1.0,
+          "context_recall": 0.5625,
+          "answer_correctness": 0.8142857142857143
+        },
+        "overall_score": 0.7610714285714286
+      },
+      {
+        "test_id": 37,
+        "question": "What is the company's diversity and inclusion policy?",
+        "answer": "Based on the provided context, the company's diversity and inclusion policy is outlined in the following points:\n\n* Zero tolerance for discrimination based on gender, caste, religion, age, disability, sexual orientation, marital status, or any other protected characteristic.\n* Equal opportunity guaranteed in recruitment, promotion, training, compensation, and working conditions.\n* All grievances related to discrimination are investigated promptly and confidentially.\n\nThis policy is stated in the employee handbook, specifically in the section addressing equal opportunity and non-discrimination.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: marketing content: 'promotion', hr content: 'employee', hr content: 'policy'. Please verify your access permissions.",
+        "ground_truth": "Diversity and inclusion policy promotes equal opportunity, inclusive workplace culture, and diversity initiatives as outlined in company policies.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "diversity_policy",
+        "confidence": 0.41256827,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.8142857142857143,
+          "context_precision": 0.8,
+          "context_recall": 0.5,
+          "answer_correctness": 0.6384615384615384
+        },
+        "overall_score": 0.6505494505494506
+      },
+      {
+        "test_id": 38,
+        "question": "How do I escalate technical issues or concerns?",
+        "answer": "Based on the provided context from the employee handbook, it appears that technical issues or concerns should be escalated through the IT Security team. According to the \"Breach Reporting\" section, you should report suspected data breaches or technical issues to the IT Security team immediately.\n\nYou can contact the IT Security team at:\n\n- Email: security@finsolvtech.com\n- Phone: +91-80-6789-0199\n\nPlease note that you should not attempt to investigate the issue yourself, but rather preserve any evidence and follow the instructions provided by the IT Security team.\n\nAdditionally, if you have any general technical questions or concerns, you may want to reach out to the IT team for assistance. However, for more serious or sensitive issues, it's recommended to follow the breach reporting process outlined in the handbook.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: engineering content: 'technical', hr content: 'employee'. Please verify your access permissions.",
+        "ground_truth": "Technical issues can be escalated through IT helpdesk, management hierarchy, or incident management systems as detailed in escalation procedures.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "escalation_process",
+        "confidence": 0.3484577,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.75,
+          "answer_relevancy": 0.76,
+          "context_precision": 1.0,
+          "context_recall": 0.38461538461538464,
+          "answer_correctness": 0.43333333333333335
+        },
+        "overall_score": 0.6655897435897435
+      },
+      {
+        "test_id": 42,
+        "question": "How do employees access mental health support?",
+        "answer": "According to the Employee Handbook, employees and their immediate family members have 24/7 access to confidential counseling via EAP partner organizations. Additionally, employees can also take advantage of the wellness programs, including regular wellness workshops, yoga sessions, and meditation circles. Furthermore, employees are encouraged to take mental health days, with no medical certificate required if communicated to their manager (max 2 days/quarter).\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: hr content: 'employee'. Please verify your access permissions.",
+        "ground_truth": "Mental health support is available through employee assistance programs, health benefits, and wellness resources as detailed in employee support services.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "employee_wellness",
+        "confidence": 0.68152773,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.8,
+          "context_precision": 1.0,
+          "context_recall": 0.7857142857142857,
+          "answer_correctness": 0.48461538461538467
+        },
+        "overall_score": 0.714065934065934
+      }
+    ],
+    "timestamp": "2026-05-10T10:05:24.944186",
+    "description": "Complete FinBot with all components"
+  },
+  "Direct Vector Search": {
+    "config_name": "Direct Vector Search",
+    "configuration": {
+      "enable_full_system": false
+    },
+    "evaluation_time_seconds": 1.3152930736541748,
+    "total_cases": 11,
+    "valid_results": 11,
+    "failed_results": 0,
+    "overall_score": 0.6136715310832959,
+    "metrics_summary": {
+      "faithfulness": {
+        "mean": 0.8636363636363636,
+        "median": 1.0,
+        "std": 0.2335496832484569,
+        "min": 0.5,
+        "max": 1.0
+      },
+      "answer_relevancy": {
+        "mean": 0.5106493506493507,
+        "median": 0.52,
+        "std": 0.15298974707057936,
+        "min": 0.30000000000000004,
+        "max": 0.8
+      },
+      "context_precision": {
+        "mean": 0.8545454545454546,
+        "median": 0.8,
+        "std": 0.09341987329938274,
+        "min": 0.8,
+        "max": 1.0
+      },
+      "context_recall": {
+        "mean": 0.6124743720331955,
+        "median": 0.5625,
+        "std": 0.13615706074756517,
+        "min": 0.38461538461538464,
+        "max": 0.7857142857142857
+      },
+      "answer_correctness": {
+        "mean": 0.22705211455211458,
+        "median": 0.18333333333333335,
+        "std": 0.11217806087562619,
+        "min": 0.1,
+        "max": 0.43333333333333335
+      }
+    },
+    "collection_analysis": {
+      "general": {
+        "count": 11,
+        "mean_score": 0.6136715310832959,
+        "median_score": 0.6096703296703296
+      }
+    },
+    "detailed_results": [
+      {
+        "test_id": 3,
+        "question": "What are the company's leave policies?",
+        "answer": "Based on available information: Q: What is the company policy on parental leave and returning to work after parental leave? A: Maternity Leave : 26 weeks paid for first two children; 12 weeks for subsequent children. Paternity Leave...",
+        "ground_truth": "Company leave policies include annual leave, sick leave, maternity/paternity leave, and other company-specific policies as outlined in the HR handbook.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "policy_inquiry",
+        "confidence": 0.52749527,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.8,
+          "context_precision": 1.0,
+          "context_recall": 0.7857142857142857,
+          "answer_correctness": 0.43333333333333335
+        },
+        "overall_score": 0.8038095238095238
+      },
+      {
+        "test_id": 16,
+        "question": "What is the onboarding process for new employees?",
+        "answer": "Based on available information: - Pre-Joining : Receipt and processing of offer letter, collection of required documents (ID, address proof, educational certificates, previous employment verification), background check completion, a...",
+        "ground_truth": "New employee onboarding includes orientation, documentation setup, system access provisioning, and department-specific training as outlined in the onboarding guide.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "process",
+        "confidence": 0.655248,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.30000000000000004,
+          "context_precision": 0.8,
+          "context_recall": 0.7647058823529411,
+          "answer_correctness": 0.1
+        },
+        "overall_score": 0.5929411764705883
+      },
+      {
+        "test_id": 17,
+        "question": "What are the company's core values?",
+        "answer": "Based on available information: - Integrity : We act with honesty, transparency, and accountability in all business dealings.\n- Respect : We value diversity and treat every individual with dignity, regardless of background or role.\n...",
+        "ground_truth": "Company core values include integrity, innovation, customer focus, and team collaboration as stated in the company handbook.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "company_culture",
+        "confidence": 0.67959934,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.30000000000000004,
+          "context_precision": 0.8,
+          "context_recall": 0.6428571428571429,
+          "answer_correctness": 0.18333333333333335
+        },
+        "overall_score": 0.5852380952380953
+      },
+      {
+        "test_id": 18,
+        "question": "How do I report a workplace concern?",
+        "answer": "Based on available information: 1. Informal Resolution (Week 1): Attempt to resolve directly with the concerned party in a respectful manner; document the conversation.\n2. Manager Involvement (Week 2): If unresolved, escalate to you...",
+        "ground_truth": "Workplace concerns can be reported through HR, anonymous hotlines, or direct management channels as outlined in the employee handbook.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "hr_process",
+        "confidence": 0.43079558,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.4,
+          "context_precision": 0.8,
+          "context_recall": 0.5,
+          "answer_correctness": 0.1
+        },
+        "overall_score": 0.4600000000000001
+      },
+      {
+        "test_id": 19,
+        "question": "What employee benefits does the company offer?",
+        "answer": "Based on available information: - Group Health Insurance : Comprehensive family floater policy covering employee, spouse, and up to 2 children; includes OPD, hospitalization, critical illness, and maternity coverage; renewal annuall...",
+        "ground_truth": "Employee benefits include health insurance, retirement plans, paid time off, professional development opportunities, and other benefits detailed in the benefits package.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "benefits",
+        "confidence": 0.59948057,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.4857142857142857,
+          "context_precision": 0.8,
+          "context_recall": 0.5555555555555556,
+          "answer_correctness": 0.2875
+        },
+        "overall_score": 0.6257539682539682
+      },
+      {
+        "test_id": 20,
+        "question": "What is the company's remote work policy?",
+        "answer": "Based on available information: - Eligibility : All employees are permitted up to 30 days/year of work from a different city or country (cumulative).\n- Process :\n1. Request remote work location change via HRMS at least 2 weeks in ad...",
+        "ground_truth": "Remote work policy outlines guidelines for working from home, hybrid arrangements, and equipment requirements as specified in the employee handbook.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "policy",
+        "confidence": 0.52469856,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.6,
+          "context_precision": 1.0,
+          "context_recall": 0.7222222222222222,
+          "answer_correctness": 0.30000000000000004
+        },
+        "overall_score": 0.7244444444444446
+      },
+      {
+        "test_id": 29,
+        "question": "What is the process for requesting time off?",
+        "answer": "Based on available information: 1., 1 = Apply via HRMS/leave portal at least 3 working days in advance (except genuine emergencies).. 2., 1 = Sick leave exceeding 2 consecutive days requires original medical certificate submitted wi...",
+        "ground_truth": "Time off requests follow a structured approval process through HR systems or management channels as outlined in the leave policy.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "hr_process",
+        "confidence": 0.5219361,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.4,
+          "context_precision": 0.8,
+          "context_recall": 0.5333333333333333,
+          "answer_correctness": 0.17142857142857143
+        },
+        "overall_score": 0.4809523809523809
+      },
+      {
+        "test_id": 30,
+        "question": "How do I access company training resources?",
+        "answer": "Based on available information: - Online Learning Platforms : Subscriptions to Coursera, Udemy, LinkedIn Learning; employees can enroll in job-relevant courses (up to 4 courses/year recommended).\n- Internal Training Library : Access...",
+        "ground_truth": "Company training resources are accessible through learning management systems and internal portals as detailed in employee development programs.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "training",
+        "confidence": 0.55558765,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.64,
+          "context_precision": 1.0,
+          "context_recall": 0.5625,
+          "answer_correctness": 0.3142857142857143
+        },
+        "overall_score": 0.7033571428571429
+      },
+      {
+        "test_id": 37,
+        "question": "What is the company's diversity and inclusion policy?",
+        "answer": "Based on available information: - Group Health Insurance : Comprehensive family floater policy covering employee, spouse, and up to 2 children; includes OPD, hospitalization, critical illness, and maternity coverage; renewal annuall...",
+        "ground_truth": "Diversity and inclusion policy promotes equal opportunity, inclusive workplace culture, and diversity initiatives as outlined in company policies.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "diversity_policy",
+        "confidence": 0.41256827,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.5714285714285714,
+          "context_precision": 0.8,
+          "context_recall": 0.5,
+          "answer_correctness": 0.17692307692307693
+        },
+        "overall_score": 0.6096703296703296
+      },
+      {
+        "test_id": 38,
+        "question": "How do I escalate technical issues or concerns?",
+        "answer": "Based on available information: 1. Informal Resolution (Week 1): Attempt to resolve directly with the concerned party in a respectful manner; document the conversation.\n2. Manager Involvement (Week 2): If unresolved, escalate to you...",
+        "ground_truth": "Technical issues can be escalated through IT helpdesk, management hierarchy, or incident management systems as detailed in escalation procedures.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "escalation_process",
+        "confidence": 0.3484577,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.52,
+          "context_precision": 0.8,
+          "context_recall": 0.38461538461538464,
+          "answer_correctness": 0.1
+        },
+        "overall_score": 0.460923076923077
+      },
+      {
+        "test_id": 42,
+        "question": "How do employees access mental health support?",
+        "answer": "Based on available information: - EAP Access : Employees and immediate family members have 24/7 access to confidential counseling via EAP partner organizations.\n- Wellness Programs : Regular wellness workshops (stress management, bu...",
+        "ground_truth": "Mental health support is available through employee assistance programs, health benefits, and wellness resources as detailed in employee support services.",
+        "collection": "general",
+        "user_role": "employee",
+        "category": "employee_wellness",
+        "confidence": 0.68152773,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.6,
+          "context_precision": 0.8,
+          "context_recall": 0.7857142857142857,
+          "answer_correctness": 0.3307692307692308
+        },
+        "overall_score": 0.7032967032967034
+      }
+    ],
+    "timestamp": "2026-05-10T10:05:26.267900",
+    "description": "Direct vector search without RAG processing"
+  },
+  "comparison": {
+    "metric_comparison": {},
+    "best_configuration": {
+      "faithfulness": {
+        "config": "Direct Vector Search",
+        "score": 0.8636363636363636
+      },
+      "answer_relevancy": {
+        "config": "Full System",
+        "score": 0.795064935064935
+      },
+      "context_precision": {
+        "config": "Full System",
+        "score": 0.9272727272727272
+      },
+      "context_recall": {
+        "config": "Full System",
+        "score": 0.6124743720331955
+      },
+      "answer_correctness": {
+        "config": "Full System",
+        "score": 0.5855394605394605
+      }
+    },
+    "performance_improvement": {
+      "faithfulness": {
+        "absolute_improvement": -0.3118522891250164,
+        "percentage_improvement": -36.1092124250019
+      },
+      "answer_relevancy": {
+        "absolute_improvement": 0.28441558441558434,
+        "percentage_improvement": 55.69684638860629
+      },
+      "context_precision": {
+        "absolute_improvement": 0.07272727272727264,
+        "percentage_improvement": 8.51063829787233
+      },
+      "context_recall": {
+        "absolute_improvement": 0.0,
+        "percentage_improvement": 0.0
+      },
+      "answer_correctness": {
+        "absolute_improvement": 0.3584873459873459,
+        "percentage_improvement": 157.88769318202645
+      }
+    }
+  },
+  "metadata": {
+    "total_test_cases": 11,
+    "completion_time": "2026-05-10T10:05:26.268012",
+    "evaluation_framework": "Internal RAGAs-style metrics"
+  }
+}

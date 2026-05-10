@@ -8,12 +8,17 @@
 
 ### **Prerequisites Check**
 ```bash
-# 1. Verify system is ready
-curl -f http://localhost:6333/collections || echo "❌ Start Qdrant first"
+# 1. Python version check (required: 3.11+)
+python --version  # Must be 3.11 or higher
 
-# 2. Check Python environment
-python --version  # Should be 3.9+
-pip show ragas datasets || echo "❌ Install requirements.txt"
+# 2. Verify Qdrant is running
+curl -f http://localhost:6333/collections || echo "❌ Start Qdrant first: docker run -p 6333:6333 qdrant/qdrant:latest"
+
+# 3. Verify required packages
+pip show groq datasets sentence-transformers qdrant-client || echo "❌ Install requirements.txt"
+
+# 4. Check Groq API key
+echo "GROQ_API_KEY: $GROQ_API_KEY" | grep -q "sk-" || echo "❌ Set GROQ_API_KEY environment variable"
 ```
 
 ### **One-Command Evaluation**
@@ -21,8 +26,11 @@ pip show ragas datasets || echo "❌ Install requirements.txt"
 # Quick verification (no dependencies needed)
 python src/evaluation/ragas_health_monitor.py
 
-# Full evaluation (requires system running)
-PYTHONPATH=. python src/evaluation/run_ragas_eval.py
+# Full evaluation (all roles)
+PYTHONPATH=. python -m src.evaluation.ragas_orchestrator
+
+# Targeted evaluation (single role)
+PYTHONPATH=. python -m src.evaluation.ragas_orchestrator --role hr
 ```
 
 ---
@@ -38,15 +46,31 @@ python src/evaluation/ragas_health_monitor.py
 
 ### **2. Full RAGAs Evaluation** 🧪
 ```bash
-# Complete evaluation with all configurations
-PYTHONPATH=. python src/evaluation/run_ragas_eval.py
+# Complete evaluation with all configurations (all 45 test cases)
+# Note: This can take 10-30 minutes depending on Groq API rate limits
+PYTHONPATH=. python -m src.evaluation.ragas_orchestrator
+
+# Role-specific evaluation (faster, scoped to a single department)
+# Valid roles: hr, finance, engineering, marketing, employee
+PYTHONPATH=. python -m src.evaluation.ragas_orchestrator --role finance
 ```
-**Output**: Comprehensive metrics across 4 system configurations
+**Output**: Comprehensive metrics across all test cases with logging
+- **Location**: `data/evaluation/evaluation_TIMESTAMP.log` (main results)
+- **Duration**: Varies based on Groq API rate limiting (429 responses trigger auto-retry with exponential backoff)
 
 ### **3. Results Checker** 📊
 ```bash
-# View latest evaluation results
+# View absolute latest evaluation results
 python src/evaluation/check_metrics.py
+
+# View latest results for a specific role
+python src/evaluation/check_metrics.py --role hr
+
+# View a specific JSON result file
+python src/evaluation/check_metrics.py data/evaluation/internal_evaluation_hr_20260510_082901.json
+
+# List all available result files
+python src/evaluation/check_metrics.py --list
 ```
 **Output**: Latest scores, collection performance, comparative analysis
 
@@ -259,20 +283,57 @@ export GROQ_API_KEY="your_key_here"
 ❌ No search results found
 
 ✅ Solution:
-# Ingest documents first
+# Ingest documents first (may take 2-5 minutes)
+python -m src.cli ingest documents
+# OR ingest specific collections:
 python -m src.cli ingest documents --collection hr --recreate
 python -m src.cli ingest documents --collection engineering --recreate
 ```
 
+#### **6. Groq API Rate Limiting (429 Errors)**
+```bash
+❌ Error: 429 Client Error: Too Many Requests
+   Retry after 15 seconds
+
+✅ This is normal and expected:
+# Groq has rate limits (~30 requests/minute for free tier)
+# The evaluation automatically retries with exponential backoff
+# For 45 test cases, evaluation typically takes 10-30 minutes
+# Let it run - you'll see "Retry after X seconds" messages
+```
+
+#### **7. Empty Log Files (evaluation_*.log)**
+```bash
+❌ evaluation_*.log exists but is 0 bytes
+
+✅ This is a known issue:
+# Multiple basicConfig() calls in the codebase can prevent file logging
+# However, all output is still captured in stdout/stderr
+# You can capture it when running:
+PYTHONPATH=. python -m src.evaluation.ragas_orchestrator 2>&1 | tee eval_output.txt
+# Results are saved to: data/evaluation/internal_evaluation_*.json
+```
+
 ### **Debug Mode Evaluation** 🐛
 ```bash
-# Run with detailed logging
-PYTHONPATH=. python -c "
-import logging
-logging.basicConfig(level=logging.DEBUG)
-from src.evaluation.internal_evaluator import run_internal_evaluation
-import asyncio
-asyncio.run(run_internal_evaluation())"
+# Run with verbose output and save to file
+PYTHONPATH=. python -m src.evaluation.ragas_orchestrator 2>&1 | tee debug_eval_output.txt
+
+# Monitor in real-time from another terminal
+tail -f debug_eval_output.txt | grep -E "Q_keywords|metric|score|ERROR"
+```
+
+### **Recent Fix: Regex Pattern Correction** 🔧
+```
+⚠️ IMPORTANT: A critical bug in keyword extraction was fixed:
+   - Previous bug: regex patterns used double-escaped backslashes (r'\\b\\w+\\b')
+   - Impact: Keywords were not extracted, causing all metrics to return 0.0
+   - Fixed: Corrected to single-escaped (r'\b\w+\b')
+   - Result: All metrics now function correctly (expect 0.6-0.9 range)
+
+✅ The fix is already applied - no action needed.
+   If you see context_precision: 0.000 on all test cases, verify you have
+   the latest version of src/evaluation/internal_evaluator.py
 ```
 
 ---

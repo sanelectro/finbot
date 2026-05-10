@@ -278,19 +278,29 @@ When you receive context documents and a question, provide a clear, accurate ans
             }
     
     def _build_context(self, results: List[Tuple]) -> str:
-        """Build context string from retrieved document chunks"""
+        """Build context string from retrieved document chunks.
+
+        Uses the actual source document name as the label so the LLM cites
+        meaningful names (e.g. 'Q3_Earnings_Report.pdf') instead of the
+        generic 'Document 1 / Document 2' placeholders.
+        """
         if not results:
             return "No relevant documents found."
-        
+
         context_parts = []
-        for i, (chunk, score) in enumerate(results, 1):
-            context_parts.append(
-                f"Document {i} (Relevance: {score:.3f}):\\n"
-                f"Source: {chunk.metadata.source_document} | Collection: {chunk.metadata.collection}\\n"
-                f"Content: {chunk.content}\\n"
+        for chunk, score in results:
+            # Use real filename; fall back to collection name if missing
+            doc_name = (
+                chunk.metadata.source_document
+                or chunk.metadata.collection
+                or "Unknown Document"
             )
-        
-        return "\\n---\\n".join(context_parts)
+            context_parts.append(
+                f"[Source: {doc_name}] (Relevance: {score:.3f})\n"
+                f"Content: {chunk.content}\n"
+            )
+
+        return "\n---\n".join(context_parts)
     
     def _enhance_query_for_exact_matches(self, query: str) -> str:
         """Enhance queries to better match employee IDs and other exact terms"""

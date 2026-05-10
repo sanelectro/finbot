@@ -101,6 +101,7 @@ Safety and compliance framework protecting against harmful queries and data leak
 ### ✅ **Component 4: RAGAs Evaluation Framework**
 
 **📖 [Read Component 4 Documentation](src/evaluation/docs/COMPONENT_4.md)**
+**📈 [Latest Evaluation Metrics Observations (10 May 2026)](evaluation_results_10_may_2026.md)**
 
 Comprehensive evaluation system measuring RAG system performance across 5 key metrics.
 

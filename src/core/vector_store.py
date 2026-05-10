@@ -186,9 +186,9 @@ class VectorStore:
         self, 
         query: str, 
         user_role: Role,
-        limit: int = 10,
+        limit: int = 3,    
         collection_filter: Optional[List[Collection]] = None,
-        score_threshold: float = 0.0
+        score_threshold: float = 0.7
     ) -> List[Tuple[DocumentChunk, float]]:
         """
         Search documents with RBAC enforcement
@@ -207,12 +207,15 @@ class VectorStore:
             List of (chunk, score) tuples
         """
         try:
+            logger.debug(f"[search_with_rbac] Starting search - query: '{query[:80]}...', role: {user_role}, limit: {limit}, collections: {collection_filter}")
+            
             # Generate query embedding
             query_embedding = await asyncio.get_event_loop().run_in_executor(
                 None,
                 self.embedding_model.encode,
                 query
             )
+            logger.debug(f"[search_with_rbac] Query embedding generated: shape={query_embedding.shape}")
             
             # Build RBAC filter - this is the critical security enforcement
             filter_conditions = [
@@ -221,9 +224,11 @@ class VectorStore:
                     match=MatchAny(any=[user_role])
                 )
             ]
+            logger.debug(f"[search_with_rbac] Added RBAC filter for role: {user_role}")
             
             # Add collection filter if specified (supports multiple collections from semantic routing)
             if collection_filter:
+                logger.debug(f"[search_with_rbac] Collection filter specified: {collection_filter}")
                 if len(collection_filter) == 1:
                     # Single collection - use MatchValue for efficiency
                     filter_conditions.append(
@@ -232,6 +237,7 @@ class VectorStore:
                             match=MatchValue(value=collection_filter[0])
                         )
                     )
+                    logger.debug(f"[search_with_rbac] Using single collection filter: {collection_filter[0]}")
                 else:
                     # Multiple collections - use MatchAny for semantic routing results
                     from typing import cast
@@ -241,6 +247,9 @@ class VectorStore:
                             match=MatchAny(any=cast(List[str], collection_filter))
                         )
                     )
+                    logger.debug(f"[search_with_rbac] Using multiple collection filter: {collection_filter}")
+            else:
+                logger.debug(f"[search_with_rbac] No collection filter - searching all accessible collections")
             
             # Create the final RBAC filter using cast to handle type checker
             from typing import cast
@@ -248,6 +257,7 @@ class VectorStore:
             rbac_filter = Filter(must=cast(List[Condition], filter_conditions))
             
             # Perform search with RBAC filter
+            logger.debug(f"[search_with_rbac] Executing Qdrant search...")
             search_results = await asyncio.get_event_loop().run_in_executor(
                 None,
                 lambda: self.client.query_points(
@@ -260,19 +270,26 @@ class VectorStore:
                 ).points
             )
             
+            logger.info(f"[search_with_rbac] Qdrant returned {len(search_results)} raw results")
+            
             # Convert results to DocumentChunk objects
             results = []
-            for result in search_results:
+            for i, result in enumerate(search_results):
+                logger.debug(f"[search_with_rbac] Result {i+1}: score={result.score:.4f}, threshold={score_threshold}, passed={result.score >= score_threshold}")
                 if result.score >= score_threshold and result.payload is not None:
                     chunk = self._payload_to_chunk(result.payload)
                     results.append((chunk, result.score))
+                    logger.debug(f"  → Added to results - source: {chunk.metadata.source_document}, collection: {chunk.metadata.collection}")
+                else:
+                    logger.debug(f"  → Filtered out - score below threshold or no payload")
             
             collections_searched = collection_filter if collection_filter else "all_accessible"
-            logger.info(f"RBAC search for role '{user_role}' in collections {collections_searched}: {len(results)} results")
+            logger.info(f"[search_with_rbac] Final results: role '{user_role}' in collections {collections_searched}: {len(results)}/{len(search_results)} results (score_threshold={score_threshold})")
+            
             return results
             
         except Exception as e:
-            logger.error(f"Search failed: {str(e)}")
+            logger.error(f"[search_with_rbac] Search failed: {str(e)}", exc_info=True)
             return []
     
     async def search_with_semantic_routing(

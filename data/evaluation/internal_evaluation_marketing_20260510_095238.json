@@ -1,0 +1,552 @@
+{
+  "Full System": {
+    "config_name": "Full System",
+    "configuration": {
+      "enable_full_system": true
+    },
+    "evaluation_time_seconds": 94.22484683990479,
+    "total_cases": 10,
+    "valid_results": 10,
+    "failed_results": 0,
+    "overall_score": 0.6139418947066005,
+    "metrics_summary": {
+      "faithfulness": {
+        "mean": 0.450218253968254,
+        "median": 0.4642857142857143,
+        "std": 0.1659622419887608,
+        "min": 0.1111111111111111,
+        "max": 0.6875
+      },
+      "answer_relevancy": {
+        "mean": 0.8791666666666667,
+        "median": 0.88,
+        "std": 0.06514584776853764,
+        "min": 0.76,
+        "max": 1.0
+      },
+      "context_precision": {
+        "mean": 0.94,
+        "median": 1.0,
+        "std": 0.1349897115421106,
+        "min": 0.6,
+        "max": 1.0
+      },
+      "context_recall": {
+        "mean": 0.3008683473389356,
+        "median": 0.34523809523809523,
+        "std": 0.13858122598107134,
+        "min": 0.06666666666666667,
+        "max": 0.47058823529411764
+      },
+      "answer_correctness": {
+        "mean": 0.4994562055591467,
+        "median": 0.5072398190045249,
+        "std": 0.14415882105783565,
+        "min": 0.30000000000000004,
+        "max": 0.6714285714285714
+      }
+    },
+    "collection_analysis": {
+      "marketing": {
+        "count": 10,
+        "mean_score": 0.6139418947066005,
+        "median_score": 0.603547385620915
+      }
+    },
+    "detailed_results": [
+      {
+        "test_id": 12,
+        "question": "What are our key marketing campaigns for this quarter?",
+        "answer": "Based on the provided context, specifically from the marketing reports for Q4 2024, our key marketing campaigns for this quarter include:\n\n1. **LinkedIn Sales Navigator targeting 850 CFOs and payment managers at mid-market/enterprise companies**: This campaign aims to reach high-value decision-makers through targeted advertising.\n2. **Customized email sequences (8 touchpoints over 10 weeks)**: This campaign involves sending personalized email sequences to potential customers to nurture leads and drive conversions.\n3. **Virtual webinar series: \u201cEnterprise Payment Transformation 2025\u201d (4 sessions, 2,400+ attendees)**: This campaign hosts webinars on a specific topic to educate and engage potential customers.\n4. **Account-based marketing (ABM) for top 75 enterprise accounts (personalized landing pages, custom PDFs)**: This campaign targets high-value accounts with personalized marketing materials to drive conversions.\n5. **Holiday corporate gift campaign (branded hardware + free trial)**: This campaign involves sending branded gifts to potential customers along with a free trial to promote our product.\n6. **Sales enablement: ROI calculators, case studies, white papers (12 new assets created)**: This campaign provides sales teams with valuable resources to help them close deals.\n\nThese campaigns demonstrate a mix of digital marketing tactics, including email marketing, social media advertising, and content marketing, aimed at reaching and engaging potential customers.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.",
+        "ground_truth": "Key marketing campaigns include digital marketing initiatives, brand awareness programs, and customer acquisition campaigns as outlined in the campaign reports.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "campaign_strategy",
+        "confidence": 0.6207459,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.6666666666666666,
+          "answer_relevancy": 0.8666666666666667,
+          "context_precision": 1.0,
+          "context_recall": 0.25,
+          "answer_correctness": 0.6
+        },
+        "overall_score": 0.6766666666666666
+      },
+      {
+        "test_id": 13,
+        "question": "How do we measure customer acquisition cost?",
+        "answer": "Based on the provided context from the customer_acquisition_report.docx, we measure customer acquisition cost (CAC) as \u20b91,640-\u20b92,045 (25% range) driven by channel mix and seasonal intensity.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.",
+        "ground_truth": "Customer acquisition cost is measured by dividing total marketing spend by the number of new customers acquired, as detailed in our marketing analytics.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "metrics",
+        "confidence": 0.5117645,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.3333333333333333,
+          "answer_relevancy": 0.88,
+          "context_precision": 0.6,
+          "context_recall": 0.375,
+          "answer_correctness": 0.30000000000000004
+        },
+        "overall_score": 0.49766666666666665
+      },
+      {
+        "test_id": 14,
+        "question": "What is our brand positioning strategy?",
+        "answer": "Based on the provided context, it appears that FinSolve's brand positioning strategy involves a multi-faceted approach. Key elements include:\n\n1. **Geographic expansion**: Doubling the number of markets from 5 to 10, with a successful Southeast Asia market entry in Q2 2024.\n2. **Market segmentation**: Focusing on strategic B2B enterprise segments, as validated by the \u20b987.2L revenue, 42 customers closed, and 285 in pipeline.\n3. **Brand awareness growth**: Increasing brand awareness by 72.7% (22% \u2192 38%) through various marketing efforts, including influencer partnerships, loyalty programs, and social media growth.\n4. **Competitive advantage**: Maintaining the #1 position in customer acquisition rate, achieving the highest CAC efficiency, and demonstrating the strongest ROI improvement year-over-year.\n\nOverall, FinSolve's brand positioning strategy appears to be centered around geographic expansion, market segmentation, and a focus on delivering strong ROI through targeted marketing efforts.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: finance content: 'revenue'. Please verify your access permissions.",
+        "ground_truth": "Brand positioning strategy focuses on establishing FinSolve as a trusted financial technology partner, emphasizing innovation and reliability.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "brand_strategy",
+        "confidence": 0.45424265,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.42857142857142855,
+          "answer_relevancy": 0.76,
+          "context_precision": 1.0,
+          "context_recall": 0.2857142857142857,
+          "answer_correctness": 0.4076923076923077
+        },
+        "overall_score": 0.5763956043956043
+      },
+      {
+        "test_id": 15,
+        "question": "Who are our main competitors in the fintech space?",
+        "answer": "Based on the provided context, our main competitors in the fintech space are:\n\n1. PaymentPro India\n2. FinTech Global\n3. RapidPay Solutions\n4. Digital Wallets Inc\n\nThese companies are mentioned in the marketing reports as having a significant market share and presence in the fintech industry.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: engineering content: 'api'. Please verify your access permissions.",
+        "ground_truth": "Main competitors include other B2B fintech companies offering similar financial services and technology solutions as identified in competitive analysis reports.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "competitive_analysis",
+        "confidence": 0.5859424,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.4,
+          "answer_relevancy": 0.925,
+          "context_precision": 0.8,
+          "context_recall": 0.3333333333333333,
+          "answer_correctness": 0.4529411764705883
+        },
+        "overall_score": 0.5822549019607843
+      },
+      {
+        "test_id": 27,
+        "question": "What is our customer retention strategy?",
+        "answer": "Based on the provided context from the customer_acquisition_report.docx, our customer retention strategy includes the following implemented strategies in Q3 2024:\n\n1. **Q3 Loyalty Program**: With 62,500 enrollments, this program has shown a reduction in repeat churn by 3.1 percentage points.\n2. **SMS/Push Notifications**: We send 2-3 re-engagement touches to customers before they churn.\n3. **Tiered Support**: We offer dedicated account managers for our Enterprise segment.\n4. **Feature Roadmap Transparency**: We provide monthly product updates to our SMB segment to keep them informed about upcoming features and improvements.\n\nAdditionally, we have identified and are addressing various churn reasons, including:\n\n1. **User Inactivity (60+ days)**: We are targeting this with push notifications and re-engagement campaigns.\n2. **Feature Gaps / Product Limitations**: We are prioritizing product roadmap development and gathering feature requests from our SMB segment.\n3. **Competitor Switching**: We are focusing on competitive positioning and feature differentiation.\n4. **Poor Support Experience**: We are scaling our support team and improving SLAs.\n5. **Price Sensitivity**: We are offering tiered pricing and loyalty discounts.\n6. **API/Technical Issues**: We are allocating engineering resources and managing SLAs.\n7. **Regulatory/Compliance Issues**: We are providing compliance consulting and geo-specific support for our Enterprise segment.\n8. **Other (Business closure, account consolidation)**: We do not have a specific retention strategy for this reason, as it is not within our control.\n\nThese strategies aim to improve customer retention and address the various reasons why customers might be churning.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: engineering content: 'api', engineering content: 'technical'. Please verify your access permissions.",
+        "ground_truth": "Customer retention strategy includes loyalty programs, customer success initiatives, and ongoing engagement tactics as outlined in retention plans.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "retention_strategy",
+        "confidence": 0.6552531,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.6875,
+          "answer_relevancy": 0.88,
+          "context_precision": 1.0,
+          "context_recall": 0.42857142857142855,
+          "answer_correctness": 0.5615384615384615
+        },
+        "overall_score": 0.711521978021978
+      },
+      {
+        "test_id": 28,
+        "question": "How do we track marketing campaign ROI?",
+        "answer": "Based on the provided context, it appears that marketing campaign ROI is tracked using the following metrics:\n\n1. **Actual ROI**: This is the actual return on investment achieved by a campaign, calculated as (Revenue - Spend) / Spend.\n2. **Target ROI**: This is the target return on investment set for a campaign before it is executed.\n3. **Variance**: This is the difference between the actual ROI and the target ROI, indicating how close the campaign's actual performance was to its target.\n\nFor example, in the context provided, the Social Media Brand Awareness campaign had a Target ROI of 2.4x, an Actual ROI of 2.38x, and a Variance of -0.02x, indicating that the campaign slightly underperformed its target ROI.\n\nAdditionally, the context mentions that the ROI is calculated based on multi-touch attribution, which suggests that the revenue attributed to a campaign is not just the direct revenue generated by the campaign, but also the revenue generated by subsequent interactions with the customer.\n\nOverall, it appears that marketing campaign ROI is tracked using a combination of actual ROI, target ROI, and variance, with a focus on understanding the campaign's performance relative to its target and identifying areas for improvement.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: finance content: 'revenue', finance content: 'investment'. Please verify your access permissions.",
+        "ground_truth": "Marketing ROI is tracked by measuring campaign costs against generated revenue and customer acquisitions using analytics tools and attribution models.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "marketing_analytics",
+        "confidence": 0.61012626,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.1111111111111111,
+          "answer_relevancy": 0.88,
+          "context_precision": 1.0,
+          "context_recall": 0.47058823529411764,
+          "answer_correctness": 0.6625
+        },
+        "overall_score": 0.6248398692810457
+      },
+      {
+        "test_id": 35,
+        "question": "What are our target customer segments?",
+        "answer": "Based on the provided context, our target customer segments appear to be:\n\n1. **Consumer segment**: This segment drives volume (84.1% of total volume) and has a loyalty program adoption rate of 35.7% among new consumer customers.\n2. **SMB (Small to Medium Business) segment**: This segment has moderate volume and good unit economics, indicating a potentially profitable customer base.\n3. **Enterprise segment**: Although this segment has low volume (4.5% of total volume), it contributes significantly to revenue (22.1% of annual revenue) and has a low churn rate (6.2%) and high LTV (Life-Time Value).\n\nThese segments are mentioned in the **Segment Insights** section of the marketing report 2024 document (Source: marketing_report_2024.docx).\n\n\u26a0\ufe0f Response may contain unauthorized content: finance content: 'revenue', finance content: 'profit'. Please verify your access permissions.",
+        "ground_truth": "Target customer segments include specific industry verticals and business sizes as defined in market segmentation and customer persona documents.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "market_segmentation",
+        "confidence": 0.60532534,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.9,
+          "context_precision": 1.0,
+          "context_recall": 0.06666666666666667,
+          "answer_correctness": 0.3857142857142857
+        },
+        "overall_score": 0.5704761904761905
+      },
+      {
+        "test_id": 36,
+        "question": "How do we measure brand awareness and sentiment?",
+        "answer": "Based on the provided context, it appears that brand awareness and sentiment are measured through various metrics and channels. \n\nFor brand awareness, the context mentions the following metrics:\n\n- Aided brand awareness in the fintech payment solution category, which increased from 22% pre-2024 to 38% in Q4 2024.\n- Brand awareness in the European market entry press, influencer partnerships, loyalty program launch, social media growth, and holiday season campaign.\n\nAdditionally, the context mentions that brand awareness metrics improved by 72.7% in 2024.\n\nAs for measuring sentiment, the context does not provide direct information on how sentiment is measured. However, it does mention that educational content outperforms product-focused content by 2.1x in video metrics, which could be an indirect indicator of sentiment.\n\nTo provide a more accurate answer, I would recommend consulting the marketing team or reviewing additional context that may provide more information on how brand awareness and sentiment are measured and tracked.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.",
+        "ground_truth": "Brand awareness and sentiment are measured through surveys, social media monitoring, and market research as detailed in brand tracking methodologies.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "brand_measurement",
+        "confidence": 0.54584944,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.375,
+          "answer_relevancy": 0.9,
+          "context_precision": 1.0,
+          "context_recall": 0.375,
+          "answer_correctness": 0.6714285714285714
+        },
+        "overall_score": 0.6642857142857143
+      },
+      {
+        "test_id": 41,
+        "question": "What are our content marketing strategies?",
+        "answer": "Based on the provided context documents, our content marketing strategies include:\n\n1. **Localized content**: We have seen that localized content outperforms global campaigns by 40-80% in emerging markets. This suggests that we should continue to create content that is tailored to specific regions and languages.\n2. **Video content**: Video content has been a high-performing channel for us, driving the highest engagement and ROI. We plan to continue investing in video content, with a focus on short-form and long-form content, as well as establishing an in-house video production team.\n3. **B2B messaging**: Our B2B messaging focused on ROI has driven 81% higher engagement, indicating that we should continue to emphasize the benefits and value of our products or services to B2B customers.\n4. **Influencer partnerships**: We have seen strong ROI from influencer partnerships with micro-creators, which suggests that we should continue to explore partnerships with social media influencers who have a strong following in our target markets.\n5. **Social media content**: Our social media audience has grown 375% and brand awareness has increased 72.7%, indicating that our social media content strategy is effective.\n\nOverall, our content marketing strategy appears to be focused on creating localized, video-based content that resonates with our target audiences, while also leveraging influencer partnerships and social media channels to reach and engage with our customers.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: hr content: 'benefits'. Please verify your access permissions.",
+        "ground_truth": "Content marketing strategies include thought leadership, educational content, and customer-focused materials as outlined in content strategy documents.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "content_strategy",
+        "confidence": 0.5579574,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.8,
+          "context_precision": 1.0,
+          "context_recall": 0.35714285714285715,
+          "answer_correctness": 0.6384615384615384
+        },
+        "overall_score": 0.6591208791208791
+      },
+      {
+        "test_id": 45,
+        "question": "What social media guidelines should employees follow?",
+        "answer": "Based on the provided context, specifically from the [Source: employee_handbook.pdf] document, employees should follow the following social media guidelines:\n\n- Treat all colleagues, clients, vendors, and stakeholders with respect, courtesy, and professionalism at all times on social media.\n- Maintain a positive, inclusive, harassment-free, and psychologically safe work environment on social media.\n- Uphold strict confidentiality of company information, client data, and proprietary methodologies on social media.\n- Avoid conflicts of interest; disclose any potential conflicts to HR immediately.\n\nAdditionally, from the [Source: marketing_report_q4_2024.docx] document, it is mentioned that the company has seen phenomenal growth on TikTok, driven by viral holiday content. However, this information is more related to the company's marketing strategy rather than social media guidelines for employees.\n\nIt is essential to note that the provided context does not explicitly mention specific social media guidelines, such as what platforms to use, how to engage with followers, or how to handle online interactions. However, the general guidelines mentioned above should be followed by employees on all social media platforms.\n\n\u26a0\ufe0f Response may contain unauthorized content: hr content: 'employee'. Please verify your access permissions.",
+        "ground_truth": "Social media guidelines include professional conduct standards, brand representation rules, and privacy considerations as outlined in social media policy.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "social_media_policy",
+        "confidence": 0.49316674,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 1.0,
+          "context_precision": 1.0,
+          "context_recall": 0.06666666666666667,
+          "answer_correctness": 0.3142857142857143
+        },
+        "overall_score": 0.5761904761904763
+      }
+    ],
+    "timestamp": "2026-05-10T09:52:37.868315",
+    "description": "Complete FinBot with all components"
+  },
+  "Direct Vector Search": {
+    "config_name": "Direct Vector Search",
+    "configuration": {
+      "enable_full_system": false
+    },
+    "evaluation_time_seconds": 0.7740938663482666,
+    "total_cases": 10,
+    "valid_results": 10,
+    "failed_results": 0,
+    "overall_score": 0.5243492243051067,
+    "metrics_summary": {
+      "faithfulness": {
+        "mean": 0.85,
+        "median": 1.0,
+        "std": 0.24152294576982397,
+        "min": 0.5,
+        "max": 1.0
+      },
+      "answer_relevancy": {
+        "mean": 0.49273809523809525,
+        "median": 0.49750000000000005,
+        "std": 0.0850293955662114,
+        "min": 0.38571428571428573,
+        "max": 0.64
+      },
+      "context_precision": {
+        "mean": 0.8,
+        "median": 0.8,
+        "std": 0.16329931618554522,
+        "min": 0.6,
+        "max": 1.0
+      },
+      "context_recall": {
+        "mean": 0.3008683473389356,
+        "median": 0.34523809523809523,
+        "std": 0.13858122598107134,
+        "min": 0.06666666666666667,
+        "max": 0.47058823529411764
+      },
+      "answer_correctness": {
+        "mean": 0.17813967894850247,
+        "median": 0.16904761904761906,
+        "std": 0.0643567958410141,
+        "min": 0.1,
+        "max": 0.3142857142857143
+      }
+    },
+    "collection_analysis": {
+      "marketing": {
+        "count": 10,
+        "mean_score": 0.5243492243051067,
+        "median_score": 0.5255252100840336
+      }
+    },
+    "detailed_results": [
+      {
+        "test_id": 12,
+        "question": "What are our key marketing campaigns for this quarter?",
+        "answer": "Based on available information: **Underperformance Root Causes:** 1. Partner misalignment: Partners had different target audiences than FinSolve 2. Co-marketing execution issues: Partners slow to implement agreed marketing tactics 3...",
+        "ground_truth": "Key marketing campaigns include digital marketing initiatives, brand awareness programs, and customer acquisition campaigns as outlined in the campaign reports.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "campaign_strategy",
+        "confidence": 0.6207459,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.4666666666666667,
+          "context_precision": 0.6,
+          "context_recall": 0.25,
+          "answer_correctness": 0.17142857142857143
+        },
+        "overall_score": 0.4976190476190476
+      },
+      {
+        "test_id": 13,
+        "question": "How do we measure customer acquisition cost?",
+        "answer": "Based on available information: **Key Insights:** - Peak acquisition months: November (69,400), August (61,200), October (62,100) - Lowest acquisition: March (48,000), June (51,800) - Q1 seasonal low; Q2-Q3 steady growth; Q4 holiday...",
+        "ground_truth": "Customer acquisition cost is measured by dividing total marketing spend by the number of new customers acquired, as detailed in our marketing analytics.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "metrics",
+        "confidence": 0.5117645,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.52,
+          "context_precision": 1.0,
+          "context_recall": 0.375,
+          "answer_correctness": 0.16666666666666669
+        },
+        "overall_score": 0.6123333333333333
+      },
+      {
+        "test_id": 14,
+        "question": "What is our brand positioning strategy?",
+        "answer": "Based on available information: **Brand Awareness Evolution:** - Pre-2024: 22% aided brand awareness (fintech payment solution category) - Q1 2024: 28% brand awareness (European market entry press) - Q2 2024: 32% brand awareness (in...",
+        "ground_truth": "Brand positioning strategy focuses on establishing FinSolve as a trusted financial technology partner, emphasizing innovation and reliability.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "brand_strategy",
+        "confidence": 0.45424265,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.52,
+          "context_precision": 1.0,
+          "context_recall": 0.2857142857142857,
+          "answer_correctness": 0.17692307692307693
+        },
+        "overall_score": 0.5965274725274725
+      },
+      {
+        "test_id": 15,
+        "question": "Who are our main competitors in the fintech space?",
+        "answer": "Based on available information: Founded in 2016, FinSolve Technologies has grown into a leading fintech player with a strong presence across India and expanding global markets. Headquartered in Bangalore, we serve 500+ enterprise cl...",
+        "ground_truth": "Main competitors include other B2B fintech companies offering similar financial services and technology solutions as identified in competitive analysis reports.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "competitive_analysis",
+        "confidence": 0.5859424,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.47500000000000003,
+          "context_precision": 0.8,
+          "context_recall": 0.3333333333333333,
+          "answer_correctness": 0.1588235294117647
+        },
+        "overall_score": 0.5534313725490196
+      },
+      {
+        "test_id": 27,
+        "question": "What is our customer retention strategy?",
+        "answer": "Based on available information: 2024 demonstrated strong customer acquisition momentum with 685,100 new customers (19.9% YoY growth) while simultaneously improving retention metrics. The blended annual churn rate declined 2.4 percen...",
+        "ground_truth": "Customer retention strategy includes loyalty programs, customer success initiatives, and ongoing engagement tactics as outlined in retention plans.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "retention_strategy",
+        "confidence": 0.6552531,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.64,
+          "context_precision": 1.0,
+          "context_recall": 0.42857142857142855,
+          "answer_correctness": 0.25384615384615383
+        },
+        "overall_score": 0.6644835164835164
+      },
+      {
+        "test_id": 28,
+        "question": "How do we track marketing campaign ROI?",
+        "answer": "Based on available information: **Metrics Definitions:** - Budget: Planned spend allocated to campaign - Actual Spend: Final spend after optimizations (may vary from budget) - Impressions: Ad impressions (100% viewability standard a...",
+        "ground_truth": "Marketing ROI is tracked by measuring campaign costs against generated revenue and customer acquisitions using analytics tools and attribution models.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "marketing_analytics",
+        "confidence": 0.61012626,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.52,
+          "context_precision": 0.8,
+          "context_recall": 0.47058823529411764,
+          "answer_correctness": 0.1625
+        },
+        "overall_score": 0.49061764705882355
+      },
+      {
+        "test_id": 35,
+        "question": "What are our target customer segments?",
+        "answer": "Based on available information: **Segment Insights:** - Consumer segment drives volume (84.1%); loyalty program adoption 35.7% of new consumer customers - SMB segment: moderate volume, good unit economics; B2B campaigns showing incr...",
+        "ground_truth": "Target customer segments include specific industry verticals and business sizes as defined in market segmentation and customer persona documents.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "market_segmentation",
+        "confidence": 0.60532534,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.4,
+          "context_precision": 0.8,
+          "context_recall": 0.06666666666666667,
+          "answer_correctness": 0.1
+        },
+        "overall_score": 0.3733333333333334
+      },
+      {
+        "test_id": 36,
+        "question": "How do we measure brand awareness and sentiment?",
+        "answer": "Based on available information: **Brand Awareness Evolution:** - Pre-2024: 22% aided brand awareness (fintech payment solution category) - Q1 2024: 28% brand awareness (European market entry press) - Q2 2024: 32% brand awareness (in...",
+        "ground_truth": "Brand awareness and sentiment are measured through surveys, social media monitoring, and market research as detailed in brand tracking methodologies.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "brand_measurement",
+        "confidence": 0.54584944,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.6,
+          "context_precision": 0.6,
+          "context_recall": 0.375,
+          "answer_correctness": 0.3142857142857143
+        },
+        "overall_score": 0.5778571428571428
+      },
+      {
+        "test_id": 41,
+        "question": "What are our content marketing strategies?",
+        "answer": "Based on available information: **Key Learnings:** - Loyalty program messaging focused on benefits drives 62% higher engagement than feature-focused messaging - Culturally-adapted landing pages (vs.\u00a0translations) increase LATAM conv...",
+        "ground_truth": "Content marketing strategies include thought leadership, educational content, and customer-focused materials as outlined in content strategy documents.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "content_strategy",
+        "confidence": 0.5579574,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.5,
+          "answer_relevancy": 0.4,
+          "context_precision": 0.8,
+          "context_recall": 0.35714285714285715,
+          "answer_correctness": 0.17692307692307693
+        },
+        "overall_score": 0.4468131868131868
+      },
+      {
+        "test_id": 45,
+        "question": "What social media guidelines should employees follow?",
+        "answer": "Based on available information: - Business Use Only : Company equipment intended for business purposes; personal use should be minimal and not interfere with work.\n- No Unauthorized Use : Do not share equipment with others, loan it ...",
+        "ground_truth": "Social media guidelines include professional conduct standards, brand representation rules, and privacy considerations as outlined in social media policy.",
+        "collection": "marketing",
+        "user_role": "marketing",
+        "category": "social_media_policy",
+        "confidence": 0.49316674,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.38571428571428573,
+          "context_precision": 0.6,
+          "context_recall": 0.06666666666666667,
+          "answer_correctness": 0.1
+        },
+        "overall_score": 0.43047619047619057
+      }
+    ],
+    "timestamp": "2026-05-10T09:52:38.645087",
+    "description": "Direct vector search without RAG processing"
+  },
+  "comparison": {
+    "metric_comparison": {},
+    "best_configuration": {
+      "faithfulness": {
+        "config": "Direct Vector Search",
+        "score": 0.85
+      },
+      "answer_relevancy": {
+        "config": "Full System",
+        "score": 0.8791666666666667
+      },
+      "context_precision": {
+        "config": "Full System",
+        "score": 0.94
+      },
+      "context_recall": {
+        "config": "Full System",
+        "score": 0.3008683473389356
+      },
+      "answer_correctness": {
+        "config": "Full System",
+        "score": 0.4994562055591467
+      }
+    },
+    "performance_improvement": {
+      "faithfulness": {
+        "absolute_improvement": -0.399781746031746,
+        "percentage_improvement": -47.033146591970116
+      },
+      "answer_relevancy": {
+        "absolute_improvement": 0.3864285714285714,
+        "percentage_improvement": 78.42474027542885
+      },
+      "context_precision": {
+        "absolute_improvement": 0.1399999999999999,
+        "percentage_improvement": 17.49999999999999
+      },
+      "context_recall": {
+        "absolute_improvement": 0.0,
+        "percentage_improvement": 0.0
+      },
+      "answer_correctness": {
+        "absolute_improvement": 0.32131652661064425,
+        "percentage_improvement": 180.37336123387314
+      }
+    }
+  },
+  "metadata": {
+    "total_test_cases": 10,
+    "completion_time": "2026-05-10T09:52:38.645189",
+    "evaluation_framework": "Internal RAGAs-style metrics"
+  }
+}

@@ -83,7 +83,8 @@ When you receive context documents and a question, provide a clear, accurate ans
         self, 
         query: str, 
         user_role: Role,
-        limit: int = 5
+        limit: int = 5,
+        session_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """
         Simplified RAG pipeline using Groq:
@@ -95,25 +96,33 @@ When you receive context documents and a question, provide a clear, accurate ans
             query: User's question
             user_role: User's role for RBAC
             limit: Maximum documents to retrieve
+            session_id: Optional session identifier
             
         Returns:
             Simple response with query, user_role, answer, and confidence
         """
         
-        logger.info(f"Processing RAG query: '{query}' for role: {user_role}")
+        sid = session_id or "no_session"
+        logger.info(f"[{sid}] RAG Query: '{query[:60]}...' Role: {user_role}")
         
         try:
             # Step 1: Enhanced query processing for employee IDs
             enhanced_query = self._enhance_query_for_exact_matches(query)
+            if enhanced_query != query:
+                logger.debug(f"[{sid}] Query enhanced: {enhanced_query[:80]}...")
             
             # Step 2: Retrieve relevant documents with RBAC
+            logger.debug(f"[{sid}] Searching for {limit} documents...")
             results = await self.vector_store.search_with_rbac(
                 query=enhanced_query,
                 user_role=user_role,
                 limit=limit
             )
             
+            logger.info(f"[{sid}] Retrieved {len(results)} documents")
+            
             if not results:
+                logger.warning(f"[{sid}] No results found for query")
                 return {
                     "query": query,
                     "user_role": user_role,
@@ -123,11 +132,13 @@ When you receive context documents and a question, provide a clear, accurate ans
             
             # Step 3: Build context from retrieved chunks
             context = self._build_context(results)
+            logger.debug(f"[{sid}] Context built: {len(context)} chars")
             
             # Step 4: Generate response using Groq (if available)
             if self.groq_client:
                 try:
                     user_message = f"Context:\\n{context}\\n\\nQuestion: {query}"
+                    logger.debug(f"[{sid}] Sending to Groq ({self.groq_model})... ({len(user_message)} chars)")
                     
                     response = self.groq_client.chat.completions.create(
                         model=self.groq_model,
@@ -138,16 +149,19 @@ When you receive context documents and a question, provide a clear, accurate ans
                         temperature=0.2,  # Low temperature for factual responses
                     )
                     
-                    answer = response.choices[0].message.content
+                    answer = response.choices[0].message.content or ""
+                    logger.debug(f"[{sid}] Groq response: {len(answer)} chars")
                 except Exception as e:
-                    logger.error(f"Groq API error: {e}")
+                    logger.warning(f"[{sid}] Groq API error: {e}, using fallback")
                     answer = self._create_fallback_response(query, results)
             else:
                 # Fallback response without LLM
+                logger.debug(f"[{sid}] Groq not available, using fallback response")
                 answer = self._create_fallback_response(query, results)
             
             # Get confidence from top result
             confidence = results[0][1] if results else 0.0
+            logger.info(f"[{sid}] Final Answer: {len(answer)} chars, Confidence: {confidence:.3f}")
             
             return {
                 "query": query,
@@ -157,7 +171,7 @@ When you receive context documents and a question, provide a clear, accurate ans
             }
             
         except Exception as e:
-            logger.error(f"RAG processing failed: {str(e)}")
+            logger.error(f"[{session_id or 'no_session'}] RAG processing failed: {str(e)}", exc_info=True)
             return {
                 "query": query,
                 "user_role": user_role,
@@ -188,10 +202,9 @@ When you receive context documents and a question, provide a clear, accurate ans
         
         if employee_ids:
             # For employee ID queries, create a more targeted search
-            # Add the exact ID multiple times and specify it's an employee_id search
-            employee_id = employee_ids[0]  # Take the first found ID
+            employee_id = employee_ids[0]
             enhanced_query = f"employee_id {employee_id} Employee: {employee_id} {query} {employee_id}"
-            logger.info(f"Enhanced query for employee ID search: '{enhanced_query}'")
+            logger.debug(f"Employee ID detected: {employee_id}, enhanced_query: {enhanced_query}")
             return enhanced_query
         
         return query
