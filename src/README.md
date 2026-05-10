@@ -6,7 +6,7 @@ This directory contains the complete FinBot source code organized into logical c
 
 ## 📁 Component Overview
 
-### 🔄 [Core Processing](core/docs/README.md)
+### 🔄 [Core Processing](../docs/core/README.md)
 - **Document Processor**: Docling-based hierarchical chunking
 - **Vector Store**: Qdrant with RBAC enforcement  
 - **Configuration**: Application settings and environment
@@ -16,28 +16,28 @@ This directory contains the complete FinBot source code organized into logical c
 - 384D vector embeddings with breadcrumb context
 - Role-based access control at vector level
 
-### 📊 [Data Models](models/docs/README.md)
+### 📊 [Data Models](../docs/models/README.md)
 - **DocumentChunk**: Simplified 3-field chunk structure
 - **DocumentMetadata**: Essential 6-field RBAC metadata
 - **Collection/Role**: Access control enums
 
 **Design Principle:** Eliminated over-engineering (15+ → 6 fields)
 
-### 🖥️ [Command Line Interface](cli/docs/README.md)
+### 🖥️ [Command Line Interface](../docs/cli/README.md)
 - **Ingestion**: Batch document processing
 - **Testing**: System validation and search testing
 - **Management**: Collection operations
 
 **Usage:** `python -m src.cli <command>`
 
-### 🌐 [API Endpoints](api/docs/README.md)
+### 🌐 [API Endpoints](../docs/api/README.md)
 - **FastAPI**: RESTful API implementation
 - **Search**: RBAC-enforced semantic search
 - **Health**: System monitoring endpoints
 
 **Status:** Ready for production deployment
 
-### 🧪 [Testing Suite](tests/docs/README.md)
+### 🧪 [Testing Suite](../docs/tests/README.md)
 - **Integration Tests**: End-to-end workflow validation
 - **Search Testing**: Natural language query validation
 - **RBAC Testing**: Role-based access verification
@@ -83,16 +83,16 @@ python main.py
 
 1. **Code changes** → Update component-specific documentation
 2. **New features** → Add tests in `tests/` directory  
-3. **API changes** → Update `api/docs/` documentation
-4. **Model changes** → Update `models/docs/` schemas
+3. **API changes** → Update `../docs/api/README.md` documentation
+4. **Model changes** → Update `../docs/models/README.md` schemas
 
 ## 📚 Detailed Documentation
 
-- [Core Processing Documentation](core/docs/README.md) - Document chunking and vector storage
-- [Data Models Documentation](models/docs/README.md) - Schema definitions and validation
-- [CLI Documentation](cli/docs/README.md) - Command-line interface usage
-- [API Documentation](api/docs/README.md) - REST endpoint specifications  
-- [Testing Documentation](tests/docs/README.md) - Test methodology and validation
+- [Core Processing Documentation](../docs/core/README.md) - Document chunking and vector storage
+- [Data Models Documentation](../docs/models/README.md) - Schema definitions and validation
+- [CLI Documentation](../docs/cli/README.md) - Command-line interface usage
+- [API Documentation](../docs/api/README.md) - REST endpoint specifications  
+- [Testing Documentation](../docs/tests/README.md) - Test methodology and validation
 
 ---
 
