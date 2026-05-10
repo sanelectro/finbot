@@ -1,0 +1,86 @@
+{
+  "role": "finance",
+  "test_cases": [
+    {
+      "id": 9,
+      "question": "What are the company's financial performance metrics for Q3?",
+      "ground_truth": "Q3 financial performance metrics include revenue, profit margins, expense ratios, and other key financial indicators as reported in the quarterly earnings summary.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "financial_performance",
+      "expected_context": "Q3 earnings and financial reports"
+    },
+    {
+      "id": 10,
+      "question": "What is the budget allocation for different departments?",
+      "ground_truth": "Budget allocation varies by department based on strategic priorities and operational needs as outlined in the annual budget plan.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "budget_analysis",
+      "expected_context": "Budget allocation documents"
+    },
+    {
+      "id": 11,
+      "question": "What are our investment priorities for FY2024?",
+      "ground_truth": "FY2024 investment priorities focus on technology infrastructure, talent acquisition, and market expansion as detailed in the annual investment plan.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "investment_strategy",
+      "expected_context": "Annual report and investment documents"
+    },
+    {
+      "id": 25,
+      "question": "What are our quarterly revenue targets?",
+      "ground_truth": "Quarterly revenue targets are set based on market analysis and growth projections as detailed in financial planning documents.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "revenue_planning",
+      "expected_context": "Financial planning and target documents"
+    },
+    {
+      "id": 26,
+      "question": "How do we calculate return on investment for projects?",
+      "ground_truth": "ROI calculation involves comparing project costs to generated benefits over time using established financial metrics and analysis frameworks.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "financial_analysis",
+      "expected_context": "Financial analysis methodologies"
+    },
+    {
+      "id": 33,
+      "question": "What are the key financial risks facing the company?",
+      "ground_truth": "Key financial risks include market volatility, credit risk, operational costs, and regulatory compliance as identified in risk assessment reports.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "risk_management",
+      "expected_context": "Risk assessment and financial analysis documents"
+    },
+    {
+      "id": 34,
+      "question": "How do we evaluate vendor contracts and costs?",
+      "ground_truth": "Vendor evaluation includes cost analysis, service quality assessment, and contract terms review using established procurement processes.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "vendor_management",
+      "expected_context": "Procurement and vendor management documentation"
+    },
+    {
+      "id": 40,
+      "question": "How do we ensure compliance with financial regulations?",
+      "ground_truth": "Financial compliance involves following regulatory requirements, audit processes, and compliance frameworks as detailed in regulatory compliance documentation.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "regulatory_compliance",
+      "expected_context": "Regulatory compliance and audit documentation"
+    },
+    {
+      "id": 44,
+      "question": "How do we track and manage operational expenses?",
+      "ground_truth": "Operational expenses are tracked through financial systems, budgeting processes, and regular review cycles as documented in expense management procedures.",
+      "collection": "finance",
+      "user_role": "finance",
+      "category": "expense_management",
+      "expected_context": "Financial management and budgeting documentation"
+    }
+  ]
+}

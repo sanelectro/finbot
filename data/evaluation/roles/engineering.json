@@ -1,0 +1,86 @@
+{
+  "role": "engineering",
+  "test_cases": [
+    {
+      "id": 6,
+      "question": "What are the system architecture best practices?",
+      "ground_truth": "System architecture best practices include scalable design patterns, microservices architecture, proper separation of concerns, and documented APIs.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "architecture",
+      "expected_context": "Engineering documentation and architecture guides"
+    },
+    {
+      "id": 7,
+      "question": "How do we handle incident management?",
+      "ground_truth": "Incident management follows a structured process including detection, response, resolution, and post-incident review as documented in the incident runbooks.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "process",
+      "expected_context": "Incident management documentation"
+    },
+    {
+      "id": 8,
+      "question": "What are our API authentication methods?",
+      "ground_truth": "API authentication methods include token-based authentication, OAuth 2.0, and other security protocols as specified in the API documentation.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "api_docs",
+      "expected_context": "API reference documentation"
+    },
+    {
+      "id": 23,
+      "question": "What are the system performance requirements?",
+      "ground_truth": "System performance requirements include response time, throughput, availability, and scalability metrics as defined in technical specifications.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "requirements",
+      "expected_context": "Technical specifications and SLA documents"
+    },
+    {
+      "id": 24,
+      "question": "How do we implement CI/CD pipelines?",
+      "ground_truth": "CI/CD pipeline implementation follows automated testing, code review, and deployment processes as documented in the development guidelines.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "devops",
+      "expected_context": "Development and deployment documentation"
+    },
+    {
+      "id": 31,
+      "question": "What security protocols must engineers follow?",
+      "ground_truth": "Engineers must follow security protocols including secure coding practices, access controls, and data protection measures as specified in security guidelines.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "security",
+      "expected_context": "Security guidelines and engineering standards"
+    },
+    {
+      "id": 32,
+      "question": "How do we handle database backup and recovery?",
+      "ground_truth": "Database backup and recovery procedures include automated backups, disaster recovery plans, and data restoration processes as documented in operational runbooks.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "database_operations",
+      "expected_context": "Database administration and backup procedures"
+    },
+    {
+      "id": 39,
+      "question": "What performance metrics do we track for engineering systems?",
+      "ground_truth": "Engineering performance metrics include system uptime, response time, error rates, and throughput as defined in monitoring and SLA documentation.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "performance_monitoring",
+      "expected_context": "System monitoring and performance documentation"
+    },
+    {
+      "id": 43,
+      "question": "What are the requirements for code reviews?",
+      "ground_truth": "Code review requirements include peer review processes, quality standards, and approval workflows as specified in development guidelines.",
+      "collection": "engineering",
+      "user_role": "engineering",
+      "category": "code_quality",
+      "expected_context": "Development process and code review guidelines"
+    }
+  ]
+}

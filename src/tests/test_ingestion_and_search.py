@@ -9,7 +9,7 @@ Comprehensive test for FinBot simplified architecture:
 import asyncio
 import sys
 from pathlib import Path
-from typing import List, Tuple
+from typing import Any, List, Tuple, cast
 
 # Add parent directory to path for imports
 sys.path.append(str(Path(__file__).parent.parent.parent))
@@ -102,7 +102,7 @@ class FinBotTester:
                     query=query,
                     user_role='engineering',
                     limit=3,
-                    collection_filter='engineering'
+                    collection_filter=['engineering']
                 )
                 
                 if results:
@@ -158,17 +158,34 @@ class FinBotTester:
         """Display collection statistics"""
         print(f"\n📈 Collection statistics:")
         try:
-            collections = await asyncio.get_event_loop().run_in_executor(
-                None, self.vector_store.client.get_collections
+            collection_info = await asyncio.get_event_loop().run_in_executor(
+                None,
+                self.vector_store.client.get_collection,
+                self.vector_store.collection_name,
             )
-            
-            for collection in collections.collections:
-                if collection.name == self.vector_store.collection_name:
-                    print(f"  • Collection: {collection.name}")
-                    print(f"  • Vector count: {collection.vectors_count or 0}")
-                    print(f"  • Vector size: {collection.config.params.vectors.size}")
-                    print(f"  • Distance: {collection.config.params.vectors.distance}")
-                    break
+
+            info_any = cast(Any, collection_info)
+            vectors_count = getattr(info_any, "vectors_count", 0) or 0
+
+            size: Any = "unknown"
+            distance: Any = "unknown"
+            config = getattr(info_any, "config", None)
+            params = getattr(config, "params", None)
+            vectors = getattr(params, "vectors", None)
+
+            if isinstance(vectors, dict):
+                first_vector = next(iter(vectors.values()), None)
+                if first_vector is not None:
+                    size = getattr(first_vector, "size", "unknown")
+                    distance = getattr(first_vector, "distance", "unknown")
+            else:
+                size = getattr(vectors, "size", "unknown")
+                distance = getattr(vectors, "distance", "unknown")
+
+            print(f"  • Collection: {self.vector_store.collection_name}")
+            print(f"  • Vector count: {vectors_count}")
+            print(f"  • Vector size: {size}")
+            print(f"  • Distance: {distance}")
         except Exception as e:
             print(f"    ❌ Failed to get collection stats: {e}")
 

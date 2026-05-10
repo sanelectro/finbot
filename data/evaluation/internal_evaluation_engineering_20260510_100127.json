@@ -1,0 +1,514 @@
+{
+  "Full System": {
+    "config_name": "Full System",
+    "configuration": {
+      "enable_full_system": true
+    },
+    "evaluation_time_seconds": 11.37276005744934,
+    "total_cases": 9,
+    "valid_results": 9,
+    "failed_results": 0,
+    "overall_score": 0.415820464938112,
+    "metrics_summary": {
+      "faithfulness": {
+        "mean": 0.08994708994708994,
+        "median": 0.0,
+        "std": 0.11950968528869521,
+        "min": 0.0,
+        "max": 0.3333333333333333
+      },
+      "answer_relevancy": {
+        "mean": 0.43492063492063493,
+        "median": 0.45714285714285713,
+        "std": 0.24192163420724835,
+        "min": 0.2,
+        "max": 0.7285714285714286
+      },
+      "context_precision": {
+        "mean": 0.9333333333333333,
+        "median": 1.0,
+        "std": 0.1414213562373095,
+        "min": 0.6,
+        "max": 1.0
+      },
+      "context_recall": {
+        "mean": 0.3547230003112356,
+        "median": 0.35714285714285715,
+        "std": 0.13603476565279513,
+        "min": 0.06666666666666667,
+        "max": 0.5294117647058824
+      },
+      "answer_correctness": {
+        "mean": 0.2661782661782662,
+        "median": 0.3307692307692308,
+        "std": 0.16169620100789844,
+        "min": 0.1,
+        "max": 0.4571428571428572
+      }
+    },
+    "collection_analysis": {
+      "engineering": {
+        "count": 9,
+        "mean_score": 0.415820464938112,
+        "median_score": 0.3890476190476191
+      }
+    },
+    "detailed_results": [
+      {
+        "test_id": 6,
+        "question": "What are the system architecture best practices?",
+        "answer": "I'm FinBot, and I'll do my best to answer your question based on the provided context.\n\nUnfortunately, I don't see any information about system architecture best practices in the provided context. The context documents appear to be related to employee policies, procedures, and guidelines, but I don't find any specific information about system architecture.\n\nIf you could provide more context or clarify your question, I'll do my best to assist you.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: hr content: 'employee'. Please verify your access permissions.",
+        "ground_truth": "System architecture best practices include scalable design patterns, microservices architecture, proper separation of concerns, and documented APIs.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "architecture",
+        "confidence": 0.2647484,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.14285714285714285,
+          "answer_relevancy": 0.7285714285714286,
+          "context_precision": 1.0,
+          "context_recall": 0.06666666666666667,
+          "answer_correctness": 0.4571428571428572
+        },
+        "overall_score": 0.47904761904761906
+      },
+      {
+        "test_id": 7,
+        "question": "How do we handle incident management?",
+        "answer": "I can only assist with FinSolve business-related questions. Please ask about our financial reports, HR policies, engineering documentation, or marketing materials.",
+        "ground_truth": "Incident management follows a structured process including detection, response, resolution, and post-incident review as documented in the incident runbooks.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "process",
+        "confidence": 0.0,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.2,
+          "context_precision": 1.0,
+          "context_recall": 0.4,
+          "answer_correctness": 0.1
+        },
+        "overall_score": 0.34
+      },
+      {
+        "test_id": 8,
+        "question": "What are our API authentication methods?",
+        "answer": "I couldn't find any information about API authentication methods in the provided context. The context documents seem to focus on general security policies, data handling, and employee responsibilities, but do not specifically mention API authentication methods. If you have any additional context or information, I'd be happy to try and help further.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: hr content: 'employee'. Please verify your access permissions.",
+        "ground_truth": "API authentication methods include token-based authentication, OAuth 2.0, and other security protocols as specified in the API documentation.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "api_docs",
+        "confidence": 0.37012023,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.3333333333333333,
+          "answer_relevancy": 0.5,
+          "context_precision": 1.0,
+          "context_recall": 0.35714285714285715,
+          "answer_correctness": 0.43333333333333335
+        },
+        "overall_score": 0.5247619047619047
+      },
+      {
+        "test_id": 23,
+        "question": "What are the system performance requirements?",
+        "answer": "Based on the provided context, I couldn't find any information about system performance requirements. The context documents seem to focus on employee policies, software usage, and device management. If you could provide more context or clarify the question, I'll do my best to assist you.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: hr content: 'employee'. Please verify your access permissions.",
+        "ground_truth": "System performance requirements include response time, throughput, availability, and scalability metrics as defined in technical specifications.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "requirements",
+        "confidence": 0.34967804,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.16666666666666666,
+          "answer_relevancy": 0.7,
+          "context_precision": 0.8,
+          "context_recall": 0.35714285714285715,
+          "answer_correctness": 0.4076923076923077
+        },
+        "overall_score": 0.48630036630036627
+      },
+      {
+        "test_id": 24,
+        "question": "How do we implement CI/CD pipelines?",
+        "answer": "I can only assist with FinSolve business-related questions. Please ask about our financial reports, HR policies, engineering documentation, or marketing materials.",
+        "ground_truth": "CI/CD pipeline implementation follows automated testing, code review, and deployment processes as documented in the development guidelines.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "devops",
+        "confidence": 0.0,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.2,
+          "context_precision": 1.0,
+          "context_recall": 0.35714285714285715,
+          "answer_correctness": 0.1
+        },
+        "overall_score": 0.33142857142857146
+      },
+      {
+        "test_id": 31,
+        "question": "What security protocols must engineers follow?",
+        "answer": "I can only assist with FinSolve business-related questions. Please ask about our financial reports, HR policies, engineering documentation, or marketing materials.",
+        "ground_truth": "Engineers must follow security protocols including secure coding practices, access controls, and data protection measures as specified in security guidelines.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "security",
+        "confidence": 0.0,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.2,
+          "context_precision": 1.0,
+          "context_recall": 0.5294117647058824,
+          "answer_correctness": 0.1
+        },
+        "overall_score": 0.3658823529411765
+      },
+      {
+        "test_id": 32,
+        "question": "How do we handle database backup and recovery?",
+        "answer": "I can only assist with FinSolve business-related questions. Please ask about our financial reports, HR policies, engineering documentation, or marketing materials.",
+        "ground_truth": "Database backup and recovery procedures include automated backups, disaster recovery plans, and data restoration processes as documented in operational runbooks.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "database_operations",
+        "confidence": 0.0,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.2,
+          "context_precision": 1.0,
+          "context_recall": 0.375,
+          "answer_correctness": 0.1
+        },
+        "overall_score": 0.335
+      },
+      {
+        "test_id": 39,
+        "question": "What performance metrics do we track for engineering systems?",
+        "answer": "Based on the provided context, I couldn't find any information about performance metrics for engineering systems. The context seems to focus on the performance review process, including feedback, ratings, and development plans, but it doesn't mention specific metrics for engineering systems.\n\nHowever, I did find a mention of \"leadership competencies, communication, collaboration, etc.\" in the context, which might be related to performance metrics. But without more specific information, I couldn't determine the exact metrics tracked for engineering systems.\n\nIf you could provide more context or clarify the question, I'd be happy to try and assist you further.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.",
+        "ground_truth": "Engineering performance metrics include system uptime, response time, error rates, and throughput as defined in monitoring and SLA documentation.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "performance_monitoring",
+        "confidence": 0.4513861,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.0,
+          "answer_relevancy": 0.7285714285714286,
+          "context_precision": 0.6,
+          "context_recall": 0.25,
+          "answer_correctness": 0.3666666666666667
+        },
+        "overall_score": 0.3890476190476191
+      },
+      {
+        "test_id": 43,
+        "question": "What are the requirements for code reviews?",
+        "answer": "I'm FinBot, and I've searched the provided context. Unfortunately, there's no information about code review requirements in the given documents. The context only covers employee handbook policies, such as software installation, performance management, and expense reporting. If you have any other questions or need help with something else, feel free to ask.\n\n\u26a0\ufe0f This response lacks proper source citations. Please verify information independently.\n\u26a0\ufe0f Response may contain unauthorized content: hr content: 'employee'. Please verify your access permissions.",
+        "ground_truth": "Code review requirements include peer review processes, quality standards, and approval workflows as specified in development guidelines.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "code_quality",
+        "confidence": 0.451518,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 0.16666666666666666,
+          "answer_relevancy": 0.45714285714285713,
+          "context_precision": 1.0,
+          "context_recall": 0.5,
+          "answer_correctness": 0.3307692307692308
+        },
+        "overall_score": 0.49091575091575096
+      }
+    ],
+    "timestamp": "2026-05-10T10:01:26.956546",
+    "description": "Complete FinBot with all components"
+  },
+  "Direct Vector Search": {
+    "config_name": "Direct Vector Search",
+    "configuration": {
+      "enable_full_system": false
+    },
+    "evaluation_time_seconds": 0.7724888324737549,
+    "total_cases": 9,
+    "valid_results": 9,
+    "failed_results": 0,
+    "overall_score": 0.558308254925902,
+    "metrics_summary": {
+      "faithfulness": {
+        "mean": 1.0,
+        "median": 1.0,
+        "std": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "answer_relevancy": {
+        "mean": 0.44682539682539685,
+        "median": 0.4,
+        "std": 0.09375330681998656,
+        "min": 0.30000000000000004,
+        "max": 0.6
+      },
+      "context_precision": {
+        "mean": 0.8222222222222222,
+        "median": 0.8,
+        "std": 0.18559214542766742,
+        "min": 0.6,
+        "max": 1.0
+      },
+      "context_recall": {
+        "mean": 0.3547230003112356,
+        "median": 0.35714285714285715,
+        "std": 0.13603476565279513,
+        "min": 0.06666666666666667,
+        "max": 0.5294117647058824
+      },
+      "answer_correctness": {
+        "mean": 0.16777065527065527,
+        "median": 0.1625,
+        "std": 0.07922424575989795,
+        "min": 0.08333333333333333,
+        "max": 0.30000000000000004
+      }
+    },
+    "collection_analysis": {
+      "engineering": {
+        "count": 9,
+        "mean_score": 0.558308254925902,
+        "median_score": 0.5714285714285714
+      }
+    },
+    "detailed_results": [
+      {
+        "test_id": 6,
+        "question": "What are the system architecture best practices?",
+        "answer": "Based on available information: Your first days at FinSolve are carefully structured to ensure a smooth and welcoming integration into our organization:...",
+        "ground_truth": "System architecture best practices include scalable design patterns, microservices architecture, proper separation of concerns, and documented APIs.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "architecture",
+        "confidence": 0.2647484,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.38571428571428573,
+          "context_precision": 1.0,
+          "context_recall": 0.06666666666666667,
+          "answer_correctness": 0.1
+        },
+        "overall_score": 0.5104761904761905
+      },
+      {
+        "test_id": 7,
+        "question": "How do we handle incident management?",
+        "answer": "Based on available information: - Immediate Reporting : All accidents, injuries, occupational illnesses, or near-miss incidents must be reported to HR and the Safety Officer within 24 hours.\n- Documentation : Incident report filed w...",
+        "ground_truth": "Incident management follows a structured process including detection, response, resolution, and post-incident review as documented in the incident runbooks.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "process",
+        "confidence": 0.48611802,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.55,
+          "context_precision": 1.0,
+          "context_recall": 0.4,
+          "answer_correctness": 0.17692307692307693
+        },
+        "overall_score": 0.6253846153846153
+      },
+      {
+        "test_id": 8,
+        "question": "What are our API authentication methods?",
+        "answer": "Based on available information: Password & Access Management : - Use strong passwords (minimum 12 characters, mix of uppercase, lowercase, numbers, symbols). - Change password every 90 days; reset immediately if compromised. - Do no...",
+        "ground_truth": "API authentication methods include token-based authentication, OAuth 2.0, and other security protocols as specified in the API documentation.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "api_docs",
+        "confidence": 0.37012023,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.4,
+          "context_precision": 0.6,
+          "context_recall": 0.35714285714285715,
+          "answer_correctness": 0.08333333333333333
+        },
+        "overall_score": 0.48809523809523814
+      },
+      {
+        "test_id": 23,
+        "question": "What are the system performance requirements?",
+        "answer": "Based on available information: - Role Requirements : Roles with no client-facing responsibilities, no critical in-office infrastructure needs, and clear output-based accountability.\n- Performance History : Employee must have comple...",
+        "ground_truth": "System performance requirements include response time, throughput, availability, and scalability metrics as defined in technical specifications.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "requirements",
+        "confidence": 0.34967804,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.5,
+          "context_precision": 0.8,
+          "context_recall": 0.35714285714285715,
+          "answer_correctness": 0.25384615384615383
+        },
+        "overall_score": 0.5821978021978022
+      },
+      {
+        "test_id": 24,
+        "question": "How do we implement CI/CD pipelines?",
+        "answer": "Based on available information: - Feedback Sources : Manager, peers (3-5 selected by employee), direct reports (if applicable), customers/partners (external stakeholders for client-facing roles).\n- Survey Tool : Anonymous online sur...",
+        "ground_truth": "CI/CD pipeline implementation follows automated testing, code review, and deployment processes as documented in the development guidelines.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "devops",
+        "confidence": 0.25479352,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.4,
+          "context_precision": 1.0,
+          "context_recall": 0.35714285714285715,
+          "answer_correctness": 0.1
+        },
+        "overall_score": 0.5714285714285714
+      },
+      {
+        "test_id": 31,
+        "question": "What security protocols must engineers follow?",
+        "answer": "Based on available information: Password & Access Management : - Use strong passwords (minimum 12 characters, mix of uppercase, lowercase, numbers, symbols). - Change password every 90 days; reset immediately if compromised. - Do no...",
+        "ground_truth": "Engineers must follow security protocols including secure coding practices, access controls, and data protection measures as specified in security guidelines.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "security",
+        "confidence": 0.45376822,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.4,
+          "context_precision": 0.8,
+          "context_recall": 0.5294117647058824,
+          "answer_correctness": 0.1625
+        },
+        "overall_score": 0.5783823529411765
+      },
+      {
+        "test_id": 32,
+        "question": "How do we handle database backup and recovery?",
+        "answer": "Based on available information: - Company Data Backup : Critical company data automatically backed up to secure cloud storage (AWS S3) daily; recovery time objective (RTO) is 4 hours.\n- Employee Responsibility : Employees are respon...",
+        "ground_truth": "Database backup and recovery procedures include automated backups, disaster recovery plans, and data restoration processes as documented in operational runbooks.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "database_operations",
+        "confidence": 0.4885264,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.6,
+          "context_precision": 1.0,
+          "context_recall": 0.375,
+          "answer_correctness": 0.30000000000000004
+        },
+        "overall_score": 0.655
+      },
+      {
+        "test_id": 39,
+        "question": "What performance metrics do we track for engineering systems?",
+        "answer": "Based on available information: Management System (PMS). 2. Manager Feedback (1 week): Manager reviews selfassessment, provides detailed feedback on performance, ratings across competencies; may conduct 1:1 discussion. 3. Peer Input...",
+        "ground_truth": "Engineering performance metrics include system uptime, response time, error rates, and throughput as defined in monitoring and SLA documentation.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "performance_monitoring",
+        "confidence": 0.4513861,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.4857142857142857,
+          "context_precision": 0.6,
+          "context_recall": 0.25,
+          "answer_correctness": 0.23333333333333334
+        },
+        "overall_score": 0.5138095238095238
+      },
+      {
+        "test_id": 43,
+        "question": "What are the requirements for code reviews?",
+        "answer": "Based on available information: - Company-Approved Software : Only install software approved by IT Security team; unauthorized installations may be remotely uninstalled.\n- Licensing : Use only licensed software; pirated or cracked s...",
+        "ground_truth": "Code review requirements include peer review processes, quality standards, and approval workflows as specified in development guidelines.",
+        "collection": "engineering",
+        "user_role": "engineering",
+        "category": "code_quality",
+        "confidence": 0.451518,
+        "contexts_count": 5,
+        "metrics": {
+          "faithfulness": 1.0,
+          "answer_relevancy": 0.30000000000000004,
+          "context_precision": 0.6,
+          "context_recall": 0.5,
+          "answer_correctness": 0.1
+        },
+        "overall_score": 0.5
+      }
+    ],
+    "timestamp": "2026-05-10T10:01:27.730727",
+    "description": "Direct vector search without RAG processing"
+  },
+  "comparison": {
+    "metric_comparison": {},
+    "best_configuration": {
+      "faithfulness": {
+        "config": "Direct Vector Search",
+        "score": 1.0
+      },
+      "answer_relevancy": {
+        "config": "Direct Vector Search",
+        "score": 0.44682539682539685
+      },
+      "context_precision": {
+        "config": "Full System",
+        "score": 0.9333333333333333
+      },
+      "context_recall": {
+        "config": "Full System",
+        "score": 0.3547230003112356
+      },
+      "answer_correctness": {
+        "config": "Full System",
+        "score": 0.2661782661782662
+      }
+    },
+    "performance_improvement": {
+      "faithfulness": {
+        "absolute_improvement": -0.91005291005291,
+        "percentage_improvement": -91.005291005291
+      },
+      "answer_relevancy": {
+        "absolute_improvement": -0.011904761904761918,
+        "percentage_improvement": -2.6642984014209623
+      },
+      "context_precision": {
+        "absolute_improvement": 0.11111111111111116,
+        "percentage_improvement": 13.51351351351352
+      },
+      "context_recall": {
+        "absolute_improvement": 0.0,
+        "percentage_improvement": 0.0
+      },
+      "answer_correctness": {
+        "absolute_improvement": 0.09840761090761091,
+        "percentage_improvement": 58.65603299269188
+      }
+    }
+  },
+  "metadata": {
+    "total_test_cases": 9,
+    "completion_time": "2026-05-10T10:01:27.730833",
+    "evaluation_framework": "Internal RAGAs-style metrics"
+  }
+}

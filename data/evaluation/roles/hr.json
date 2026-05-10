@@ -1,0 +1,59 @@
+{
+  "role": "hr",
+  "test_cases": [
+    {
+      "id": 1,
+      "question": "What is the name of employee with ID FINEMP1000?",
+      "ground_truth": "The employee with ID FINEMP1000 is Mahesh Desai.",
+      "collection": "hr",
+      "user_role": "hr",
+      "category": "employee_lookup",
+      "expected_context": "Employee data with ID FINEMP1000"
+    },
+    {
+      "id": 2,
+      "question": "Who has the highest salary in the company?",
+      "ground_truth": "Based on the HR data, the employee with the highest salary would need to be identified from the salary column in the employee data.",
+      "collection": "hr",
+      "user_role": "hr",
+      "category": "salary_analysis",
+      "expected_context": "Employee salary information"
+    },
+    {
+      "id": 4,
+      "question": "How many employees work in the Compliance department?",
+      "ground_truth": "The number of employees in the Compliance department can be determined by counting employees with 'Compliance' as their department.",
+      "collection": "hr",
+      "user_role": "hr",
+      "category": "department_analysis",
+      "expected_context": "Employee department information"
+    },
+    {
+      "id": 5,
+      "question": "What is the average salary for employees in the Finance department?",
+      "ground_truth": "The average salary for Finance department employees would be calculated from the salary data of all employees in the Finance department.",
+      "collection": "hr",
+      "user_role": "hr",
+      "category": "salary_analysis",
+      "expected_context": "Employee salary and department data"
+    },
+    {
+      "id": 21,
+      "question": "How many female employees work in the Engineering department?",
+      "ground_truth": "The number of female employees in Engineering can be determined by filtering employee data by gender and department.",
+      "collection": "hr",
+      "user_role": "hr",
+      "category": "diversity_analysis",
+      "expected_context": "Employee gender and department data"
+    },
+    {
+      "id": 22,
+      "question": "What is the employee turnover rate?",
+      "ground_truth": "Employee turnover rate is calculated based on departures over a specific period and total employee count as tracked in HR metrics.",
+      "collection": "hr",
+      "user_role": "hr",
+      "category": "hr_metrics",
+      "expected_context": "HR analytics and turnover data"
+    }
+  ]
+}
