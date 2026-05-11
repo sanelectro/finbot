@@ -366,29 +366,21 @@ flowchart TD
 
 ---
 
-## 🎥 **Video Demonstrations (coming soon)**
+## 🎥 **Video Demonstrations**
 
-### System Overview
-> 📹 [![FinBot overview](https://img.youtube.com/vi/l8tnCbqVzJc/maxresdefault.jpg)](https://www.youtube.com/watch?v=l8tnCbqVzJc)
+### FINBOT - Overview
+> 📹 [![Watch the video](https://img.youtube.com/vi/l8tnCbqVzJc/maxresdefault.jpg)](https://www.youtube.com/watch?v=l8tnCbqVzJc)
 > - System architecture overview
 > - Component interactions
 > - Key features demonstration
 
-### Complete technical demo 
-> 📹 [(https://youtu.be/zo7PDsOLAms?si=wPPX3qBTK1YsMMJ7)]
+### FINBOT - Technical demo 
+> 📹 [![Watch the video](https://img.youtube.com/vi/zo7PDsOLAms/hqdefault.jpg)](https://www.youtube.com/watch?v=zo7PDsOLAms)
 > - Hierarchical chunking in action
 > - Vector embedding generation
 > - RBAC tagging
 > - Semantic routing decision
 > - Admin panel capabilities
-
-### Query Processing (Coming soon)
-> 📹 [Insert video link: Query to response flow (4 minutes)]
-> - Data Retrieval 
-> - RBAC demo
-> - Guardrail enforcement
-> - Admin capabilities
-> - RAGAs evaluation
 
 ---
 
