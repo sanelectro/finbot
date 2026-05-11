@@ -374,32 +374,21 @@ flowchart TD
 > - Component interactions
 > - Key features demonstration
 
-### Document Ingestion (Coming soon)
-> 📹 [Insert video link: Document processing pipeline (3 minutes)]
+### Complete technical demo 
+> 📹 [(https://youtu.be/zo7PDsOLAms?si=wPPX3qBTK1YsMMJ7)]
 > - Hierarchical chunking in action
 > - Vector embedding generation
 > - RBAC tagging
+> - Semantic routing decision
+> - Admin panel capabilities
 
 ### Query Processing (Coming soon)
 > 📹 [Insert video link: Query to response flow (4 minutes)]
-> - Query input and preprocessing
-> - Semantic routing decision
-> - Vector search and retrieval
-> - Response generation with citations
-
-### Role-Based Access Control (Coming soon)
-> 📹 [Insert video link: RBAC demonstration (3 minutes)]
-> - Login with different roles
-> - Collection-specific access
+> - Data Retrieval 
+> - RBAC demo
 > - Guardrail enforcement
-> - Admin panel capabilities
-
-### Admin Operations (Coming soon)
-> 📹 [Insert video link: Admin panel tutorial (4 minutes)]
-> - User management operations
-> - Document upload and reindexing
-> - Collection configuration
-> - System monitoring
+> - Admin capabilities
+> - RAGAs evaluation
 
 ---
 
